@@ -1,0 +1,99 @@
+# The Thorntons — thethorntons.ca
+
+Family website built with plain HTML/CSS, hosted on GitHub Pages.
+
+## Pages
+
+| File | Person | URL |
+|------|--------|-----|
+| `index.html` | Family homepage | `thethorntons.ca` |
+| `jennifer.html` | Jennifer | `thethorntons.ca/jennifer` |
+| `rob.html` | Rob | `thethorntons.ca/rob` |
+| `natalie.html` | Natalie | `thethorntons.ca/natalie` |
+| `kaitlyn.html` | Kaitlyn | `thethorntons.ca/kaitlyn` |
+
+## Setup
+
+### 1. Add your photos
+
+Copy your photos into the `images/` folder and rename them to match:
+
+| Filename | Used for |
+|----------|----------|
+| `images/family-hero.jpg` | Homepage hero (wide, landscape — e.g. jen-rob-002) |
+| `images/family-002.jpg` | Gallery strip photo 1 (e.g. jen-rob-007) |
+| `images/family-003.jpg` | Gallery strip photo 2 (e.g. jen-rob-021) |
+| `images/family-004.jpg` | Gallery strip photo 3 (e.g. jen-rob-012) |
+| `images/jennifer.jpg` | Jennifer headshot (e.g. jen-rob-020) |
+| `images/rob.jpg` | Rob headshot (e.g. jen-rob-024) |
+| `images/natalie.jpg` | Natalie headshot (e.g. jen-rob-019) |
+| `images/kaitlyn.jpg` | Kaitlyn headshot (e.g. jen-rob-015) |
+
+> **Tip:** Resize images before uploading. Headshots at ~400×400px and hero/gallery at ~1400px wide keeps load times fast.
+
+### 2. Add resume PDFs
+
+Place resume PDFs in a `files/` folder:
+
+```
+files/jennifer-resume.pdf
+files/rob-resume.pdf
+files/natalie-resume.pdf
+files/kaitlyn-resume.pdf
+```
+
+### 3. Update placeholder content
+
+Search each HTML file for placeholder text and replace with real content:
+
+- `jennifer.html` — employer names, certifications, article content, email
+- `rob.html` — employer names, project names/descriptions, GitHub URL, email
+- `natalie.html` — school name, program at uOttawa, activities, email
+- `kaitlyn.html` — school name, activities, email
+
+### 4. Enable GitHub Pages
+
+1. Go to your repo **Settings → Pages**
+2. Source: **Deploy from a branch**
+3. Branch: `main` / `(root)`
+4. Click **Save**
+
+Your site will be live at `https://jen-thornton.github.io/thornton-family-website/`
+
+### 5. Connect your custom domain
+
+1. In repo Settings → Pages → Custom domain, enter `thethorntons.ca`
+2. At your domain registrar, add these DNS records:
+
+```
+Type    Name    Value
+A       @       185.199.108.153
+A       @       185.199.109.153
+A       @       185.199.110.153
+A       @       185.199.111.153
+CNAME   www     jen-thornton.github.io
+```
+
+3. Check "Enforce HTTPS" once the certificate provisions (usually a few minutes)
+
+## Updating content
+
+Each page is self-contained HTML — just edit the file and push to `main`. GitHub Pages rebuilds automatically.
+
+To add a new article for Jennifer, copy one of the `article-card` blocks in `jennifer.html` and update the text.
+
+## File structure
+
+```
+thornton-family-website/
+├── index.html          ← Family homepage
+├── jennifer.html       ← Jennifer's section
+├── rob.html            ← Rob's section
+├── natalie.html        ← Natalie's section
+├── kaitlyn.html        ← Kaitlyn's section
+├── css/
+│   └── styles.css      ← All shared styles
+├── images/             ← Add your photos here
+├── files/              ← Add resume PDFs here (create this folder)
+└── README.md
+```
