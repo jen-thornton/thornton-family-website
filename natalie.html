@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaitlyn Thornton · Ottawa, ON</title>
+  <meta name="description" content="High school student in Ottawa seeking summer employment. Dependable, hardworking, and ready to contribute." />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+  <style>
+    .accent-bar { background: var(--kai-mid); }
+    .sub-nav__links a.active { border-bottom-color: var(--kai); color: var(--kai); }
+    .person-hero__avatar { border-color: var(--kai-mid); }
+    .person-hero__title { color: var(--kai); }
+    .stat-card { background: var(--kai-light); }
+    .stat-card__num { color: #4A1B0C; }
+    .stat-card__label { color: var(--kai); }
+    .pill { background: var(--kai-light); color: #712B13; }
+    .pill__dot { background: var(--kai-mid); }
+    .exp-block__role { color: var(--kai); }
+    .exp-block__bullet::before { color: var(--kai-mid); }
+    .avail-badge { background: var(--kai); }
+    .hiring-banner { background: var(--kai-light); border-color: #F0997B; }
+    .hiring-banner__icon { background: var(--kai-mid); }
+    .hiring-banner__title { color: #4A1B0C; }
+    .hiring-banner__sub { color: var(--kai); }
+    .interest-chip i { color: var(--kai-mid); }
+    .person-footer { background: var(--kai-light); border-top-color: #F0997B; }
+    .person-footer, .person-footer a { color: var(--kai); }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav">
+    <a href="index.html" class="site-nav__logo">the <span>thorntons</span></a>
+    <ul class="site-nav__links">
+      <li><a href="jennifer.html">Jennifer</a></li>
+      <li><a href="rob.html">Rob</a></li>
+      <li><a href="natalie.html">Natalie</a></li>
+      <li><a href="kaitlyn.html" class="active">Kaitlyn</a></li>
+      <li><a href="index.html#photos">Photos</a></li>
+    </ul>
+  </nav>
+
+  <div class="accent-bar"></div>
+
+  <div style="background:#fff; border-bottom:0.5px solid var(--border);">
+    <div class="page-wrap">
+      <nav class="sub-nav" style="padding:0;">
+        <a href="index.html" class="sub-nav__back">
+          <i class="ti ti-arrow-left" style="font-size:13px;"></i> Home
+        </a>
+        <ul class="sub-nav__links">
+          <li><a href="#about" class="active">About</a></li>
+          <li><a href="#resume">Resume</a></li>
+          <li><a href="#interests">Interests</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <main>
+    <div class="page-wrap">
+
+      <!-- ── Hero ──────────────────────────────────────── -->
+      <section class="person-hero" id="about">
+        <!-- Replace src with images/kaitlyn.jpg -->
+        <img class="person-hero__avatar" src="images/kaitlyn.jpg"
+             alt="Kaitlyn Thornton" />
+        <div>
+          <h1 class="person-hero__name">Kaitlyn Thornton</h1>
+          <p class="person-hero__title">High school student &nbsp;·&nbsp; Ottawa, ON</p>
+          <p class="person-hero__bio">
+            Currently in high school and looking for a summer job where I can gain real work experience.
+            I'm hardworking, a quick learner, great with people, and always show up ready to contribute.
+            Happy to take on any role where I can make a difference.
+          </p>
+          <div class="btn-row">
+            <a href="files/kaitlyn-resume.pdf" class="btn-primary" style="background:var(--kai);">
+              <i class="ti ti-download" style="font-size:14px;"></i> Download resume
+            </a>
+            <a href="#contact" class="btn-secondary" style="color:var(--kai);border-color:#F0997B;">
+              <i class="ti ti-mail" style="font-size:14px;"></i> Get in touch
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Hiring banner ─────────────────────────────── -->
+      <div style="padding-top:32px;">
+        <div class="hiring-banner">
+          <div class="hiring-banner__icon">
+            <i class="ti ti-briefcase" style="font-size:20px;color:#fff;"></i>
+          </div>
+          <div>
+            <p class="hiring-banner__title">Actively seeking summer employment</p>
+            <p class="hiring-banner__sub">Retail, food service, admin, camp counsellor, babysitting — open to all opportunities</p>
+          </div>
+          <span class="avail-badge">
+            <span class="avail-dot"></span> Available now
+          </span>
+        </div>
+
+        <!-- ── Stats ───────────────────────────────────── -->
+        <div class="stat-grid">
+          <div class="stat-card">
+            <span class="stat-card__num">Gr. 11</span>
+            <span class="stat-card__label">strong academic standing</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__num">2 yrs</span>
+            <span class="stat-card__label">child care experience</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__num">Open</span>
+            <span class="stat-card__label">flexible availability</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Body grid ─────────────────────────────────── -->
+      <div class="body-grid--equal body-grid" id="resume" style="padding-top:0;">
+
+        <div>
+          <p class="sec-label">Skills</p>
+          <div class="pill-wrap" style="margin-bottom:28px;">
+            <span class="pill"><span class="pill__dot"></span>Reliable &amp; punctual</span>
+            <span class="pill"><span class="pill__dot"></span>Customer service</span>
+            <span class="pill"><span class="pill__dot"></span>Teamwork</span>
+            <span class="pill"><span class="pill__dot"></span>Google Workspace</span>
+            <span class="pill"><span class="pill__dot"></span>Microsoft Office</span>
+            <span class="pill"><span class="pill__dot"></span>Cash handling</span>
+            <span class="pill"><span class="pill__dot"></span>Social media</span>
+            <span class="pill"><span class="pill__dot"></span>Child care</span>
+            <span class="pill"><span class="pill__dot"></span>First aid (in progress)</span>
+          </div>
+
+          <p class="sec-label">Education</p>
+          <div class="exp-block">
+            <div class="exp-block__top">
+              <span class="exp-block__company">Local High School, Ottawa</span>
+              <span class="exp-block__date">2022 – present</span>
+            </div>
+            <p class="exp-block__role">Ontario Secondary School Diploma (in progress)</p>
+            <p class="exp-block__bullet">Strong academic standing</p>
+            <p class="exp-block__bullet">Active in school activities and community</p>
+          </div>
+
+          <!-- Interests -->
+          <p class="sec-label" id="interests" style="margin-top:8px;">Interests</p>
+          <div>
+            <span class="interest-chip"><i class="ti ti-music"></i> Music</span>
+            <span class="interest-chip"><i class="ti ti-book"></i> Reading</span>
+            <span class="interest-chip"><i class="ti ti-palette"></i> Art</span>
+            <span class="interest-chip"><i class="ti ti-paw"></i> Animals</span>
+            <span class="interest-chip"><i class="ti ti-device-gamepad-2"></i> Gaming</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="sec-label">Experience &amp; activities</p>
+
+          <div class="exp-block">
+            <div class="exp-block__top">
+              <span class="exp-block__company">Babysitting</span>
+              <span class="exp-block__date">2023 – present</span>
+            </div>
+            <p class="exp-block__role">Independent child care provider</p>
+            <p class="exp-block__bullet">Regular care for neighbourhood families in Ottawa</p>
+            <p class="exp-block__bullet">Responsible for safety, meals, homework help, and activities</p>
+            <p class="exp-block__bullet">Trusted by multiple families on an ongoing basis</p>
+          </div>
+
+          <div class="exp-block">
+            <div class="exp-block__top">
+              <span class="exp-block__company">Community volunteering</span>
+              <span class="exp-block__date">2023 – present</span>
+            </div>
+            <p class="exp-block__role">Community volunteer</p>
+            <p class="exp-block__bullet">School and community service hours</p>
+            <p class="exp-block__bullet">Event support and collaborative team tasks</p>
+          </div>
+
+          <div class="exp-block">
+            <div class="exp-block__top">
+              <span class="exp-block__company">School activities</span>
+              <span class="exp-block__date">2022 – present</span>
+            </div>
+            <p class="exp-block__role">Clubs &amp; extracurriculars</p>
+            <p class="exp-block__bullet">Participation in school clubs and events</p>
+            <p class="exp-block__bullet">Consistent contributor and team player</p>
+          </div>
+
+          <!-- Contact -->
+          <p class="sec-label" id="contact">Get in touch</p>
+          <div style="background:var(--kai-light); border-radius:var(--radius-md); padding:16px 18px;">
+            <p style="font-size:13px; color:#4A1B0C; margin-bottom:10px; line-height:1.6;">
+              Available for summer employment — flexible hours, enthusiastic, and ready to learn.
+              References available on request.
+            </p>
+            <a href="mailto:kaitlyn@thethorntons.ca" class="btn-primary" style="background:var(--kai); font-size:12px;">
+              <i class="ti ti-mail" style="font-size:13px;"></i> kaitlyn@thethorntons.ca
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="person-footer">
+    <span>kaitlyn.thethorntons.ca</span>
+    <div class="person-footer__links">
+      <a href="mailto:kaitlyn@thethorntons.ca">
+        <i class="ti ti-mail" style="font-size:14px;"></i> Email
+      </a>
+    </div>
+  </footer>
+
+</body>
+</html>
