@@ -1,134 +1,405 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Thorntons · Ottawa, ON</title>
-  <meta name="description" content="Welcome to the Thornton family website. Ottawa, Ontario." />
-  <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Thorntons</title>
+  <meta name="description" content="The Thornton family — Orleans, Ontario. Software engineering, fraud analysis, mathematics, art, and everything in between.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --stone-50:  #F8F6F1;
+      --stone-100: #EDE9E0;
+      --stone-200: #D6CFC2;
+      --stone-400: #A89F8F;
+      --stone-600: #6B6256;
+      --stone-800: #3A332A;
+      --slate-900: #1C1C1E;
+      --serif: 'EB Garamond', Georgia, serif;
+      --sans:  'Inter', system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--sans);
+      background-color: var(--stone-50);
+      color: var(--slate-900);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      border-bottom: 0.5px solid var(--stone-200);
+      background: var(--stone-50);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--stone-600);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--slate-900); }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      height: 90vh;
+      min-height: 520px;
+      overflow: hidden;
+    }
+    .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      display: block;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(28,28,30,0.05) 0%, rgba(28,28,30,0.58) 100%);
+    }
+    .hero-text {
+      position: absolute;
+      bottom: 4rem;
+      left: 4rem;
+      right: 4rem;
+    }
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 0.5px;
+      background: rgba(255,255,255,0.5);
+    }
+    .hero-h1 {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 400;
+      line-height: 1.05;
+      color: #fff;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.25rem;
+    }
+    .hero-h1 em { font-style: italic; color: rgba(255,255,255,0.75); }
+    .hero-sub {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.75);
+      font-weight: 300;
+      max-width: 50ch;
+      line-height: 1.7;
+    }
+
+    /* FAMILY GRID */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 3rem;
+    }
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 2.5rem;
+    }
+    .family-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5px;
+      background: var(--stone-200);
+      border: 0.5px solid var(--stone-200);
+    }
+    .member-card {
+      background: var(--stone-50);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      overflow: hidden;
+      transition: background 0.2s;
+    }
+    .member-card:hover { background: var(--stone-100); }
+    .member-photo {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: opacity 0.3s;
+    }
+    .member-card:hover .member-photo { opacity: 0.9; }
+    .member-info { padding: 1.25rem 1.25rem 1.75rem; }
+    .member-name {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      margin-bottom: 0.25rem;
+    }
+    .member-role {
+      font-size: 0.75rem;
+      color: var(--stone-400);
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.85rem;
+    }
+    .member-interests {
+      font-size: 0.8rem;
+      color: var(--stone-600);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+    .member-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1.1rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      text-decoration: none;
+    }
+    .member-link::after { content: '→'; font-size: 0.85rem; }
+    .member-card:hover .member-link { color: var(--slate-900); }
+
+    /* ABOUT */
+    .about-section { border-top: 0.5px solid var(--stone-200); }
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .about-photo {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center 20%;
+      border: 0.5px solid var(--stone-200);
+    }
+    .about-heading {
+      font-family: var(--serif);
+      font-size: 2.2rem;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--slate-900);
+      margin-bottom: 1.5rem;
+    }
+    .about-heading em { font-style: italic; color: var(--stone-600); }
+    .about-body {
+      font-size: 0.9rem;
+      line-height: 1.9;
+      color: var(--stone-600);
+      font-weight: 300;
+    }
+    .about-body p + p { margin-top: 1rem; }
+
+    /* DETAILS STRIP */
+    .details-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 0.5px solid var(--stone-200);
+      margin-top: 4rem;
+    }
+    .detail-item {
+      padding: 1.75rem 1.5rem 1.75rem 0;
+      border-right: 0.5px solid var(--stone-200);
+    }
+    .detail-item:last-child { border-right: none; }
+    .detail-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 0.35rem;
+    }
+    .detail-value {
+      font-size: 0.88rem;
+      color: var(--stone-800);
+      font-weight: 300;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 0.5px solid var(--stone-200);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy { font-size: 0.75rem; color: var(--stone-400); }
+    .footer-cats {
+      font-size: 0.75rem;
+      color: var(--stone-400);
+      font-style: italic;
+      font-family: var(--serif);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { gap: 1.25rem; }
+      .hero-text { left: 1.5rem; right: 1.5rem; bottom: 2.5rem; }
+      .section { padding: 3rem 1.5rem; }
+      .family-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .details-strip { grid-template-columns: repeat(2, 1fr); }
+      .detail-item:nth-child(2) { border-right: none; }
+      .detail-item:nth-child(3) { border-top: 0.5px solid var(--stone-200); }
+      .detail-item:nth-child(4) { border-top: 0.5px solid var(--stone-200); }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .family-grid { grid-template-columns: 1fr; }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.7rem; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- ── Shared navigation ─────────────────────────────── -->
-  <nav class="site-nav">
-    <a href="index.html" class="site-nav__logo">the <span>thorntons</span></a>
-    <ul class="site-nav__links">
-      <li><a href="jennifer.html">Jennifer</a></li>
-      <li><a href="rob.html">Rob</a></li>
-      <li><a href="natalie.html">Natalie</a></li>
-      <li><a href="kaitlyn.html">Kaitlyn</a></li>
-      <li><a href="index.html#photos" class="active">Photos</a></li>
+  <nav>
+    <a class="nav-logo" href="/">The Thorntons</a>
+    <ul class="nav-links">
+      <li><a href="/rob/">Rob</a></li>
+      <li><a href="/jennifer/">Jennifer</a></li>
+      <li><a href="/natalie/">Natalie</a></li>
+      <li><a href="/kaitlyn/">Kaitlyn</a></li>
     </ul>
   </nav>
 
-  <!-- ── Hero ──────────────────────────────────────────── -->
-  <section class="home-hero">
-    <!-- Replace src with your actual photo path, e.g. images/family-001.jpg -->
-    <img class="home-hero__img" src="images/family-hero.jpg"
-         alt="The Thornton family in autumn" />
-    <div class="home-hero__overlay">
-      <h1 class="home-hero__title">Welcome to <em>our</em> corner<br>of the internet</h1>
-      <p class="home-hero__sub">Ottawa, Ontario &nbsp;·&nbsp; a family of four, each with a story to tell</p>
+  <div class="hero">
+    <img class="hero-img" src="images/family-hero.jpg" alt="The Thornton family together in autumn">
+    <div class="hero-overlay"></div>
+    <div class="hero-text">
+      <p class="hero-eyebrow">Orleans, Ontario</p>
+      <h1 class="hero-h1">The Thornton<br><em>Family</em></h1>
+      <p class="hero-sub">A family of four — and two cats — who made the journey from British Columbia to the banks of the Ottawa River.</p>
     </div>
-  </section>
+  </div>
 
-  <!-- ── Meet the family ───────────────────────────────── -->
-  <main>
-    <div class="page-wrap">
+  <div class="section">
+    <p class="section-label">Meet the family</p>
+    <div class="family-grid">
 
-      <p class="sec-label" style="padding-top: 40px;">Meet the family</p>
+      <a class="member-card" href="/rob/">
+        <img class="member-photo" src="images/rob.jpg" alt="Rob Thornton">
+        <div class="member-info">
+          <p class="member-name">Rob Thornton</p>
+          <p class="member-role">Senior Software Engineer</p>
+          <p class="member-interests">Software engineering, geocaching, LLMs, reading &amp; tinkering.</p>
+          <span class="member-link">View profile</span>
+        </div>
+      </a>
 
-      <div class="member-grid">
+      <a class="member-card" href="/jennifer/">
+        <img class="member-photo" src="images/jennifer.jpg" alt="Jennifer Thornton">
+        <div class="member-info">
+          <p class="member-name">Jennifer Thornton</p>
+          <p class="member-role">Senior Fraud Operations Analyst</p>
+          <p class="member-interests">Fraud analysis, geocaching, reading &amp; family time.</p>
+          <span class="member-link">View profile</span>
+        </div>
+      </a>
 
-        <!-- Jennifer -->
-        <a href="jennifer.html" class="member-card">
-          <!-- Replace src with images/jennifer.jpg -->
-          <img class="member-card__photo" src="images/jennifer.jpg"
-               alt="Jennifer Thornton" style="object-position: center 10%;" />
-          <div class="member-card__body">
-            <p class="member-card__name">Jennifer</p>
-            <p class="member-card__role">Senior Fraud Operations Analyst</p>
-            <div class="member-card__tags">
-              <span class="member-card__tag" style="background:var(--jen-light);color:var(--jen);">Fraud ops</span>
-              <span class="member-card__tag" style="background:var(--jen-light);color:var(--jen);">AML</span>
-            </div>
-            <span class="member-card__cta" style="color:var(--jen);border-color:var(--jen);">
-              View profile <i class="ti ti-arrow-right" style="font-size:12px;"></i>
-            </span>
-          </div>
-        </a>
+      <a class="member-card" href="/natalie/">
+        <img class="member-photo" src="images/natalie.jpg" alt="Natalie Thornton">
+        <div class="member-info">
+          <p class="member-name">Natalie Thornton</p>
+          <p class="member-role">Mathematics student, uOttawa '29</p>
+          <p class="member-interests">Clarinet, music, video games &amp; mathematical curiosity.</p>
+          <span class="member-link">View profile</span>
+        </div>
+      </a>
 
-        <!-- Rob -->
-        <a href="rob.html" class="member-card">
-          <!-- Replace src with images/rob.jpg -->
-          <img class="member-card__photo" src="images/rob.jpg"
-               alt="Rob Thornton" style="object-position: center 5%;" />
-          <div class="member-card__body">
-            <p class="member-card__name">Rob</p>
-            <p class="member-card__role">Senior Software Engineer</p>
-            <div class="member-card__tags">
-              <span class="member-card__tag" style="background:var(--rob-light);color:var(--rob);">Code</span>
-              <span class="member-card__tag" style="background:var(--rob-light);color:var(--rob);">Portfolio</span>
-            </div>
-            <span class="member-card__cta" style="color:var(--rob);border-color:var(--rob);">
-              View profile <i class="ti ti-arrow-right" style="font-size:12px;"></i>
-            </span>
-          </div>
-        </a>
-
-        <!-- Natalie -->
-        <a href="natalie.html" class="member-card">
-          <!-- Replace src with images/natalie.jpg -->
-          <img class="member-card__photo" src="images/natalie.jpg"
-               alt="Natalie Thornton" style="object-position: center 10%;" />
-          <div class="member-card__body">
-            <p class="member-card__name">Natalie</p>
-            <p class="member-card__role">Grad 2025 · uOttawa bound</p>
-            <div class="member-card__tags">
-              <span class="member-card__tag" style="background:var(--nat-light);color:var(--nat);">Grad 2025</span>
-              <span class="member-card__tag" style="background:var(--nat-light);color:var(--nat);">Available</span>
-            </div>
-            <span class="member-card__cta" style="color:var(--nat);border-color:var(--nat);">
-              View profile <i class="ti ti-arrow-right" style="font-size:12px;"></i>
-            </span>
-          </div>
-        </a>
-
-        <!-- Kaitlyn -->
-        <a href="kaitlyn.html" class="member-card">
-          <!-- Replace src with images/kaitlyn.jpg -->
-          <img class="member-card__photo" src="images/kaitlyn.jpg"
-               alt="Kaitlyn Thornton" style="object-position: center 5%;" />
-          <div class="member-card__body">
-            <p class="member-card__name">Kaitlyn</p>
-            <p class="member-card__role">High school student</p>
-            <div class="member-card__tags">
-              <span class="member-card__tag" style="background:var(--kai-light);color:var(--kai);">Available</span>
-            </div>
-            <span class="member-card__cta" style="color:var(--kai);border-color:var(--kai);">
-              View profile <i class="ti ti-arrow-right" style="font-size:12px;"></i>
-            </span>
-          </div>
-        </a>
-
-      </div>
-
-      <!-- ── Photo gallery strip ─────────────────────── -->
-      <p class="sec-label" id="photos" style="padding-top: 12px;">A few recent photos</p>
-      <div class="gallery-strip">
-        <img src="images/family-002.jpg" alt="The family together" />
-        <img src="images/family-003.jpg" alt="Rob and Jennifer" />
-        <img src="images/family-004.jpg" alt="The girls" />
-      </div>
+      <a class="member-card" href="/kaitlyn/">
+        <img class="member-photo" src="images/kaitlyn.jpg" alt="Kaitlyn Thornton">
+        <div class="member-info">
+          <p class="member-name">Kaitlyn Thornton</p>
+          <p class="member-role">Artist &amp; Animator</p>
+          <p class="member-interests">Animation, illustration, art &amp; video games.</p>
+          <span class="member-link">View profile</span>
+        </div>
+      </a>
 
     </div>
-  </main>
+  </div>
 
-  <!-- ── Footer ────────────────────────────────────────── -->
-  <footer class="home-footer">
-    <span>© 2025 The Thorntons &nbsp;·&nbsp; thethorntons.ca</span>
-    <span>Ottawa, Ontario, Canada</span>
+  <div class="section about-section">
+    <div class="about-inner">
+      <div>
+        <img class="about-photo" src="images/couple.jpg" alt="Rob and Jennifer Thornton">
+      </div>
+      <div>
+        <p class="section-label" style="margin-bottom: 1.25rem;">Our story</p>
+        <h2 class="about-heading">From the <em>Pacific<br>to the Rideau</em></h2>
+        <div class="about-body">
+          <p>In 2019 we packed up our lives in British Columbia and headed east, putting down roots in Orleans — a community just outside Ottawa that quickly started to feel like home.</p>
+          <p>This site is a little window into who we are: the careers we've built, the projects we're proud of, and the hobbies that keep life interesting. Whether you're a hiring manager, a fellow geocacher, or just curious — welcome.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="details-strip">
+      <div class="detail-item">
+        <p class="detail-label">Based in</p>
+        <p class="detail-value">Orleans, ON</p>
+      </div>
+      <div class="detail-item" style="padding-left: 1.5rem;">
+        <p class="detail-label">Originally from</p>
+        <p class="detail-value">British Columbia</p>
+      </div>
+      <div class="detail-item" style="padding-left: 1.5rem;">
+        <p class="detail-label">Household</p>
+        <p class="detail-value">4 Thorntons + 2 cats</p>
+      </div>
+      <div class="detail-item" style="padding-left: 1.5rem;">
+        <p class="detail-label">Cats</p>
+        <p class="detail-value">Khaleesi &amp; Luna</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p class="footer-copy">&copy; 2025 The Thorntons &middot; thethorntons.ca</p>
+    <p class="footer-cats">Supervised by Khaleesi &amp; Luna</p>
   </footer>
 
 </body>
