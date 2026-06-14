@@ -1,320 +1,600 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rob Thornton · Senior Software Engineer</title>
-  <meta name="description" content="Senior Software Engineer based in Ottawa, ON. Portfolio, open source projects, and resume." />
-  <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rob Thornton — The Thorntons</title>
+  <meta name="description" content="Rob Thornton — Senior Software Developer at Shopify. Building reliable systems, exploring with GPS, and tinkering at the edges of what's possible.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    body { background: #0d1117; }
-    main { background: var(--cream); }
-    .rob-page-nav {
-      background: #0d1117;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 12px 28px;
-      border-bottom: 0.5px solid #21262d;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    :root {
+      --stone-50:  #F8F6F1;
+      --stone-100: #EDE9E0;
+      --stone-200: #D6CFC2;
+      --stone-400: #A89F8F;
+      --stone-600: #6B6256;
+      --stone-800: #3A332A;
+      --slate-900: #1C1C1E;
+      --serif: 'EB Garamond', Georgia, serif;
+      --sans:  'Inter', system-ui, sans-serif;
     }
-    .rob-page-nav__back { color: #8b949e; font-size: 12px; display: flex; align-items: center; gap: 5px; }
-    .rob-page-nav__back:hover { color: #e6edf3; }
-    .rob-page-nav__links { display: flex; gap: 22px; list-style: none; }
-    .rob-page-nav__links a { color: #8b949e; font-size: 12px; transition: color 0.15s; }
-    .rob-page-nav__links a:hover, .rob-page-nav__links a.active { color: #e6edf3; }
-    .rob-page-nav__links a.active { border-bottom: 1.5px solid var(--rob-mid); padding-bottom: 2px; }
-
-    .rob-hero-section {
-      background: #0d1117;
-      padding: 36px 0 40px;
-      border-bottom: 0.5px solid #21262d;
+ 
+    body {
+      font-family: var(--sans);
+      background-color: var(--stone-50);
+      color: var(--slate-900);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
     }
-    .rob-hero-section .person-hero__name { color: #e6edf3; }
-    .rob-hero-section .person-hero__title { color: var(--rob-mid); }
-    .rob-hero-section .person-hero__bio { color: #8b949e; }
-    .rob-hero-section .person-hero__avatar { border-color: var(--rob); }
-
-    .rob-stats { background: #0d1117; padding: 0 0 40px; }
-    .rob-stat-card { background: #161b22; border: 0.5px solid #21262d; }
-    .rob-stat-card .stat-card__num { color: #e6edf3; font-family: 'Lora', Georgia, serif; }
-    .rob-stat-card .stat-card__label { color: #8b949e; }
-
-    .pill { background: var(--rob-light); color: #0C447C; }
-    .pill__dot { background: var(--rob-mid); }
-    .proj-card:hover { border-color: var(--rob-mid); }
-    .lang-badge { background: var(--rob-light); color: #0C447C; }
-    .exp-block__role { color: var(--rob); }
-    .exp-block__bullet::before { color: var(--rob-mid); }
-
-    .page-wrap--dark { background: #0d1117; }
+ 
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      border-bottom: 0.5px solid var(--stone-200);
+      background: var(--stone-50);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--stone-600);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--slate-900); }
+    .nav-links a.active { color: var(--slate-900); }
+ 
+    /* PAGE HEADER */
+    .page-header {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 3rem 3rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 3rem;
+      align-items: end;
+      border-bottom: 0.5px solid var(--stone-200);
+    }
+    .page-header-photo {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      object-position: center 15%;
+      border: 0.5px solid var(--stone-200);
+      display: block;
+      flex-shrink: 0;
+    }
+    .page-header-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 0.75rem;
+    }
+    .page-header-name {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 400;
+      line-height: 1.05;
+      color: var(--slate-900);
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+    }
+    .page-header-name em { font-style: italic; color: var(--stone-600); }
+    .page-header-tagline {
+      font-size: 0.9rem;
+      color: var(--stone-600);
+      font-weight: 300;
+      max-width: 55ch;
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+    .header-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      background: var(--slate-900);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--stone-800); }
+    .btn-primary svg { width: 14px; height: 14px; }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone-600);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .btn-secondary:hover { color: var(--slate-900); }
+    .btn-secondary::after { content: '→'; font-size: 0.85rem; }
+ 
+    /* SHARED SECTION */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 3rem;
+    }
+    .section + .section { border-top: 0.5px solid var(--stone-200); }
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 2rem;
+    }
+    .section-heading {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--slate-900);
+      margin-bottom: 1.25rem;
+    }
+    .section-heading em { font-style: italic; color: var(--stone-600); }
+ 
+    /* BIO */
+    .bio-body {
+      font-size: 0.9rem;
+      line-height: 1.9;
+      color: var(--stone-600);
+      font-weight: 300;
+      max-width: 70ch;
+    }
+    .bio-body p + p { margin-top: 1rem; }
+ 
+    /* DETAILS STRIP */
+    .details-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 0.5px solid var(--stone-200);
+      margin-top: 3rem;
+    }
+    .detail-item {
+      padding: 1.75rem 1.5rem 1.75rem 0;
+      border-right: 0.5px solid var(--stone-200);
+    }
+    .detail-item:last-child { border-right: none; }
+    .detail-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 0.35rem;
+    }
+    .detail-value {
+      font-size: 0.88rem;
+      color: var(--stone-800);
+      font-weight: 300;
+    }
+ 
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--stone-200);
+      border: 0.5px solid var(--stone-200);
+    }
+    .skill-item {
+      background: var(--stone-50);
+      padding: 1.75rem;
+    }
+    .skill-title {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      margin-bottom: 0.6rem;
+    }
+    .skill-desc {
+      font-size: 0.8rem;
+      line-height: 1.75;
+      color: var(--stone-600);
+      font-weight: 300;
+    }
+ 
+    /* TOOLS */
+    .tools-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+    .tool-tag {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--stone-600);
+      border: 0.5px solid var(--stone-200);
+      padding: 0.35rem 0.75rem;
+      background: var(--stone-50);
+    }
+ 
+    /* EXPERIENCE TIMELINE */
+    .timeline { margin-top: 0.5rem; }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 2.5rem;
+      padding: 2rem 0;
+      border-top: 0.5px solid var(--stone-200);
+    }
+    .timeline-item:last-child { border-bottom: 0.5px solid var(--stone-200); }
+    .timeline-dates {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 0.35rem;
+    }
+    .timeline-company {
+      font-size: 0.85rem;
+      color: var(--stone-600);
+      font-weight: 300;
+    }
+    .timeline-role {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      margin-bottom: 0.85rem;
+    }
+    .timeline-bullets {
+      list-style: none;
+      padding: 0;
+    }
+    .timeline-bullets li {
+      font-size: 0.82rem;
+      line-height: 1.75;
+      color: var(--stone-600);
+      font-weight: 300;
+      padding-left: 1rem;
+      position: relative;
+      margin-bottom: 0.4rem;
+    }
+    .timeline-bullets li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--stone-400);
+    }
+ 
+    /* INTERESTS */
+    .interests-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5px;
+      background: var(--stone-200);
+      border: 0.5px solid var(--stone-200);
+    }
+    .interest-item {
+      background: var(--stone-50);
+      padding: 1.75rem;
+    }
+    .interest-title {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      margin-bottom: 0.6rem;
+    }
+    .interest-desc {
+      font-size: 0.8rem;
+      line-height: 1.75;
+      color: var(--stone-600);
+      font-weight: 300;
+    }
+ 
+    /* FAMILY NAV */
+    .family-nav-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--stone-200);
+      border: 0.5px solid var(--stone-200);
+    }
+    .family-nav-card {
+      background: var(--stone-50);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      padding: 1.75rem;
+      transition: background 0.2s;
+    }
+    .family-nav-card:hover { background: var(--stone-100); }
+    .family-nav-name {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      margin-bottom: 0.2rem;
+    }
+    .family-nav-role {
+      font-size: 0.75rem;
+      color: var(--stone-400);
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.85rem;
+    }
+    .family-nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+    }
+    .family-nav-link::after { content: '→'; font-size: 0.85rem; }
+    .family-nav-card:hover .family-nav-link { color: var(--slate-900); }
+ 
+    /* FOOTER */
+    footer {
+      border-top: 0.5px solid var(--stone-200);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy { font-size: 0.75rem; color: var(--stone-400); }
+    .footer-cats {
+      font-size: 0.75rem;
+      color: var(--stone-400);
+      font-style: italic;
+      font-family: var(--serif);
+    }
+ 
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { gap: 1.25rem; }
+      .page-header { padding: 2.5rem 1.5rem 2.5rem; grid-template-columns: 1fr; gap: 1.5rem; }
+      .page-header-photo { width: 140px; height: 140px; }
+      .section { padding: 3rem 1.5rem; }
+      .details-strip { grid-template-columns: repeat(2, 1fr); }
+      .detail-item:nth-child(2) { border-right: none; }
+      .detail-item:nth-child(3) { border-top: 0.5px solid var(--stone-200); }
+      .detail-item:nth-child(4) { border-top: 0.5px solid var(--stone-200); }
+      .skills-grid { grid-template-columns: 1fr; }
+      .interests-grid { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .family-nav-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.7rem; }
+    }
   </style>
 </head>
 <body>
-
-  <nav class="site-nav">
-    <a href="index.html" class="site-nav__logo">the <span>thorntons</span></a>
-    <ul class="site-nav__links">
-      <li><a href="jennifer.html">Jennifer</a></li>
-      <li><a href="rob.html" class="active">Rob</a></li>
-      <li><a href="natalie.html">Natalie</a></li>
-      <li><a href="kaitlyn.html">Kaitlyn</a></li>
-      <li><a href="index.html#photos">Photos</a></li>
+ 
+  <nav>
+    <a class="nav-logo" href="/">The Thorntons</a>
+    <ul class="nav-links">
+      <li><a href="/rob/" class="active">Rob</a></li>
+      <li><a href="/jennifer/">Jennifer</a></li>
+      <li><a href="/natalie/">Natalie</a></li>
+      <li><a href="/kaitlyn/">Kaitlyn</a></li>
     </ul>
   </nav>
-
-  <div class="page-wrap--dark">
-    <div style="max-width:var(--max-w); margin:0 auto; padding:0 28px;">
-      <nav class="rob-page-nav" style="padding-left:0; padding-right:0;">
-        <a href="index.html" class="rob-page-nav__back">
-          <i class="ti ti-arrow-left" style="font-size:13px;"></i> Home
+ 
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <img class="page-header-photo" src="../images/rob.jpg" alt="Rob Thornton">
+    <div class="page-header-text">
+      <p class="page-header-eyebrow">Senior Software Developer</p>
+      <h1 class="page-header-name">Rob<br><em>Thornton</em></h1>
+      <p class="page-header-tagline">Building reliable systems by day, hunting hidden caches by weekend — a software developer who finds equal satisfaction in elegant code, a well-placed geocache, and whatever rabbit hole LLMs have opened up this week.</p>
+      <div class="header-actions">
+        <a class="btn-primary" href="rob-thornton-resume.pdf" download>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Résumé
         </a>
-        <ul class="rob-page-nav__links">
-          <li><a href="#about" class="active">About</a></li>
-          <li><a href="#portfolio">Portfolio</a></li>
-          <li><a href="#resume">Resume</a></li>
-          <li><a href="https://github.com" target="_blank" rel="noopener">GitHub</a></li>
-        </ul>
-      </nav>
-    </div>
-  </div>
-
-  <!-- ── Dark hero ─────────────────────────────────────── -->
-  <section class="rob-hero-section" id="about">
-    <div class="page-wrap">
-      <div class="person-hero" style="border-bottom:none; padding-bottom:0;">
-        <!-- Replace src with images/rob.jpg -->
-        <img class="person-hero__avatar" src="images/rob.jpg"
-             alt="Rob Thornton" style="object-position: center 5%;" />
-        <div>
-          <h1 class="person-hero__name">Rob Thornton</h1>
-          <p class="person-hero__title">Senior Software Engineer &nbsp;·&nbsp; Ottawa, ON</p>
-          <p class="person-hero__bio">
-            Building reliable, scalable software for over a decade. Passionate about clean architecture,
-            developer tooling, and the craft of engineering. Open source contributor.
-          </p>
-          <div class="btn-row">
-            <a href="files/rob-resume.pdf" class="btn-primary" style="background:var(--rob);">
-              <i class="ti ti-download" style="font-size:14px;"></i> Download resume
-            </a>
-            <a href="https://github.com" target="_blank" rel="noopener"
-               class="btn-secondary" style="color:#8b949e; border-color:#30363d;">
-              <i class="ti ti-brand-github" style="font-size:14px;"></i> GitHub
-            </a>
-            <a href="mailto:rob@thethorntons.ca"
-               class="btn-secondary" style="color:#8b949e; border-color:#30363d;">
-              <i class="ti ti-mail" style="font-size:14px;"></i> Contact
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Dark stat cards ───────────────────────────────── -->
-  <div class="rob-stats">
-    <div class="page-wrap">
-      <div class="stat-grid" style="padding-top:32px;">
-        <div class="stat-card rob-stat-card">
-          <span class="stat-card__num">12+</span>
-          <span class="stat-card__label">years experience</span>
-        </div>
-        <div class="stat-card rob-stat-card">
-          <span class="stat-card__num">40+</span>
-          <span class="stat-card__label">public repos</span>
-        </div>
-        <div class="stat-card rob-stat-card">
-          <span class="stat-card__num">8</span>
-          <span class="stat-card__label">shipped products</span>
-        </div>
+        <a class="btn-secondary" href="https://www.linkedin.com/in/rob-thornton-a3398048/" target="_blank" rel="noopener">LinkedIn profile</a>
       </div>
     </div>
   </div>
-
-  <!-- ── Light body ────────────────────────────────────── -->
-  <main>
-    <div class="page-wrap" style="padding-top:36px;">
-
-      <p class="sec-label">Skills &amp; technologies</p>
-      <div class="pill-wrap">
-        <span class="pill"><span class="pill__dot"></span>TypeScript</span>
-        <span class="pill"><span class="pill__dot"></span>React</span>
-        <span class="pill"><span class="pill__dot"></span>Node.js</span>
-        <span class="pill"><span class="pill__dot"></span>Go</span>
-        <span class="pill"><span class="pill__dot"></span>Python</span>
-        <span class="pill"><span class="pill__dot"></span>PostgreSQL</span>
-        <span class="pill"><span class="pill__dot"></span>AWS</span>
-        <span class="pill"><span class="pill__dot"></span>Docker</span>
-        <span class="pill"><span class="pill__dot"></span>Kubernetes</span>
-        <span class="pill"><span class="pill__dot"></span>GraphQL</span>
-        <span class="pill"><span class="pill__dot"></span>CI/CD</span>
-        <span class="pill"><span class="pill__dot"></span>Redis</span>
-      </div>
-
-      <p class="sec-label" id="portfolio">Featured projects</p>
-      <div class="proj-grid" style="margin-bottom:40px;">
-
-        <div class="proj-card">
-          <div class="proj-card__top">
-            <p class="proj-card__name">
-              <i class="ti ti-database" style="font-size:14px;margin-right:5px;color:var(--rob-mid);"></i>
-              query-engine
-            </p>
-            <span class="proj-card__stars">
-              <i class="ti ti-star" style="font-size:13px;"></i> 142
-            </span>
-          </div>
-          <p class="proj-card__desc">Type-safe PostgreSQL query builder with zero runtime dependencies and chainable APIs.</p>
-          <span class="lang-badge">TypeScript</span>
-        </div>
-
-        <div class="proj-card">
-          <div class="proj-card__top">
-            <p class="proj-card__name">
-              <i class="ti ti-terminal-2" style="font-size:14px;margin-right:5px;color:var(--rob-mid);"></i>
-              deploy-cli
-            </p>
-            <span class="proj-card__stars">
-              <i class="ti ti-star" style="font-size:13px;"></i> 87
-            </span>
-          </div>
-          <p class="proj-card__desc">Zero-downtime Kubernetes deployments with rollback support and Slack notifications.</p>
-          <span class="lang-badge">Go</span>
-        </div>
-
-        <div class="proj-card">
-          <div class="proj-card__top">
-            <p class="proj-card__name">
-              <i class="ti ti-api" style="font-size:14px;margin-right:5px;color:var(--rob-mid);"></i>
-              api-scaffold
-            </p>
-            <span class="proj-card__stars">
-              <i class="ti ti-star" style="font-size:13px;"></i> 55
-            </span>
-          </div>
-          <p class="proj-card__desc">Opinionated REST API starter with auth, rate limiting, and OpenAPI doc generation baked in.</p>
-          <span class="lang-badge">Node.js</span>
-        </div>
-
-        <div class="proj-card">
-          <div class="proj-card__top">
-            <p class="proj-card__name">
-              <i class="ti ti-chart-dots" style="font-size:14px;margin-right:5px;color:var(--rob-mid);"></i>
-              metrics-dash
-            </p>
-            <span class="proj-card__stars">
-              <i class="ti ti-star" style="font-size:13px;"></i> 31
-            </span>
-          </div>
-          <p class="proj-card__desc">Self-hosted observability dashboard. Plug in Prometheus or Datadog and go.</p>
-          <span class="lang-badge">React</span>
-        </div>
-
-      </div>
-
-      <!-- ── Experience + GitHub stats ────────────────── -->
-      <div class="body-grid" id="resume" style="padding-top:0;">
-
-        <div>
-          <p class="sec-label">Experience</p>
-          <div class="exp-block">
-            <div class="exp-block__top">
-              <span class="exp-block__company">Current Employer</span>
-              <span class="exp-block__date">2019 – present</span>
-            </div>
-            <p class="exp-block__role">Senior Software Engineer</p>
-            <p class="exp-block__bullet">Architect and lead development of core platform services</p>
-            <p class="exp-block__bullet">Mentor engineers and conduct code reviews</p>
-            <p class="exp-block__bullet">Drive adoption of modern tooling and best practices</p>
-          </div>
-          <div class="exp-block">
-            <div class="exp-block__top">
-              <span class="exp-block__company">Previous Employer</span>
-              <span class="exp-block__date">2015 – 2019</span>
-            </div>
-            <p class="exp-block__role">Software Engineer</p>
-            <p class="exp-block__bullet">Full-stack feature development and API design</p>
-            <p class="exp-block__bullet">Led migration from monolith to microservices</p>
-          </div>
-          <div class="exp-block">
-            <div class="exp-block__top">
-              <span class="exp-block__company">Early Career</span>
-              <span class="exp-block__date">2012 – 2015</span>
-            </div>
-            <p class="exp-block__role">Junior Developer</p>
-            <p class="exp-block__bullet">Web application development and maintenance</p>
-            <p class="exp-block__bullet">Client-facing feature delivery</p>
-          </div>
-
-          <a href="files/rob-resume.pdf" class="btn-primary" style="background:var(--rob); margin-top:8px; display:inline-flex;">
-            <i class="ti ti-download" style="font-size:13px;"></i> Download full resume
-          </a>
-        </div>
-
-        <div>
-          <p class="sec-label">Languages on GitHub</p>
-          <div style="margin-bottom:28px;">
-            <div class="gh-bar">
-              <span class="gh-bar__label">TypeScript</span>
-              <div class="gh-bar__track"><div class="gh-bar__fill" style="width:72%;"></div></div>
-              <span class="gh-bar__pct">72%</span>
-            </div>
-            <div class="gh-bar">
-              <span class="gh-bar__label">Go</span>
-              <div class="gh-bar__track"><div class="gh-bar__fill" style="width:55%;"></div></div>
-              <span class="gh-bar__pct">55%</span>
-            </div>
-            <div class="gh-bar">
-              <span class="gh-bar__label">Python</span>
-              <div class="gh-bar__track"><div class="gh-bar__fill" style="width:38%;"></div></div>
-              <span class="gh-bar__pct">38%</span>
-            </div>
-            <div class="gh-bar">
-              <span class="gh-bar__label">Shell</span>
-              <div class="gh-bar__track"><div class="gh-bar__fill" style="width:20%;"></div></div>
-              <span class="gh-bar__pct">20%</span>
-            </div>
-            <div class="gh-bar">
-              <span class="gh-bar__label">Other</span>
-              <div class="gh-bar__track"><div class="gh-bar__fill" style="width:12%; background:var(--rob-light); border:0.5px solid var(--border);"></div></div>
-              <span class="gh-bar__pct">12%</span>
-            </div>
-          </div>
-
-          <p class="sec-label">Education</p>
-          <div class="exp-block">
-            <div class="exp-block__top">
-              <span class="exp-block__company">University</span>
-              <span class="exp-block__date">2008 – 2012</span>
-            </div>
-            <p class="exp-block__role">Bachelor of Science, Computer Science</p>
-          </div>
-
-          <p class="sec-label" style="margin-top:20px;">Get in touch</p>
-          <div style="background:var(--rob-light); border-radius:var(--radius-md); padding:16px 18px;">
-            <p style="font-size:13px; color:#0C447C; margin-bottom:10px; line-height:1.6;">
-              Open to interesting engineering challenges, collaborations, and open source contributions.
-            </p>
-            <a href="mailto:rob@thethorntons.ca" class="btn-primary" style="background:var(--rob); font-size:12px;">
-              <i class="ti ti-mail" style="font-size:13px;"></i> rob@thethorntons.ca
-            </a>
-          </div>
-        </div>
-
-      </div>
-
+ 
+  <!-- BIO -->
+  <div class="section">
+    <p class="section-label">About</p>
+    <h2 class="section-heading">Systems thinker,<br><em>perpetual tinkerer</em></h2>
+    <div class="bio-body">
+      <p>Rob is a Senior Software Developer at Shopify, where he's spent the better part of a decade working across the stack on systems that need to be fast, reliable, and built to scale. He gravitates toward the interesting problems — the ones that don't have obvious answers and reward careful thinking over quick fixes.</p>
+      <p>Outside of shipping code, Rob has a genuine curiosity about where technology is headed. He's particularly fascinated by LLMs and what they make newly possible — both as a practitioner who can build with them and as someone who reads widely about the field. That curiosity carries into his other hobby: geocaching, which scratches a similar itch. Finding the unfindable, reading a landscape carefully, and appreciating the effort someone else put into hiding something well.</p>
+      <p>Rob and his family made the move from British Columbia to Orleans, Ontario in 2019 and haven't looked back. When he's not at a keyboard or out with a GPS device, he's likely buried in a book.</p>
     </div>
-  </main>
-
-  <footer class="dev-footer">
-    <span class="dev-footer__url">rob.thethorntons.ca</span>
-    <div class="dev-footer__links">
-      <a href="https://github.com" target="_blank" rel="noopener">
-        <i class="ti ti-brand-github" style="font-size:14px;"></i> GitHub
+ 
+    <div class="details-strip">
+      <div class="detail-item">
+        <p class="detail-label">Current role</p>
+        <p class="detail-value">Senior Software Developer</p>
+      </div>
+      <div class="detail-item" style="padding-left: 1.5rem;">
+        <p class="detail-label">Employer</p>
+        <p class="detail-value">Shopify</p>
+      </div>
+      <div class="detail-item" style="padding-left: 1.5rem;">
+        <p class="detail-label">Based in</p>
+        <p class="detail-value">Orleans, ON</p>
+      </div>
+      <div class="detail-item" style="padding-left: 1.5rem;">
+        <p class="detail-label">Originally from</p>
+        <p class="detail-value">British Columbia</p>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- SKILLS -->
+  <div class="section">
+    <p class="section-label">Core skills</p>
+    <h2 class="section-heading">What I bring<br><em>to the table</em></h2>
+    <div class="skills-grid">
+      <div class="skill-item">
+        <p class="skill-title">Software Engineering</p>
+        <p class="skill-desc">Full-stack development with an eye for system design, performance, and maintainability. Comfortable working across layers of the stack and bridging the gap between a product requirement and a production-ready solution.</p>
+      </div>
+      <div class="skill-item">
+        <p class="skill-title">Distributed Systems</p>
+        <p class="skill-desc">Experience building and scaling systems at Shopify's level of traffic and reliability requirements. Familiarity with the failure modes, trade-offs, and operational realities that only emerge at scale.</p>
+      </div>
+      <div class="skill-item">
+        <p class="skill-title">AI &amp; LLM Integration</p>
+        <p class="skill-desc">A genuine interest in large language models that goes beyond the hype — understanding how they work, where they fail, and how to build useful things with them responsibly. Actively experimenting with applied AI tooling.</p>
+      </div>
+      <div class="skill-item">
+        <p class="skill-title">Technical Problem-Solving</p>
+        <p class="skill-desc">Drawn to problems that reward careful decomposition — breaking a gnarly bug or an ambiguous requirement into something tractable and then following the thread until it's solved properly.</p>
+      </div>
+      <div class="skill-item">
+        <p class="skill-title">Collaboration &amp; Communication</p>
+        <p class="skill-desc">Experienced working across teams in a remote-first environment. Clear communicator who can explain a technical decision to a non-technical stakeholder without losing the important nuance.</p>
+      </div>
+      <div class="skill-item">
+        <p class="skill-title">Continuous Learning</p>
+        <p class="skill-desc">A genuine reader — of technical writing, research papers, and broader non-fiction — who applies the same curiosity at work as everywhere else. Keeps up with the field not because it's required, but because it's interesting.</p>
+      </div>
+    </div>
+ 
+    <div style="margin-top: 2.5rem;">
+      <p class="section-label" style="margin-bottom: 1rem;">Tools &amp; technologies</p>
+      <div class="tools-list">
+        <span class="tool-tag">Ruby</span>
+        <span class="tool-tag">Ruby on Rails</span>
+        <span class="tool-tag">JavaScript</span>
+        <span class="tool-tag">TypeScript</span>
+        <span class="tool-tag">React</span>
+        <span class="tool-tag">GraphQL</span>
+        <span class="tool-tag">MySQL</span>
+        <span class="tool-tag">Redis</span>
+        <span class="tool-tag">Git</span>
+        <span class="tool-tag">GitHub</span>
+        <span class="tool-tag">Kubernetes</span>
+        <span class="tool-tag">Docker</span>
+        <span class="tool-tag">Datadog</span>
+        <span class="tool-tag">Slack</span>
+        <span class="tool-tag">Claude</span>
+        <span class="tool-tag">ChatGPT</span>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- EXPERIENCE -->
+  <div class="section">
+    <p class="section-label">Experience</p>
+    <h2 class="section-heading">Career<br><em>history</em></h2>
+    <div class="timeline">
+ 
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <p class="timeline-dates">Present</p>
+          <p class="timeline-company">Shopify</p>
+        </div>
+        <div>
+          <p class="timeline-role">Senior Software Developer</p>
+          <ul class="timeline-bullets">
+            <li>Placeholder — full career history coming soon.</li>
+            <li>Senior-level engineering role at one of Canada's most prominent technology companies, working on systems that serve millions of merchants worldwide.</li>
+            <li>Involved in the full software development lifecycle, from architectural decisions through to production observability and incident response.</li>
+          </ul>
+        </div>
+      </div>
+ 
+    </div>
+  </div>
+ 
+  <!-- INTERESTS -->
+  <div class="section">
+    <p class="section-label">Beyond the keyboard</p>
+    <h2 class="section-heading">What I get up to<br><em>outside work</em></h2>
+    <div class="interests-grid">
+      <div class="interest-item">
+        <p class="interest-title">Geocaching</p>
+        <p class="interest-desc">There's something genuinely satisfying about standing in a place you've never stood before because someone decided to hide something there. Rob and Jennifer geocache together across the Ottawa region — it turns an ordinary walk into a small expedition, and occasionally reveals a corner of the city worth knowing about. A recent family trip to London and Paris expanded their territory considerably, with caches found in both cities.</p>
+      </div>
+      <div class="interest-item">
+        <p class="interest-title">Saga — a programming language</p>
+        <p class="interest-desc">Rob is building Saga from scratch: a programming language designed to be LLM-ready and genuinely pleasant to use, with the kind of elegance and expressiveness that a discerning engineer actually appreciates. It's the sort of project that asks hard questions about language design and forces careful answers.</p>
+      </div>
+      <div class="interest-item">
+        <p class="interest-title">Large Language Models</p>
+        <p class="interest-desc">Rob follows the LLM field closely — reading research, building tools, and thinking through what these systems make newly possible. That curiosity led directly to Saga: a language conceived from the ground up with LLM interaction in mind, not bolted on as an afterthought.</p>
+      </div>
+      <div class="interest-item">
+        <p class="interest-title">Cooking &amp; Authentic Cuisine</p>
+        <p class="interest-desc">Rob has a love for tracking down authentic recipes from around the world — the real versions, not the simplified ones — and bringing them to the family table. It's part research project, part creative outlet, and the best experiments tend to become household staples.</p>
+      </div>
+      <div class="interest-item">
+        <p class="interest-title">Reading</p>
+        <p class="interest-desc">A committed reader across genres — technical writing, history, science, and wherever curiosity leads. Books are how Rob processes ideas more slowly and carefully than the internet usually allows, and a good one has a habit of showing up in how he approaches a problem at work a few weeks later.</p>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- REST OF FAMILY -->
+  <div class="section" style="border-top: 0.5px solid var(--stone-200);">
+    <p class="section-label">The rest of the family</p>
+    <div class="family-nav-grid">
+      <a class="family-nav-card" href="/jennifer/">
+        <p class="family-nav-name">Jennifer Thornton</p>
+        <p class="family-nav-role">Senior Fraud Operations Analyst</p>
+        <span class="family-nav-link">View profile</span>
       </a>
-      <a href="https://linkedin.com" target="_blank" rel="noopener">
-        <i class="ti ti-brand-linkedin" style="font-size:14px;"></i> LinkedIn
+      <a class="family-nav-card" href="/natalie/">
+        <p class="family-nav-name">Natalie Thornton</p>
+        <p class="family-nav-role">Mathematics student, uOttawa '29</p>
+        <span class="family-nav-link">View profile</span>
+      </a>
+      <a class="family-nav-card" href="/kaitlyn/">
+        <p class="family-nav-name">Kaitlyn Thornton</p>
+        <p class="family-nav-role">Artist &amp; Animator</p>
+        <span class="family-nav-link">View profile</span>
       </a>
     </div>
+  </div>
+ 
+  <footer>
+    <p class="footer-copy">&copy; 2025 The Thorntons &middot; thethorntons.ca</p>
+    <p class="footer-cats">Supervised by Khaleesi &amp; Luna</p>
   </footer>
-
+ 
 </body>
 </html>
