@@ -1,1 +1,594 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Natalie Thornton — The Thorntons</title>
+  <meta name="description" content="Natalie Thornton — incoming Honours Mathematics student at uOttawa, clarinetist, band organizer, and mentor.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    :root {
+      --stone-50:  #F8F6F1;
+      --stone-100: #EDE9E0;
+      --stone-200: #D6CFC2;
+      --stone-400: #A89F8F;
+      --stone-600: #6B6256;
+      --stone-800: #3A332A;
+      --slate-900: #1C1C1E;
+      --serif: 'EB Garamond', Georgia, serif;
+      --sans:  'Inter', system-ui, sans-serif;
+ 
+      /* Natalie's accent — a warm, muted sage that reads youthful without being garish */
+      --accent:     #6B8F71;
+      --accent-dim: #8EAF94;
+      --accent-bg:  #EEF3EE;
+    }
+ 
+    body {
+      font-family: var(--sans);
+      background-color: var(--stone-50);
+      color: var(--slate-900);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+ 
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      border-bottom: 0.5px solid var(--stone-200);
+      background: var(--stone-50);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--stone-600);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--slate-900); }
+    .nav-links a.active { color: var(--slate-900); }
+ 
+    /* PAGE HEADER */
+    .page-header {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 3rem 3rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 3rem;
+      align-items: end;
+      border-bottom: 0.5px solid var(--stone-200);
+    }
+    .page-header-photo {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      object-position: center 15%;
+      border: 0.5px solid var(--stone-200);
+      display: block;
+      flex-shrink: 0;
+    }
+    .page-header-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .page-header-name {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 400;
+      line-height: 1.05;
+      color: var(--slate-900);
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+    }
+    .page-header-name em { font-style: italic; color: var(--stone-600); }
+    .page-header-tagline {
+      font-size: 0.9rem;
+      color: var(--stone-600);
+      font-weight: 300;
+      max-width: 55ch;
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+    .header-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--stone-800); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone-600);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .btn-secondary:hover { color: var(--slate-900); }
+    .btn-secondary::after { content: '→'; font-size: 0.85rem; }
+ 
+    /* SHARED SECTION */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 3rem;
+    }
+    .section + .section { border-top: 0.5px solid var(--stone-200); }
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 2rem;
+    }
+    .section-heading {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--slate-900);
+      margin-bottom: 1.25rem;
+    }
+    .section-heading em { font-style: italic; color: var(--stone-600); }
+ 
+    /* BIO */
+    .bio-body {
+      font-size: 0.9rem;
+      line-height: 1.9;
+      color: var(--stone-600);
+      font-weight: 300;
+      max-width: 70ch;
+    }
+    .bio-body p + p { margin-top: 1rem; }
+ 
+    /* DETAILS STRIP */
+    .details-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 0.5px solid var(--stone-200);
+      margin-top: 3rem;
+    }
+    .detail-item {
+      padding: 1.75rem 1.5rem 1.75rem 0;
+      border-right: 0.5px solid var(--stone-200);
+    }
+    .detail-item:last-child { border-right: none; }
+    .detail-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 0.35rem;
+    }
+    .detail-value {
+      font-size: 0.88rem;
+      color: var(--stone-800);
+      font-weight: 300;
+    }
+ 
+    /* HIGHLIGHT PULL QUOTE — the youthful signature element */
+    .pull-quote {
+      background: var(--accent-bg);
+      border-left: 2px solid var(--accent);
+      padding: 2rem 2.5rem;
+      margin: 2.5rem 0 0;
+    }
+    .pull-quote p {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      font-style: italic;
+      color: var(--stone-800);
+      line-height: 1.55;
+    }
+    .pull-quote cite {
+      display: block;
+      margin-top: 0.75rem;
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-style: normal;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+ 
+    /* ACHIEVEMENTS GRID */
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--stone-200);
+      border: 0.5px solid var(--stone-200);
+    }
+    .achievement-item {
+      background: var(--stone-50);
+      padding: 1.75rem;
+      position: relative;
+    }
+    .achievement-item.accent-bg {
+      background: var(--accent-bg);
+    }
+    .achievement-eyebrow {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-dim);
+      margin-bottom: 0.5rem;
+    }
+    .achievement-title {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+    }
+    .achievement-desc {
+      font-size: 0.8rem;
+      line-height: 1.75;
+      color: var(--stone-600);
+      font-weight: 300;
+    }
+ 
+    /* SKILLS / QUALITIES */
+    .qualities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--stone-200);
+      border: 0.5px solid var(--stone-200);
+    }
+    .quality-item {
+      background: var(--stone-50);
+      padding: 1.75rem;
+    }
+    .quality-title {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      margin-bottom: 0.6rem;
+    }
+    .quality-desc {
+      font-size: 0.8rem;
+      line-height: 1.75;
+      color: var(--stone-600);
+      font-weight: 300;
+    }
+ 
+    /* LOOKING FOR WORK CTA */
+    .cta-block {
+      background: var(--accent-bg);
+      border: 0.5px solid #c2d5c4;
+      padding: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+    .cta-heading {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      margin-bottom: 0.5rem;
+      line-height: 1.25;
+    }
+    .cta-heading em { font-style: italic; color: var(--accent); }
+    .cta-sub {
+      font-size: 0.85rem;
+      color: var(--stone-600);
+      font-weight: 300;
+      line-height: 1.7;
+      max-width: 50ch;
+    }
+ 
+    /* FAMILY NAV */
+    .family-nav-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--stone-200);
+      border: 0.5px solid var(--stone-200);
+    }
+    .family-nav-card {
+      background: var(--stone-50);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      padding: 1.75rem;
+      transition: background 0.2s;
+    }
+    .family-nav-card:hover { background: var(--stone-100); }
+    .family-nav-name {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      margin-bottom: 0.2rem;
+    }
+    .family-nav-role {
+      font-size: 0.75rem;
+      color: var(--stone-400);
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.85rem;
+    }
+    .family-nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+    }
+    .family-nav-link::after { content: '→'; font-size: 0.85rem; }
+    .family-nav-card:hover .family-nav-link { color: var(--slate-900); }
+ 
+    /* FOOTER */
+    footer {
+      border-top: 0.5px solid var(--stone-200);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy { font-size: 0.75rem; color: var(--stone-400); }
+    .footer-cats {
+      font-size: 0.75rem;
+      color: var(--stone-400);
+      font-style: italic;
+      font-family: var(--serif);
+    }
+ 
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { gap: 1.25rem; }
+      .page-header { padding: 2.5rem 1.5rem 2.5rem; grid-template-columns: 1fr; gap: 1.5rem; }
+      .page-header-photo { width: 140px; height: 140px; }
+      .section { padding: 3rem 1.5rem; }
+      .details-strip { grid-template-columns: repeat(2, 1fr); }
+      .detail-item:nth-child(2) { border-right: none; }
+      .detail-item:nth-child(3) { border-top: 0.5px solid var(--stone-200); }
+      .detail-item:nth-child(4) { border-top: 0.5px solid var(--stone-200); }
+      .achievements-grid { grid-template-columns: 1fr; }
+      .qualities-grid { grid-template-columns: 1fr; }
+      .cta-block { flex-direction: column; align-items: flex-start; }
+      .family-nav-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+ 
+  <nav>
+    <a class="nav-logo" href="/">The Thorntons</a>
+    <ul class="nav-links">
+      <li><a href="/rob/">Rob</a></li>
+      <li><a href="/jennifer/">Jennifer</a></li>
+      <li><a href="/natalie/" class="active">Natalie</a></li>
+      <li><a href="/kaitlyn/">Kaitlyn</a></li>
+    </ul>
+  </nav>
+ 
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <img class="page-header-photo" src="../images/natalie.jpg" alt="Natalie Thornton">
+    <div class="page-header-text">
+      <p class="page-header-eyebrow">Musician · Mentor · Mathematician</p>
+      <h1 class="page-header-name">Natalie<br><em>Thornton</em></h1>
+      <p class="page-header-tagline">Cairine Wilson Secondary School graduate heading to uOttawa for Honours Mathematics in September 2026 — with a clarinet case, a love of puzzles, and a few years of leading, organising, and showing up for people along the way.</p>
+      <div class="header-actions">
+        <a class="btn-primary" href="mailto:natalie@thethorntons.ca">Get in touch</a>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- BIO -->
+  <div class="section">
+    <p class="section-label">About</p>
+    <h2 class="section-heading">More than the<br><em>sum of her notes</em></h2>
+    <div class="bio-body">
+      <p>Natalie just wrapped up four years at Cairine Wilson Secondary School — years spent playing clarinet in two bands, mentoring Grade 9 students through a leadership course, organising concerts, running bake sales, and somehow still finding time to fall deeper in love with mathematics.</p>
+      <p>She's the kind of person who doesn't just participate — she helps make things happen. Whether that's arranging a video game piece for the year-end concert or making sure the ticket booth runs smoothly, she's learned that good organisation and genuine care for the people around you goes a long way.</p>
+      <p>This September she begins her Honours Bachelor of Mathematics at the University of Ottawa, ready to bring that same energy to a whole new chapter.</p>
+    </div>
+ 
+    <div class="pull-quote">
+      <p>"Curiosity got me into mathematics. Clarinet taught me how to practise. Four years of school events taught me everything else."</p>
+      <cite>— Natalie Thornton</cite>
+    </div>
+ 
+    <div class="details-strip">
+      <div class="detail-item">
+        <p class="detail-label">Graduating from</p>
+        <p class="detail-value">Cairine Wilson S.S.</p>
+      </div>
+      <div class="detail-item" style="padding-left: 1.5rem;">
+        <p class="detail-label">Heading to</p>
+        <p class="detail-value">uOttawa, Sept 2026</p>
+      </div>
+      <div class="detail-item" style="padding-left: 1.5rem;">
+        <p class="detail-label">Programme</p>
+        <p class="detail-value">Honours B.Math</p>
+      </div>
+      <div class="detail-item" style="padding-left: 1.5rem;">
+        <p class="detail-label">Based in</p>
+        <p class="detail-value">Orleans, ON</p>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- HIGHLIGHTS -->
+  <div class="section">
+    <p class="section-label">Highlights</p>
+    <h2 class="section-heading">Things worth<br><em>being proud of</em></h2>
+    <div class="achievements-grid">
+ 
+      <div class="achievement-item accent-bg">
+        <p class="achievement-eyebrow">Music · 2026 Ottawa Musicfest</p>
+        <p class="achievement-title">Silver Medal — CW Concert Band</p>
+        <p class="achievement-desc">Member of the Cairine Wilson Concert Band that earned a silver placement at the 2026 Ottawa Musicfest. Competing at a festival alongside bands from across the region, the result was a testament to the group's commitment through a full year of rehearsal.</p>
+      </div>
+ 
+      <div class="achievement-item">
+        <p class="achievement-eyebrow">Music · Year-End Concert</p>
+        <p class="achievement-title">Arranged "BB's Song" for Graduate Performance</p>
+        <p class="achievement-desc">For the CW year-end concert, Natalie arranged <em>BB's Song</em> from the video game <em>Death Stranding</em> as the graduate performance piece — bringing a piece of music she loved into a format the full band could perform together as a send-off.</p>
+      </div>
+ 
+      <div class="achievement-item">
+        <p class="achievement-eyebrow">Jazz Band</p>
+        <p class="achievement-title">Clarinetist, CW Jazz &amp; Concert Bands</p>
+        <p class="achievement-desc">Four years of active membership in both the CW Concert Band and Jazz Band — performing across a wide range of styles and repertoire, and developing the discipline and ensemble awareness that only comes from playing alongside others week after week.</p>
+      </div>
+ 
+      <div class="achievement-item">
+        <p class="achievement-eyebrow">Leadership · Grade 12</p>
+        <p class="achievement-title">Link Crew — Mentoring Grade 9 Students</p>
+        <p class="achievement-desc">Completed Link, a Grade 12 leadership course built around supporting incoming Grade 9 students as they transition into high school. Natalie served as a mentor, helping new students navigate routines, find their footing, and feel genuinely welcome from day one.</p>
+      </div>
+ 
+      <div class="achievement-item">
+        <p class="achievement-eyebrow">Event Organisation</p>
+        <p class="achievement-title">Band Concerts &amp; Bake Sale Coordinator</p>
+        <p class="achievement-desc">Played an active role organising multiple band concerts and events — from logistics and promotion through to ticket sales and running bake sales. The kind of work that's invisible when it goes right and only noticed when it doesn't.</p>
+      </div>
+ 
+      <div class="achievement-item accent-bg">
+        <p class="achievement-eyebrow">Academia · Accepted 2026</p>
+        <p class="achievement-title">Honours Bachelor of Mathematics, uOttawa</p>
+        <p class="achievement-desc">Accepted into the Honours Bachelor of Mathematics programme at the University of Ottawa, beginning September 2026. A natural next step for someone who has always found as much satisfaction in an elegant proof as in a well-played phrase.</p>
+      </div>
+ 
+    </div>
+  </div>
+ 
+  <!-- SKILLS / QUALITIES -->
+  <div class="section">
+    <p class="section-label">What I bring</p>
+    <h2 class="section-heading">Skills built in<br><em>the real world</em></h2>
+    <div class="qualities-grid">
+ 
+      <div class="quality-item">
+        <p class="quality-title">Organisation &amp; Event Planning</p>
+        <p class="quality-desc">Planned and delivered multiple school events from the ground up — coordinating logistics, managing ticket sales, handling promotion, and keeping things moving on the day. Good at seeing what needs doing before being asked.</p>
+      </div>
+ 
+      <div class="quality-item">
+        <p class="quality-title">Mentorship &amp; Peer Support</p>
+        <p class="quality-desc">Genuinely enjoys helping people find their feet. Through Link and the wider school community, Natalie has practised meeting people where they are — patient, encouraging, and good at making others feel like they belong.</p>
+      </div>
+ 
+      <div class="quality-item">
+        <p class="quality-title">Analytical Thinking</p>
+        <p class="quality-desc">A mathematical mind that enjoys working through problems carefully and logically. Comfortable sitting with a hard question long enough to actually understand it rather than reaching for the nearest shortcut.</p>
+      </div>
+ 
+      <div class="quality-item">
+        <p class="quality-title">Creativity &amp; Arrangement</p>
+        <p class="quality-desc">Arranging <em>BB's Song</em> for a full concert band from scratch required listening, musical intuition, and a lot of patience with notation software. Natalie approaches creative problems with the same methodical curiosity she brings to mathematics.</p>
+      </div>
+ 
+      <div class="quality-item">
+        <p class="quality-title">Teamwork &amp; Ensemble Skills</p>
+        <p class="quality-desc">Years of band have made listening a reflex. Playing in an ensemble means constant awareness of the people around you — when to lead, when to follow, and how to make the whole sound better than the parts.</p>
+      </div>
+ 
+      <div class="quality-item">
+        <p class="quality-title">Reliability &amp; Follow-through</p>
+        <p class="quality-desc">The kind of person who signs up for something and then actually does it. Bake sales get baked for. Concerts get organised. New students get met at the door. Natalie takes commitments seriously and sees them through.</p>
+      </div>
+ 
+    </div>
+  </div>
+ 
+  <!-- LOOKING FOR SUMMER WORK CTA -->
+  <div class="section" style="padding-top: 0; padding-bottom: 4rem;">
+    <div class="cta-block">
+      <div>
+        <h3 class="cta-heading">Open to<br><em>summer opportunities</em></h3>
+        <p class="cta-sub">Before the first lecture at uOttawa, Natalie is looking for a summer role where she can put her organisational, people, and analytical skills to work. If you think she'd be a good fit for your team, she'd love to hear from you.</p>
+      </div>
+      <a class="btn-primary" href="mailto:natalie@thethorntons.ca" style="white-space: nowrap;">
+        Get in touch →
+      </a>
+    </div>
+  </div>
+ 
+  <!-- REST OF FAMILY -->
+  <div class="section" style="border-top: 0.5px solid var(--stone-200);">
+    <p class="section-label">The rest of the family</p>
+    <div class="family-nav-grid">
+      <a class="family-nav-card" href="/rob/">
+        <p class="family-nav-name">Rob Thornton</p>
+        <p class="family-nav-role">Senior Software Developer</p>
+        <span class="family-nav-link">View profile</span>
+      </a>
+      <a class="family-nav-card" href="/jennifer/">
+        <p class="family-nav-name">Jennifer Thornton</p>
+        <p class="family-nav-role">Senior Fraud Operations Analyst</p>
+        <span class="family-nav-link">View profile</span>
+      </a>
+      <a class="family-nav-card" href="/kaitlyn/">
+        <p class="family-nav-name">Kaitlyn Thornton</p>
+        <p class="family-nav-role">Artist &amp; Animator</p>
+        <span class="family-nav-link">View profile</span>
+      </a>
+    </div>
+  </div>
+ 
+  <footer>
+    <p class="footer-copy">&copy; 2025 The Thorntons &middot; thethorntons.ca</p>
+    <p class="footer-cats">Supervised by Khaleesi &amp; Luna</p>
+  </footer>
+ 
+</body>
+</html>
