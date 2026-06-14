@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Platform Integrity Agent — Jennifer Thornton</title>
+<meta name="description" content="Case study: Platform Integrity Investigation Agent — an AI-powered fraud investigation system built by Jennifer Thornton at Benevity." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+<style>
+  /* ─────────────────────────────────────────
+     THORNTON SITE TOKENS
+  ───────────────────────────────────────── */
+  :root {
+    --stone-50:  #F8F6F1;
+    --stone-100: #EDE9E0;
+    --stone-200: #D6CFC2;
+    --stone-400: #A89F8F;
+    --stone-600: #6B6256;
+    --stone-800: #3A332A;
+    --slate-900: #1C1C1E;
+    --serif: 'EB Garamond', Georgia, serif;
+    --sans:  'Inter', system-ui, sans-serif;
+
+    /* Agent mockup tokens — kept exactly as authored */
+    --bg: #F8F9FB;
+    --bg-card: #FFFFFF;
+    --bg-raised: #F1F3F7;
+    --border: #E2E6ED;
+    --border-mid: #D0D6E0;
+    --text-primary: #111827;
+    --text-secondary: #5A6478;
+    --text-muted: #9AA3B2;
+    --accent: #2563EB;
+    --accent-dim: #DBEAFE;
+    --accent-glow: rgba(37,99,235,0.08);
+    --red: #DC2626;
+    --red-dim: #FEE2E2;
+    --orange: #EA580C;
+    --orange-dim: #FFEDD5;
+    --yellow: #CA8A04;
+    --yellow-dim: #FEF9C3;
+    --green: #16A34A;
+    --green-dim: #DCFCE7;
+    --mono: 'JetBrains Mono', monospace;
+    --radius: 8px;
+    --radius-lg: 12px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    background-color: var(--stone-50);
+    color: var(--slate-900);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ─────────────────────────────────────────
+     NAV — Thornton style
+  ───────────────────────────────────────── */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    border-bottom: 0.5px solid var(--stone-200);
+    background: var(--stone-50);
+    position: sticky;
+    top: 0;
+    z-index: 200;
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--slate-900);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--stone-600);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--slate-900); }
+  .nav-links a.active { color: var(--slate-900); }
+
+  /* ─────────────────────────────────────────
+     PAGE HEADER — Thornton style
+  ───────────────────────────────────────── */
+  .page-header-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 3rem 3rem;
+    border-bottom: 0.5px solid var(--stone-200);
+  }
+  .breadcrumb {
+    font-size: 0.72rem;
+    color: var(--stone-400);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .breadcrumb a { color: var(--stone-400); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--slate-900); }
+  .breadcrumb span { color: var(--stone-200); }
+  .page-title {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--slate-900);
+    margin-bottom: 1rem;
+  }
+  .page-title em { font-style: italic; color: var(--stone-600); }
+  .page-intro {
+    font-size: 0.9rem;
+    line-height: 1.85;
+    color: var(--stone-600);
+    font-weight: 300;
+    max-width: 65ch;
+    margin-bottom: 1.5rem;
+  }
+  .header-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .header-tag {
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: var(--stone-600);
+    border: 0.5px solid var(--stone-200);
+    padding: 0.3rem 0.65rem;
+    background: var(--stone-50);
+  }
+
+  /* ─────────────────────────────────────────
+     ORIGIN / CONTEXT — Thornton style wrapper
+     (text sections between screens)
+  ───────────────────────────────────────── */
+  .thornton-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 3rem;
+    border-bottom: 0.5px solid var(--stone-200);
+  }
+  .thornton-section + .thornton-section {
+    border-top: none;
+  }
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+    margin-bottom: 1.5rem;
+  }
+  .section-heading {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--slate-900);
+    margin-bottom: 1.25rem;
+  }
+  .section-heading em { font-style: italic; color: var(--stone-600); }
+  .origin-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 3rem;
+  }
+  .origin-col-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+    margin-bottom: 0.6rem;
+  }
+  .origin-col-heading {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--slate-900);
+    margin-bottom: 0.85rem;
+    line-height: 1.25;
+  }
+  .origin-col-body {
+    font-size: 0.88rem;
+    color: var(--stone-600);
+    line-height: 1.9;
+    font-weight: 300;
+  }
+  .origin-col-body p + p { margin-top: 0.85rem; }
+
+  /* Stats strip */
+  .stats-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 0.5px solid var(--stone-200);
+    background: var(--stone-100);
+  }
+  .stat-item {
+    padding: 1.75rem 1.5rem;
+    border-right: 0.5px solid var(--stone-200);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 2.4rem;
+    font-weight: 400;
+    color: var(--slate-900);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--stone-600);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  /* ─────────────────────────────────────────
+     SCREEN WRAPPER — sits inside Thornton layout
+  ───────────────────────────────────────── */
+  .screen-section {
+    background: var(--stone-100);
+    border-top: 0.5px solid var(--stone-200);
+    border-bottom: 0.5px solid var(--stone-200);
+    padding: 3rem 0 3.5rem;
+  }
+  .screen-section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 3rem;
+  }
+  .screen-section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  .screen-num {
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--stone-400);
+  }
+  .screen-title {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--slate-900);
+  }
+  .screen-desc {
+    font-size: 0.78rem;
+    color: var(--stone-400);
+    font-weight: 300;
+    margin-left: auto;
+  }
+
+  /* ─────────────────────────────────────────
+     AGENT MOCKUP — all styles kept exactly
+     as originally authored by Jennifer
+  ───────────────────────────────────────── */
+  .screen {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+  }
+  .screen-chrome {
+    background: var(--bg-raised);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .chrome-dots { display: flex; gap: 5px; }
+  .chrome-dots span { width: 10px; height: 10px; border-radius: 50%; }
+  .chrome-dots span:nth-child(1) { background: #EF4444; }
+  .chrome-dots span:nth-child(2) { background: #EAB308; }
+  .chrome-dots span:nth-child(3) { background: #22C55E; }
+  .chrome-url {
+    flex: 1;
+    background: var(--bg);
+    border-radius: 5px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--text-muted);
+    margin: 0 8px;
+  }
+  .screen-inner { padding: 24px; }
+
+  /* Annotation system — kept exactly */
+  .annotated { position: relative; }
+  .annotated::after {
+    content: attr(data-badge);
+    position: absolute;
+    top: -10px;
+    right: -4px;
+    background: #0D9488;
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 2px 8px 2px 6px;
+    border-radius: 999px;
+    white-space: nowrap;
+    cursor: default;
+    z-index: 10;
+    box-shadow: 0 1px 4px rgba(13,148,136,0.25);
+    transition: background 0.15s;
+  }
+  .annotated:hover::after { background: #0F766E; }
+  .annotation-tooltip {
+    display: none;
+    position: absolute;
+    top: -10px;
+    right: 0;
+    transform: translateX(calc(-100% - 12px));
+    width: 340px;
+    background: #F0FDFA;
+    border: 1px solid #99F6E4;
+    border-left: 3px solid #0D9488;
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    z-index: 100;
+    box-shadow: 0 8px 24px rgba(13,148,136,0.12), 0 2px 8px rgba(0,0,0,0.08);
+    pointer-events: none;
+  }
+  .annotated:hover .annotation-tooltip { display: block; }
+  .annotation-tooltip { pointer-events: auto; }
+  .annotation-tip-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .annotation-tip-icon {
+    width: 24px; height: 24px;
+    border-radius: 5px;
+    background: #CCFBF1;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 13px;
+    color: #0D9488;
+  }
+  .annotation-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #0F766E;
+  }
+  .annotation-text {
+    font-size: 12px;
+    color: #134E4A;
+    line-height: 1.65;
+  }
+  .annotation-text strong { color: #042F2E; font-weight: 500; }
+
+  /* UI components — kept exactly */
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px; padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .topbar-left { display: flex; align-items: center; gap: 10px; }
+  .topbar-left h2 { font-size: 14px; font-weight: 500; font-family: var(--sans); }
+  .case-id {
+    font-size: 11px; color: var(--text-secondary);
+    background: var(--bg-raised); padding: 3px 8px;
+    border-radius: 5px; border: 1px solid var(--border);
+    font-family: var(--mono);
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 5px;
+    font-family: var(--sans);
+  }
+  .badge-red { background: var(--red-dim); color: var(--red); }
+  .badge-orange { background: var(--orange-dim); color: var(--orange); }
+  .badge-yellow { background: var(--yellow-dim); color: var(--yellow); }
+  .badge-green { background: var(--green-dim); color: var(--green); }
+  .badge-blue { background: var(--accent-dim); color: var(--accent); }
+  .badge-gray { background: var(--bg-raised); color: var(--text-secondary); border: 1px solid var(--border); }
+  .badge-pulse { background: var(--accent-dim); color: var(--accent); animation: pulse 1.6s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+  .ui-card {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .sec-title {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--text-muted);
+    margin-bottom: 10px; font-family: var(--sans);
+  }
+  .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+  .meta-item label { font-size: 10px; color: var(--text-secondary); display: block; margin-bottom: 2px; }
+  .meta-item span { font-size: 13px; font-weight: 500; }
+  .risk-banner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px; border-radius: var(--radius);
+    border: 1px solid #FECACA; background: var(--red-dim); margin-bottom: 12px;
+  }
+  .risk-left { display: flex; align-items: center; gap: 12px; }
+  .risk-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--red); flex-shrink: 0; box-shadow: 0 0 6px rgba(220,38,38,0.3); }
+  .risk-label { font-size: 13px; font-weight: 600; color: var(--red); }
+  .risk-sub { font-size: 11px; color: #B91C1C; }
+  .risk-action-label { font-size: 10px; color: #B91C1C; margin-bottom: 2px; text-align: right; }
+  .risk-action-value { font-size: 13px; font-weight: 500; color: var(--red); }
+  .score-track {
+    height: 5px; border-radius: 3px;
+    background: linear-gradient(90deg, var(--green) 0%, var(--yellow) 35%, var(--orange) 65%, var(--red) 100%);
+    position: relative; margin-bottom: 4px;
+  }
+  .score-marker {
+    position: absolute; top: -4px;
+    width: 13px; height: 13px; border-radius: 50%;
+    background: var(--red); border: 2px solid var(--bg-raised);
+    left: 78%; transform: translateX(-50%);
+    box-shadow: 0 0 6px var(--red);
+  }
+  .score-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--text-muted); }
+  .stage-list { display: flex; flex-direction: column; }
+  .stage { display: flex; gap: 0; }
+  .stage-connector { display: flex; flex-direction: column; align-items: center; margin-right: 12px; }
+  .sdot {
+    width: 26px; height: 26px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; flex-shrink: 0;
+  }
+  .sdot-done { background: var(--accent); color: white; }
+  .sdot-active { background: var(--accent-dim); color: var(--accent); border: 2px solid var(--accent); animation: pulse 1.6s infinite; }
+  .sdot-pending { background: var(--bg); color: var(--text-muted); border: 1px solid var(--border); }
+  .sline { width: 1.5px; flex: 1; min-height: 10px; }
+  .sline-done { background: var(--accent); }
+  .sline-pending { background: var(--border); }
+  .sbody { flex: 1; padding-bottom: 16px; padding-top: 2px; }
+  .sname { font-size: 13px; font-weight: 500; margin-bottom: 2px; font-family: var(--sans); }
+  .sname-active { color: var(--accent); }
+  .sname-pending { color: var(--text-muted); }
+  .smeta { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; }
+  .sfinding {
+    font-size: 12px; line-height: 1.6;
+    background: var(--bg); padding: 8px 10px;
+    border-radius: 6px; border-left: 2px solid var(--accent);
+    color: var(--text-secondary);
+  }
+  .sfinding-red { border-left-color: var(--red); }
+  .sfinding-orange { border-left-color: var(--orange); }
+  .source-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+  .stag {
+    font-size: 10px; background: var(--bg); border: 1px solid var(--border);
+    padding: 2px 6px; border-radius: 4px; color: var(--text-muted);
+    font-family: var(--mono);
+  }
+  .active-query {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; font-family: var(--mono); color: var(--accent);
+    background: var(--accent-dim); border-radius: 5px;
+    padding: 6px 10px; margin-bottom: 6px;
+  }
+  .spinner {
+    width: 10px; height: 10px; border-radius: 50%;
+    border: 1.5px solid var(--accent); border-top-color: transparent;
+    animation: spin 0.7s linear infinite; flex-shrink: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .pending-stage { font-size: 12px; color: var(--text-muted); font-style: italic; padding: 3px 0; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field.full { grid-column: 1 / -1; }
+  .field label { font-size: 10px; color: var(--text-secondary); font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; font-family: var(--sans); }
+  .field input, .field select, .field textarea {
+    font-size: 13px; padding: 7px 10px;
+    border: 1px solid var(--border-mid);
+    border-radius: 6px;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--sans);
+    outline: none;
+  }
+  .field textarea { resize: vertical; min-height: 70px; }
+  .radio-group { display: flex; gap: 6px; flex-wrap: wrap; }
+  .rchip {
+    font-size: 12px; padding: 4px 10px;
+    border-radius: 999px; border: 1px solid var(--border-mid);
+    background: var(--bg); color: var(--text-secondary); cursor: pointer;
+  }
+  .rchip.on { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); font-weight: 500; }
+  .upload-zone {
+    border: 1px dashed var(--border-mid); border-radius: var(--radius);
+    padding: 20px; text-align: center; background: var(--bg); cursor: pointer;
+  }
+  .upload-zone i { font-size: 22px; color: var(--text-muted); display: block; margin-bottom: 4px; }
+  .upload-label { font-size: 13px; font-weight: 500; }
+  .upload-hint { font-size: 11px; color: var(--text-muted); }
+  .attached {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 6px; padding: 8px 10px; margin-top: 8px;
+    font-size: 12px;
+  }
+  .attached i { color: var(--green); }
+  .checkbox-group { display: flex; flex-direction: column; gap: 7px; }
+  .cbox { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-secondary); }
+  .cbox input { accent-color: var(--accent); width: 13px; height: 13px; }
+  .pipeline-preview { display: flex; align-items: center; flex-wrap: wrap; gap: 0; margin-top: 10px; }
+  .pchip {
+    font-size: 11px; background: var(--bg); border: 1px solid var(--border);
+    border-radius: 5px; padding: 4px 8px; color: var(--text-secondary);
+  }
+  .parrow { font-size: 11px; color: var(--text-muted); margin: 0 4px; }
+  .selfcert-check {
+    font-size: 12px; background: var(--orange-dim);
+    border-left: 2px solid var(--orange);
+    border-radius: 5px; padding: 8px 10px;
+    color: #9A3412; line-height: 1.6; margin-top: 8px;
+  }
+  .flag-row {
+    display: flex; align-items: flex-start; gap: 8px;
+    background: var(--bg); border-radius: 6px;
+    padding: 8px 10px; margin-bottom: 6px;
+    font-size: 12px; color: var(--text-secondary); line-height: 1.5;
+  }
+  .flag-row i { color: var(--orange); margin-top: 1px; flex-shrink: 0; }
+  .txn-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-bottom: 12px; }
+  .txn-stat { background: var(--bg); border-radius: 6px; padding: 10px; }
+  .txn-stat label { font-size: 10px; color: var(--text-secondary); display: block; margin-bottom: 3px; }
+  .txn-stat span { font-size: 16px; font-weight: 600; }
+  .anomaly { display: flex; align-items: flex-start; gap: 6px; font-size: 12px; color: var(--text-secondary); margin-bottom: 5px; }
+  .anomaly i { color: var(--orange); font-size: 13px; margin-top: 1px; }
+  .esc-box {
+    border: 1px solid #FECACA; background: var(--red-dim);
+    border-radius: var(--radius); padding: 12px 14px;
+  }
+  .esc-title { font-size: 13px; font-weight: 500; color: var(--red); margin-bottom: 4px; font-family: var(--sans); }
+  .esc-body { font-size: 12px; color: #B91C1C; line-height: 1.6; }
+  .signoff-box {
+    border: 1px solid var(--border-mid); background: var(--bg);
+    border-radius: var(--radius); padding: 14px 16px;
+  }
+  .avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--accent-dim); display: flex; align-items: center;
+    justify-content: center; font-size: 11px; font-weight: 600; color: var(--accent);
+  }
+  .btn {
+    font-size: 12px; padding: 7px 14px;
+    border-radius: 6px; border: 1px solid var(--border-mid);
+    background: transparent; color: var(--text-secondary);
+    cursor: pointer; font-family: var(--sans);
+  }
+  .btn-agent-primary {
+    background: var(--accent); color: white;
+    border-color: var(--accent); font-weight: 500;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .btn-danger { background: var(--red-dim); color: var(--red); border-color: #FECACA; }
+  .ui-divider { height: 1px; background: var(--border); margin: 12px 0; }
+
+  /* ─────────────────────────────────────────
+     BACK LINK & FOOTER — Thornton style
+  ───────────────────────────────────────── */
+  .back-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem;
+    border-bottom: 0.5px solid var(--stone-200);
+  }
+  .back-link {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: color 0.2s;
+  }
+  .back-link::before { content: '←'; font-size: 0.85rem; }
+  .back-link:hover { color: var(--slate-900); }
+
+  footer {
+    border-top: 0.5px solid var(--stone-200);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-copy { font-size: 0.75rem; color: var(--stone-400); }
+  .footer-note { font-size: 0.75rem; color: var(--stone-400); font-style: italic; font-family: var(--serif); }
+
+  /* ─────────────────────────────────────────
+     RESPONSIVE
+  ───────────────────────────────────────── */
+  @media (max-width: 768px) {
+    nav { padding: 1.25rem 1.5rem; }
+    .nav-links { gap: 1.25rem; }
+    .page-header-section { padding: 2.5rem 1.5rem; }
+    .thornton-section { padding: 3rem 1.5rem; }
+    .screen-section-inner { padding: 0 1.5rem; }
+    .origin-two-col { grid-template-columns: 1fr; gap: 2rem; }
+    .stats-strip { grid-template-columns: repeat(2, 1fr); }
+    .stat-item:nth-child(2) { border-right: none; }
+    .stat-item:nth-child(3) { border-top: 0.5px solid var(--stone-200); }
+    .stat-item:nth-child(4) { border-top: 0.5px solid var(--stone-200); border-right: none; }
+    .back-section { padding: 2rem 1.5rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    .txn-grid { grid-template-columns: repeat(2, 1fr); }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-grid-3 { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .nav-links { gap: 1rem; }
+    .nav-links a { font-size: 0.7rem; }
+    .screen-section-header { flex-wrap: wrap; }
+    .screen-desc { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <a class="nav-logo" href="/">The Thorntons</a>
+  <ul class="nav-links">
+    <li><a href="/rob/">Rob</a></li>
+    <li><a href="/jennifer/" class="active">Jennifer</a></li>
+    <li><a href="/natalie/">Natalie</a></li>
+    <li><a href="/kaitlyn/">Kaitlyn</a></li>
+  </ul>
+</nav>
+
+<!-- ─── PAGE HEADER ─── -->
+<div class="page-header-section">
+  <p class="breadcrumb">
+    <a href="/jennifer/">Jennifer Thornton</a>
+    <span>/</span>
+    <a href="/jennifer/portfolio/">Portfolio</a>
+    <span>/</span>
+    Platform Integrity Agent
+  </p>
+  <h1 class="page-title">Platform Integrity<br><em>Investigation Agent</em></h1>
+  <p class="page-intro">An end-to-end AI-powered investigation system built to detect NPO fraud, match harvesting, and donation abuse in the corporate social responsibility space. Designed, built, and deployed as a team of one.</p>
+  <div class="header-tags">
+    <span class="header-tag">Claude API</span>
+    <span class="header-tag">Agentic AI</span>
+    <span class="header-tag">OSINT</span>
+    <span class="header-tag">Fraud Operations</span>
+    <span class="header-tag">Risk Scoring</span>
+    <span class="header-tag">CSR / Nonprofit</span>
+    <span class="header-tag">Human-in-the-loop</span>
+  </div>
+</div>
+
+<!-- ─── ORIGIN STORY ─── -->
+<div class="thornton-section">
+  <p class="section-label">Background</p>
+  <div class="origin-two-col">
+    <div>
+      <p class="origin-col-label">The problem</p>
+      <h2 class="origin-col-heading">Built from scratch, as a team of one</h2>
+      <div class="origin-col-body">
+        <p>When I joined Benevity as their first Senior Fraud Operations Analyst in January 2026, there was no fraud program, no tooling, and no playbook. Benevity operates at the intersection of corporate clients, their employees as donors, and the nonprofits receiving funds — a uniquely complex ecosystem where fraud can hide in plain sight.</p>
+        <p>Data was fragmented across systems with no active monitoring. I was being asked to determine whether NPOs were legitimate and whether donations were fraudulent. Manually. With no structured process and no dedicated tools.</p>
+      </div>
+    </div>
+    <div>
+      <p class="origin-col-label">The solution</p>
+      <h2 class="origin-col-heading">An end-to-end investigation agent</h2>
+      <div class="origin-col-body">
+        <p>I started by learning the CSR fraud landscape: match harvesting, impossible volunteer hours, conflict of interest, shell NPOs. From there I built a risk-based scoring framework from first principles, a multi-stage OSINT prompt using AI web search, a forensic data analysis prompt for transaction patterns, and a set of platform integrity guidelines to make every decision consistent and defensible.</p>
+        <p>Once I had access to Claude, I unified everything into a single agentic pipeline: structured case intake, CSV pre-processing for anomaly detection, 7-stage OSINT investigation, AI-powered risk scoring, escalation logic, and human analyst sign-off. All in one tool.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-strip">
+    <div class="stat-item">
+      <div class="stat-num">7</div>
+      <div class="stat-label">OSINT stages per investigation</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">4</div>
+      <div class="stat-label">Risk tiers with mapped actions</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">1</div>
+      <div class="stat-label">Analyst. No prior tooling. Built this.</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">0→</div>
+      <div class="stat-label">Fraud program built from the ground up</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SCREEN 1: CASE INTAKE
+═══════════════════════════════════════ -->
+<div class="screen-section">
+  <div class="screen-section-inner">
+    <div class="screen-section-header">
+      <span class="screen-num">01</span>
+      <span class="screen-title">Case intake</span>
+      <span class="screen-desc">Structured input triggers the agent pipeline</span>
+    </div>
+
+    <div class="screen">
+      <div class="screen-chrome">
+        <div class="chrome-dots"><span></span><span></span><span></span></div>
+        <div class="chrome-url">platform-integrity / investigations / new</div>
+      </div>
+      <div class="screen-inner">
+
+        <div class="topbar">
+          <div class="topbar-left">
+            <i class="ti ti-file-plus" style="color:var(--text-secondary);"></i>
+            <h2>New Investigation: Case Intake</h2>
+          </div>
+          <span class="badge badge-gray">Draft</span>
+        </div>
+
+        <!-- NPO info -->
+        <div class="sec-title">NPO information</div>
+        <div class="ui-card annotated" data-badge="✦ Design note" style="position:relative;">
+          <div class="form-grid" style="margin-bottom:12px;">
+            <div class="field"><label>Organization name</label><input value="Bright Futures Foundation" /></div>
+            <div class="field"><label>EIN / Tax ID</label><input value="47-2831940" /></div>
+            <div class="field"><label>Country</label><select><option>United States</option></select></div>
+            <div class="field"><label>State / Province</label><input value="Arizona" /></div>
+            <div class="field"><label>Registered address</label><input value="4821 W Camelback Rd, Phoenix, AZ 85031" /></div>
+            <div class="field"><label>Primary contact email</label><input value="admin@brightfuturesfnd.org" /></div>
+          </div>
+          <div class="form-grid-3">
+            <div class="field"><label>Website</label><input value="brightfuturesfnd.org" /></div>
+            <div class="field"><label>LinkedIn</label><input placeholder="linkedin.com/company/..." /></div>
+            <div class="field"><label>Other social</label><input placeholder="Facebook, Instagram, X..." /></div>
+          </div>
+          <div class="annotation-tooltip">
+            <div class="annotation-tip-header"><div class="annotation-tip-icon"><i class="ti ti-building"></i></div><span class="annotation-label">Intake form: built for the agent's needs</span></div>
+            <div class="annotation-text">Every field maps directly to what the OSINT pipeline needs to operate. EIN feeds stage 1 (legal status), website and social links feed stage 4 (digital presence), address feeds stage 2 (governance). <strong>No field is decorative</strong> — each one is a structured input for a downstream agent prompt.</div>
+          </div>
+        </div>
+
+        <!-- Case context -->
+        <div class="sec-title" style="margin-top:4px;">Case context</div>
+        <div class="ui-card">
+          <div class="form-grid" style="margin-bottom:12px;">
+            <div class="field"><label>Corporate client</label><input value="Meridian Technologies" /></div>
+            <div class="field"><label>Investigation type</label><select><option>NPO legitimacy + donation fraud</option></select></div>
+            <div class="field full"><label>Reason for investigation</label><textarea>Unusual donation pattern flagged: 89% of transactions at $25 minimum match threshold. High velocity spike across 3-day window. 11 of 14 donors share corporate email domain. Referred by compliance team.</textarea></div>
+          </div>
+          <div class="field annotated" style="margin-bottom:12px;position:relative;" data-badge="✦ Design note">
+            <label>Fraud type indicators</label>
+            <div class="radio-group" style="margin-top:6px;">
+              <span class="rchip on">Match harvesting</span>
+              <span class="rchip on">Impossible volunteer hours</span>
+              <span class="rchip">Account takeover</span>
+              <span class="rchip">Identity fraud</span>
+              <span class="rchip">Conflict of interest</span>
+              <span class="rchip">Shell NPO</span>
+              <span class="rchip">Terms of use violation</span>
+            </div>
+            <div class="annotation-tooltip">
+              <div class="annotation-tip-header"><div class="annotation-tip-icon"><i class="ti ti-tags"></i></div><span class="annotation-label">Why fraud type tags matter</span></div>
+              <div class="annotation-text">CSR fraud isn't one-size-fits-all. <strong>Match harvesting</strong> looks completely different from <strong>impossible volunteer hours</strong> or a <strong>shell NPO</strong>. Tagging the suspected type upfront lets the agent weight its analysis toward the right risk indicators, and makes the output more defensible when escalating to leadership.</div>
+            </div>
+          </div>
+          <div class="field">
+            <label>Priority</label>
+            <div class="radio-group" style="margin-top:6px;">
+              <span class="rchip">Low</span><span class="rchip on">Medium</span><span class="rchip">High</span><span class="rchip">Urgent</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data inputs -->
+        <div class="sec-title" style="margin-top:4px;">Data inputs</div>
+        <div class="ui-card">
+          <div class="field" style="margin-bottom:14px;">
+            <label>Transaction data (CSV export from platform)</label>
+            <div class="upload-zone">
+              <i class="ti ti-upload"></i>
+              <div class="upload-label">Drop CSV file or click to upload</div>
+              <div class="upload-hint">Accepts .csv, .xlsx. Max 50MB.</div>
+            </div>
+            <div class="attached">
+              <i class="ti ti-file-spreadsheet"></i>
+              <span>meridian_brightfutures_txns_Q1Q2_2024.csv &nbsp;·&nbsp; 312 rows &nbsp;·&nbsp; 2.1MB</span>
+            </div>
+          </div>
+          <div class="ui-divider"></div>
+
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;">Transaction analysis</div>
+
+          <div class="ui-card annotated" style="margin-bottom:14px;position:relative;" data-badge="✦ Architecture note">
+            <div class="annotation-tooltip">
+              <div class="annotation-tip-header"><div class="annotation-tip-icon"><i class="ti ti-table-import"></i></div><span class="annotation-label">CSV pre-processing: optimised for speed and cost</span></div>
+              <div class="annotation-text">The agent doesn't pass raw transaction rows to the AI. It <strong>pre-processes the CSV first</strong>, computing donation velocity, threshold clustering, donor diversity, and timing patterns, then feeds only the derived signals into the forensic analysis. This reduces token usage significantly and speeds up the pipeline while improving accuracy.</div>
+            </div>
+            <div class="txn-grid">
+              <div class="txn-stat"><label>Total donations</label><span>$24,180</span></div>
+              <div class="txn-stat"><label>Transactions</label><span>312</span></div>
+              <div class="txn-stat"><label>Unique donors</label><span style="color:var(--red);">14</span></div>
+              <div class="txn-stat"><label>Match ratio</label><span style="color:var(--red);">4.2×</span></div>
+            </div>
+            <div class="ui-divider"></div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;">Anomalies detected</div>
+            <div class="anomaly"><i class="ti ti-alert-circle"></i>89% of donations are $25, consistent with match harvesting at minimum threshold</div>
+            <div class="anomaly"><i class="ti ti-alert-circle"></i>11 of 14 donors share corporate email domain (meridian.com)</div>
+            <div class="anomaly"><i class="ti ti-alert-circle"></i>Donation velocity spike: 140 transactions in a 72-hour window (Apr 3–5)</div>
+            <div class="anomaly"><i class="ti ti-alert-circle"></i>No recurring donors; all one-time gifts with no follow-on engagement</div>
+            <div class="anomaly"><i class="ti ti-alert-circle"></i>Self-certified volunteer hours (480 hrs) inconsistent with 14-donor base</div>
+          </div>
+
+          <div class="ui-divider"></div>
+          <div class="field" style="margin-bottom:14px;">
+            <label>Self-certification response</label>
+            <textarea>Q: Describe your primary programs and beneficiaries.
+A: We provide after-school tutoring and meals to underprivileged youth in the Phoenix metro area, serving approximately 200 children weekly.
+
+Q: How are donated funds allocated?
+A: 70% program delivery, 20% operations, 10% fundraising.</textarea>
+            <div class="selfcert-check annotated" style="position:relative;" data-badge="✦ Design note">
+              <strong>Auto-check:</strong> Board member "Maria Holden" shares surname with Chair, flagging a potential conflict of interest. Volunteer hours claimed (480 hrs) inconsistent with 14-donor base. Will be flagged in analysis.
+              <div class="annotation-tooltip">
+                <div class="annotation-tip-header"><div class="annotation-tip-icon"><i class="ti ti-robot"></i></div><span class="annotation-label">Pre-processing before the agent runs</span></div>
+                <div class="annotation-text">The self-cert auto-check runs <strong>before</strong> the main agent. It does lightweight pattern matching that catches obvious red flags instantly (name overlaps, implausible numbers), so the OSINT pipeline starts with context already flagged rather than discovering conflicts mid-investigation.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agent config -->
+        <div class="sec-title" style="margin-top:4px;">Agent configuration</div>
+        <div class="ui-card annotated" data-badge="✦ Design note" style="position:relative;">
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">OSINT stages to run</div>
+          <div class="checkbox-group" style="margin-bottom:14px;">
+            <label class="cbox"><input type="checkbox" checked /> Legal &amp; regulatory status</label>
+            <label class="cbox"><input type="checkbox" checked /> Governance &amp; leadership</label>
+            <label class="cbox"><input type="checkbox" checked /> Adverse media</label>
+            <label class="cbox"><input type="checkbox" checked /> Digital &amp; web presence</label>
+            <label class="cbox"><input type="checkbox" checked /> Program &amp; impact verification</label>
+            <label class="cbox"><input type="checkbox" checked /> Financial &amp; funding transparency</label>
+            <label class="cbox"><input type="checkbox" checked /> Conflict of interest &amp; network analysis</label>
+          </div>
+          <div class="ui-divider"></div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;">Full pipeline</div>
+          <div class="pipeline-preview">
+            <span class="pchip">Intake</span><span class="parrow">→</span>
+            <span class="pchip">CSV pre-process</span><span class="parrow">→</span>
+            <span class="pchip">7× OSINT</span><span class="parrow">→</span>
+            <span class="pchip">Risk scoring</span><span class="parrow">→</span>
+            <span class="pchip">Escalation check</span><span class="parrow">→</span>
+            <span class="pchip">Report draft</span><span class="parrow">→</span>
+            <span class="pchip">Analyst sign-off</span>
+          </div>
+          <div class="annotation-tooltip">
+            <div class="annotation-tip-header"><div class="annotation-tip-icon"><i class="ti ti-settings"></i></div><span class="annotation-label">Configurable by design</span></div>
+            <div class="annotation-text">Not every case needs all 7 stages. A quick legitimacy check on a new NPO doesn't need transaction analysis. Making stages toggleable means the agent can run <strong>faster and cheaper</strong> for lower-stakes cases, and be dialled up to full depth when the risk warrants it.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;padding-top:12px;border-top:1px solid var(--border);gap:8px;">
+          <button class="btn">Save draft</button>
+          <button class="btn btn-agent-primary"><i class="ti ti-player-play"></i> Launch investigation</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     SCREEN 2: OSINT PIPELINE
+═══════════════════════════════════════ -->
+<div class="screen-section" style="border-top:none;">
+  <div class="screen-section-inner">
+    <div class="screen-section-header">
+      <span class="screen-num">02</span>
+      <span class="screen-title">OSINT investigation pipeline</span>
+      <span class="screen-desc">7-stage agent running live</span>
+    </div>
+
+    <div class="screen">
+      <div class="screen-chrome">
+        <div class="chrome-dots"><span></span><span></span><span></span></div>
+        <div class="chrome-url">platform-integrity / investigations / PI-2024-0847 / osint</div>
+      </div>
+      <div class="screen-inner">
+
+        <div class="topbar annotated" data-badge="✦ Architecture note" style="position:relative;">
+          <div class="annotation-tooltip">
+            <div class="annotation-tip-header"><div class="annotation-tip-icon"><i class="ti ti-layers-intersect"></i></div><span class="annotation-label">Why 7 stages, not one big prompt</span></div>
+            <div class="annotation-text">Breaking OSINT into <strong>7 discrete, sequential stages</strong> was deliberate. Each stage has a focused scope and its own source list, producing more thorough results than a single broad search and making findings auditable. Running stages sequentially is also <strong>significantly more token efficient</strong>: each prompt is smaller and purpose-built. Later stages can be skipped if earlier ones already produce a clear-cut outcome.</div>
+          </div>
+          <div class="topbar-left">
+            <i class="ti ti-radar" style="color:var(--text-secondary);"></i>
+            <h2>OSINT Investigation Pipeline</h2>
+            <span class="case-id">PI-2024-0847</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="badge badge-pulse"><span class="spinner" style="width:8px;height:8px;"></span>&nbsp; Agent running</span>
+            <span style="font-size:11px;color:var(--text-secondary);">Stage 4 of 7 · Est. 40s remaining</span>
+          </div>
+        </div>
+
+        <!-- progress -->
+        <div style="margin-bottom:20px;">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-secondary);margin-bottom:6px;">
+            <span>Pipeline progress</span><span>4 / 7 stages complete</span>
+          </div>
+          <div style="height:4px;background:var(--bg);border-radius:2px;overflow:hidden;">
+            <div style="height:100%;width:57%;background:var(--accent);border-radius:2px;"></div>
+          </div>
+        </div>
+
+        <div class="sec-title">Agent stages</div>
+        <div class="stage-list">
+
+          <!-- S1 -->
+          <div class="stage annotated" data-badge="✦ Why first" style="position:relative;">
+            <div class="stage-connector"><div class="sdot sdot-done">✓</div><div class="sline sline-done"></div></div>
+            <div class="sbody">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;">
+                <span class="sname">1 · Legal &amp; regulatory status</span>
+                <span class="badge badge-red">Critical</span>
+              </div>
+              <div class="smeta">IRS Tax Exempt Org Search · Arizona Corporation Commission · ProPublica</div>
+              <div class="sfinding sfinding-red">IRS 501(c)(3) exemption revoked May 2023. 3 consecutive years of non-filing. Arizona state registration lapsed Q1 2024. Organization is currently operating without valid charitable status.</div>
+              <div class="source-tags"><span class="stag">IRS TEOS</span><span class="stag">AZ Corp Commission</span><span class="stag">ProPublica</span></div>
+            </div>
+            <div class="annotation-tooltip">
+              <div class="annotation-tip-header"><div class="annotation-tip-icon"><i class="ti ti-gavel"></i></div><span class="annotation-label">Stage 1: the foundation of any NPO check</span></div>
+              <div class="annotation-text">Legal status is checked first because <strong>a revoked 501(c)(3) is an automatic critical flag</strong>. It means donations may not be tax-deductible and the corporate client has liability exposure. Finding this early prevents wasted effort on remaining stages if the case is already clear-cut.</div>
+            </div>
+          </div>
+
+          <!-- S2 -->
+          <div class="stage">
+            <div class="stage-connector"><div class="sdot sdot-done">✓</div><div class="sline sline-done"></div></div>
+            <div class="sbody">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;">
+                <span class="sname">2 · Governance &amp; leadership</span>
+                <span class="badge badge-red">High</span>
+              </div>
+              <div class="smeta">GuideStar · LinkedIn · Secretary of State filings</div>
+              <div class="sfinding sfinding-red">3-member board; 2 share a residential address. Executive director has no verifiable nonprofit history. No audited financials or annual reports publicly filed.</div>
+              <div class="source-tags"><span class="stag">GuideStar</span><span class="stag">LinkedIn</span><span class="stag">AZ SOS</span></div>
+            </div>
+          </div>
+
+          <!-- S3 -->
+          <div class="stage annotated" data-badge="✦ Design note" style="position:relative;">
+            <div class="stage-connector"><div class="sdot sdot-done">✓</div><div class="sline sline-done"></div></div>
+            <div class="sbody">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;">
+                <span class="sname">3 · Adverse media</span>
+                <span class="badge badge-red">High</span>
+              </div>
+              <div class="smeta">News search · BBB Wise Giving Alliance · Google News</div>
+              <div class="sfinding sfinding-red">Phoenix New Times (Mar 2024): allegations of grant fund misappropriation. BBB Wise Giving: fails 3 of 20 accountability standards. No criminal proceedings found at this time.</div>
+              <div class="source-tags"><span class="stag">Phoenix New Times</span><span class="stag">BBB Wise Giving</span><span class="stag">Google News</span></div>
+            </div>
+            <div class="annotation-tooltip">
+              <div class="annotation-tip-header"><div class="annotation-tip-icon"><i class="ti ti-news"></i></div><span class="annotation-label">Adverse media: why it's a separate stage</span></div>
+              <div class="annotation-text">Adverse media can't be inferred from regulatory databases alone. News coverage, watchdog reports, and BBB ratings reveal <strong>reputational risk that doesn't show up in official filings</strong>. This is especially important when escalating to ELT, where brand exposure is as significant as legal exposure.</div>
+            </div>
+          </div>
+
+          <!-- S4 active -->
+          <div class="stage">
+            <div class="stage-connector"><div class="sdot sdot-active">4</div><div class="sline sline-pending"></div></div>
+            <div class="sbody">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;">
+                <span class="sname sname-active">4 · Digital &amp; web presence</span>
+                <span class="badge badge-blue">Running</span>
+              </div>
+              <div class="smeta">Domain WHOIS · Wayback Machine · Social media audit</div>
+              <div class="active-query"><div class="spinner"></div>"Bright Futures Foundation Phoenix" site:linkedin.com OR site:facebook.com OR site:instagram.com</div>
+              <div class="sfinding" style="opacity:0.7;">Domain registered 14 months ago. Website sparse with no program photos or impact stories. Social accounts created within 30 days of first donation. <em>Social audit in progress…</em></div>
+              <div class="source-tags"><span class="stag">WHOIS</span><span class="stag">Wayback Machine</span><span class="stag">LinkedIn</span><span class="stag">Facebook</span></div>
+            </div>
+          </div>
+
+          <!-- S5 -->
+          <div class="stage">
+            <div class="stage-connector"><div class="sdot sdot-pending">5</div><div class="sline sline-pending"></div></div>
+            <div class="sbody">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;">
+                <span class="sname sname-pending">5 · Program &amp; impact verification</span>
+                <span class="badge badge-gray">Pending</span>
+              </div>
+              <div class="pending-stage">Queued · GuideStar, Charity Navigator, Google Maps, program evidence search</div>
+            </div>
+          </div>
+
+          <!-- S6 -->
+          <div class="stage">
+            <div class="stage-connector"><div class="sdot sdot-pending">6</div><div class="sline sline-pending"></div></div>
+            <div class="sbody">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;">
+                <span class="sname sname-pending">6 · Financial &amp; funding transparency</span>
+                <span class="badge badge-gray">Pending</span>
+              </div>
+              <div class="pending-stage">Queued · Form 990 lookup, Candid, Open990, funding source analysis</div>
+            </div>
+          </div>
+
+          <!-- S7 -->
+          <div class="stage annotated" data-badge="✦ Why last" style="position:relative;">
+            <div class="stage-connector"><div class="sdot sdot-pending">7</div></div>
+            <div class="sbody">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;">
+                <span class="sname sname-pending">7 · Conflict of interest &amp; network analysis</span>
+                <span class="badge badge-gray">Pending</span>
+              </div>
+              <div class="pending-stage">Queued · EIN cross-reference, board member network, platform history lookup</div>
+            </div>
+            <div class="annotation-tooltip">
+              <div class="annotation-tip-header"><div class="annotation-tip-icon"><i class="ti ti-network"></i></div><span class="annotation-label">Stage 7: the one that catches the most</span></div>
+              <div class="annotation-text">Network analysis (cross-referencing EINs, board members, and platform history) was added after noticing that <strong>fraudulent NPOs rarely operate alone</strong>. Shell organizations and repeat offenders often share board members or addresses. This stage catches coordinated fraud that individual NPO checks would miss entirely.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     SCREEN 3: INVESTIGATION REPORT
+═══════════════════════════════════════ -->
+<div class="screen-section" style="border-top:none;">
+  <div class="screen-section-inner">
+    <div class="screen-section-header">
+      <span class="screen-num">03</span>
+      <span class="screen-title">Investigation report</span>
+      <span class="screen-desc">Risk score, findings, escalation &amp; analyst sign-off</span>
+    </div>
+
+    <div class="screen">
+      <div class="screen-chrome">
+        <div class="chrome-dots"><span></span><span></span><span></span></div>
+        <div class="chrome-url">platform-integrity / investigations / PI-2024-0847 / report</div>
+      </div>
+      <div class="screen-inner">
+
+        <div class="topbar">
+          <div class="topbar-left">
+            <i class="ti ti-shield-check" style="color:var(--text-secondary);"></i>
+            <h2>Platform Integrity Investigation Report</h2>
+            <span class="case-id">PI-2024-0847</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="badge badge-orange">Pending analyst review</span>
+            <span style="font-size:11px;color:var(--text-secondary);">Generated Jun 10, 2026</span>
+          </div>
+        </div>
+
+        <!-- Risk -->
+        <div class="sec-title">Risk assessment</div>
+        <div class="risk-banner annotated" data-badge="✦ Framework note" style="position:relative;">
+          <div class="risk-left">
+            <div class="risk-dot"></div>
+            <div><div class="risk-label">Red: High Risk</div><div class="risk-sub">Score: 78 / 100</div></div>
+          </div>
+          <div><div class="risk-action-label">Recommended action</div><div class="risk-action-value">Terminate</div></div>
+          <div class="annotation-tooltip">
+            <div class="annotation-tip-header"><div class="annotation-tip-icon"><i class="ti ti-ruler-measure"></i></div><span class="annotation-label">The risk scoring model</span></div>
+            <div class="annotation-text">The Green / Yellow / Orange / Red scale maps directly to recommended actions: <strong>No action → RFI → Suspend → Terminate</strong>. This framework was built from scratch. There was no existing model when the fraud program launched. The goal was to make every decision <strong>consistent and defensible</strong>, especially when escalating to legal or ELT.</div>
+          </div>
+        </div>
+
+        <div class="ui-card" style="margin-bottom:12px;">
+          <div class="score-track"><div class="score-marker"></div></div>
+          <div class="score-labels"><span>Green</span><span>Yellow</span><span>Orange</span><span>Red</span></div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;">
+            <span class="badge badge-red">Legal/governance: critical</span>
+            <span class="badge badge-red">Adverse media: high</span>
+            <span class="badge badge-orange">Donation pattern: high</span>
+            <span class="badge badge-yellow">Self-cert: inconsistent</span>
+          </div>
+        </div>
+
+        <!-- OSINT summary -->
+        <div class="sec-title">OSINT findings summary</div>
+        <div class="ui-card">
+          <div class="flag-row"><i class="ti ti-alert-triangle"></i>IRS 501(c)(3) status revoked May 2023. State registration lapsed Q1 2024.</div>
+          <div class="flag-row"><i class="ti ti-alert-triangle"></i>2 of 3 board members share a residential address. No audited financials on record.</div>
+          <div class="flag-row"><i class="ti ti-alert-triangle"></i>Adverse media: fund misappropriation allegations (Phoenix New Times, Mar 2024).</div>
+          <div class="flag-row"><i class="ti ti-alert-circle"></i>Domain registered 14 months ago. Social accounts created within 30 days of first donation.</div>
+          <div class="flag-row"><i class="ti ti-alert-circle"></i>No verifiable program delivery. Mission statement mirrors a legitimate local NPO.</div>
+          <div class="flag-row"><i class="ti ti-alert-circle"></i>Shared board member cross-references with 2 other flagged NPOs; 1 previously suspended on platform.</div>
+        </div>
+
+        <!-- Escalation -->
+        <div class="sec-title">Escalation</div>
+        <div class="esc-box annotated" style="margin-bottom:12px;position:relative;" data-badge="✦ Logic note">
+          <div class="esc-title"><i class="ti ti-send"></i> ELT escalation required</div>
+          <div class="esc-body">Revoked tax-exempt status and active adverse media create regulatory and reputational exposure for Benevity and Meridian Technologies. Shared board member network links this case to a prior platform suspension. Legal and compliance teams should be looped in prior to any client-facing communication.</div>
+          <div class="annotation-tooltip">
+            <div class="annotation-tip-header"><div class="annotation-tip-icon"><i class="ti ti-arrow-up-circle"></i></div><span class="annotation-label">Escalation logic: built for blast radius</span></div>
+            <div class="annotation-text">The escalation trigger isn't just risk score. It factors in <strong>blast radius</strong> (how many corporate clients or donors are affected), <strong>brand risk</strong> (adverse media that could reach the press) and <strong>legal/regulatory exposure</strong>. A medium-risk case with a Fortune 500 client and live media coverage escalates faster than a high-risk case with no external visibility.</div>
+          </div>
+        </div>
+
+        <!-- Sign-off -->
+        <div class="sec-title">Analyst review &amp; sign-off</div>
+        <div class="signoff-box annotated" style="position:relative;" data-badge="✦ Governance note">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+            <span style="font-size:13px;font-weight:500;">Human review required before action</span>
+            <span class="badge badge-orange">Awaiting sign-off</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <div class="avatar">SR</div>
+            <div><div style="font-size:13px;font-weight:500;">Assigned analyst</div><div style="font-size:11px;color:var(--text-secondary);">Senior Fraud Operations Analyst</div></div>
+          </div>
+          <textarea class="field" style="width:100%;margin-bottom:10px;min-height:64px;font-size:13px;padding:7px 10px;border:1px solid var(--border-mid);border-radius:6px;background:var(--bg);color:var(--text-primary);font-family:var(--sans);outline:none;" placeholder="Add review notes, corrections, or override reasoning…"></textarea>
+          <div style="display:flex;gap:8px;">
+            <button class="btn">Override recommendation</button>
+            <button class="btn">Draft comms</button>
+            <button class="btn btn-danger" style="margin-left:auto;">Confirm &amp; submit</button>
+          </div>
+          <div class="annotation-tooltip">
+            <div class="annotation-tip-header"><div class="annotation-tip-icon"><i class="ti ti-user-check"></i></div><span class="annotation-label">Human-in-the-loop: by design, not as a fallback</span></div>
+            <div class="annotation-text">The agent <strong>cannot take action on its own</strong>. Every investigation requires a human analyst to review findings, add notes, and explicitly confirm before any action is taken. This was a deliberate governance decision, not a technical limitation, to ensure <strong>accountability and defensibility</strong>, especially when terminating a nonprofit's access to the platform.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── BACK LINK ─── -->
+<div class="back-section">
+  <a class="back-link" href="/jennifer/portfolio/">Back to portfolio</a>
+</div>
+
+<footer>
+  <p class="footer-copy">&copy; 2025 The Thorntons &middot; thethorntons.ca</p>
+  <p class="footer-note">Mockup. All data is synthetic &middot; No proprietary IP</p>
+</footer>
+
+<script>
+  const annotated = document.querySelectorAll('.annotated');
+  const pulse = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.transition = 'box-shadow 0.3s ease';
+        pulse.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  annotated.forEach(el => pulse.observe(el));
+</script>
+</body>
+</html>
