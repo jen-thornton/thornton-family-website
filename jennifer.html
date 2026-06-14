@@ -1,254 +1,668 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jennifer Thornton · Senior Fraud Operations Analyst</title>
-  <meta name="description" content="Senior Fraud Operations Analyst and AML specialist based in Ottawa, ON. Resume, articles, and professional projects." />
-  <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jennifer Thornton — The Thorntons</title>
+  <meta name="description" content="Jennifer Thornton — Senior Fraud & Compliance Operations Analyst. 7+ years in fintech risk, fraud detection, and AML operations.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    /* Jennifer's teal accent overrides */
-    .accent-bar { background: var(--jen-mid); }
-    .sub-nav__links a.active { border-bottom-color: var(--jen); color: var(--jen); }
-    .person-hero__avatar { border-color: var(--jen-mid); }
-    .person-hero__title { color: var(--jen); }
-    .stat-card { background: var(--jen-light); }
-    .stat-card__num { color: #085041; }
-    .stat-card__label { color: var(--jen); }
-    .pill { background: var(--jen-light); color: #085041; }
-    .pill__dot { background: var(--jen-mid); }
-    .article-card:hover { border-color: var(--jen-mid); }
-    .exp-block__role { color: var(--jen); }
-    .exp-block__bullet::before { color: var(--jen-mid); }
-    .cert-card__icon { background: var(--jen-light); color: var(--jen); }
-    .person-footer { background: var(--jen-light); border-top-color: #9FE1CB; }
-    .person-footer, .person-footer a { color: var(--jen); }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    :root {
+      --stone-50:  #F8F6F1;
+      --stone-100: #EDE9E0;
+      --stone-200: #D6CFC2;
+      --stone-400: #A89F8F;
+      --stone-600: #6B6256;
+      --stone-800: #3A332A;
+      --slate-900: #1C1C1E;
+      --serif: 'EB Garamond', Georgia, serif;
+      --sans:  'Inter', system-ui, sans-serif;
+    }
+ 
+    body {
+      font-family: var(--sans);
+      background-color: var(--stone-50);
+      color: var(--slate-900);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+ 
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      border-bottom: 0.5px solid var(--stone-200);
+      background: var(--stone-50);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--stone-600);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--slate-900); }
+    .nav-links a.active { color: var(--slate-900); }
+ 
+    /* PAGE HEADER (no hero) */
+    .page-header {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 3rem 0;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 3rem;
+      align-items: end;
+      border-bottom: 0.5px solid var(--stone-200);
+      padding-bottom: 3rem;
+    }
+    .page-header-photo {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      object-position: center 15%;
+      border: 0.5px solid var(--stone-200);
+      display: block;
+      flex-shrink: 0;
+    }
+    .page-header-text {}
+    .page-header-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 0.75rem;
+    }
+    .page-header-name {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 400;
+      line-height: 1.05;
+      color: var(--slate-900);
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+    }
+    .page-header-name em { font-style: italic; color: var(--stone-600); }
+    .page-header-tagline {
+      font-size: 0.9rem;
+      color: var(--stone-600);
+      font-weight: 300;
+      max-width: 55ch;
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+    .header-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      background: var(--slate-900);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--stone-800); }
+    .btn-primary svg { width: 14px; height: 14px; }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone-600);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .btn-secondary:hover { color: var(--slate-900); }
+    .btn-secondary::after { content: '→'; font-size: 0.85rem; }
+ 
+    /* SHARED SECTION */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 3rem;
+    }
+    .section + .section { border-top: 0.5px solid var(--stone-200); }
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 2rem;
+    }
+    .section-heading {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--slate-900);
+      margin-bottom: 1.25rem;
+    }
+    .section-heading em { font-style: italic; color: var(--stone-600); }
+ 
+    /* BIO */
+    .bio-body {
+      font-size: 0.9rem;
+      line-height: 1.9;
+      color: var(--stone-600);
+      font-weight: 300;
+      max-width: 70ch;
+    }
+    .bio-body p + p { margin-top: 1rem; }
+ 
+    /* DETAILS STRIP */
+    .details-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 0.5px solid var(--stone-200);
+      margin-top: 3rem;
+    }
+    .detail-item {
+      padding: 1.75rem 1.5rem 1.75rem 0;
+      border-right: 0.5px solid var(--stone-200);
+    }
+    .detail-item:last-child { border-right: none; }
+    .detail-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 0.35rem;
+    }
+    .detail-value {
+      font-size: 0.88rem;
+      color: var(--stone-800);
+      font-weight: 300;
+    }
+ 
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--stone-200);
+      border: 0.5px solid var(--stone-200);
+    }
+    .skill-item {
+      background: var(--stone-50);
+      padding: 1.75rem;
+    }
+    .skill-title {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      margin-bottom: 0.6rem;
+    }
+    .skill-desc {
+      font-size: 0.8rem;
+      line-height: 1.75;
+      color: var(--stone-600);
+      font-weight: 300;
+    }
+ 
+    /* TOOLS */
+    .tools-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+    .tool-tag {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--stone-600);
+      border: 0.5px solid var(--stone-200);
+      padding: 0.35rem 0.75rem;
+      background: var(--stone-50);
+    }
+ 
+    /* EXPERIENCE TIMELINE */
+    .timeline { margin-top: 0.5rem; }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 2.5rem;
+      padding: 2rem 0;
+      border-top: 0.5px solid var(--stone-200);
+    }
+    .timeline-item:last-child { border-bottom: 0.5px solid var(--stone-200); }
+    .timeline-meta {}
+    .timeline-dates {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 0.35rem;
+    }
+    .timeline-company {
+      font-size: 0.85rem;
+      color: var(--stone-600);
+      font-weight: 300;
+    }
+    .timeline-role {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      margin-bottom: 0.85rem;
+    }
+    .timeline-bullets {
+      list-style: none;
+      padding: 0;
+    }
+    .timeline-bullets li {
+      font-size: 0.82rem;
+      line-height: 1.75;
+      color: var(--stone-600);
+      font-weight: 300;
+      padding-left: 1rem;
+      position: relative;
+      margin-bottom: 0.4rem;
+    }
+    .timeline-bullets li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--stone-400);
+    }
+ 
+    /* PORTFOLIO CTA */
+    .portfolio-cta {
+      background: var(--stone-100);
+      border: 0.5px solid var(--stone-200);
+      padding: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      margin-top: 0;
+    }
+    .portfolio-cta-text {}
+    .portfolio-cta-heading {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      margin-bottom: 0.5rem;
+    }
+    .portfolio-cta-heading em { font-style: italic; color: var(--stone-600); }
+    .portfolio-cta-sub {
+      font-size: 0.85rem;
+      color: var(--stone-600);
+      font-weight: 300;
+      line-height: 1.7;
+      max-width: 50ch;
+    }
+ 
+    /* FAMILY NAV */
+    .family-nav-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--stone-200);
+      border: 0.5px solid var(--stone-200);
+    }
+    .family-nav-card {
+      background: var(--stone-50);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      padding: 1.75rem;
+      transition: background 0.2s;
+    }
+    .family-nav-card:hover { background: var(--stone-100); }
+    .family-nav-name {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      margin-bottom: 0.2rem;
+    }
+    .family-nav-role {
+      font-size: 0.75rem;
+      color: var(--stone-400);
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.85rem;
+    }
+    .family-nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+    }
+    .family-nav-link::after { content: '→'; font-size: 0.85rem; }
+    .family-nav-card:hover .family-nav-link { color: var(--slate-900); }
+ 
+    /* FOOTER */
+    footer {
+      border-top: 0.5px solid var(--stone-200);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy { font-size: 0.75rem; color: var(--stone-400); }
+    .footer-cats {
+      font-size: 0.75rem;
+      color: var(--stone-400);
+      font-style: italic;
+      font-family: var(--serif);
+    }
+ 
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { gap: 1.25rem; }
+      .page-header { padding: 2.5rem 1.5rem 2.5rem; grid-template-columns: 1fr; gap: 1.5rem; }
+      .page-header-photo { width: 140px; height: 140px; }
+      .section { padding: 3rem 1.5rem; }
+      .details-strip { grid-template-columns: repeat(2, 1fr); }
+      .detail-item:nth-child(2) { border-right: none; }
+      .detail-item:nth-child(3) { border-top: 0.5px solid var(--stone-200); }
+      .detail-item:nth-child(4) { border-top: 0.5px solid var(--stone-200); }
+      .skills-grid { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .portfolio-cta { flex-direction: column; align-items: flex-start; }
+      .family-nav-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.7rem; }
+    }
   </style>
 </head>
 <body>
-
-  <nav class="site-nav">
-    <a href="index.html" class="site-nav__logo">the <span>thorntons</span></a>
-    <ul class="site-nav__links">
-      <li><a href="jennifer.html" class="active">Jennifer</a></li>
-      <li><a href="rob.html">Rob</a></li>
-      <li><a href="natalie.html">Natalie</a></li>
-      <li><a href="kaitlyn.html">Kaitlyn</a></li>
-      <li><a href="index.html#photos">Photos</a></li>
+ 
+  <nav>
+    <a class="nav-logo" href="/">The Thorntons</a>
+    <ul class="nav-links">
+      <li><a href="/rob/">Rob</a></li>
+      <li><a href="/jennifer/" class="active">Jennifer</a></li>
+      <li><a href="/natalie/">Natalie</a></li>
+      <li><a href="/kaitlyn/">Kaitlyn</a></li>
     </ul>
   </nav>
-
-  <div class="accent-bar"></div>
-
-  <div style="background:#fff; border-bottom: 0.5px solid var(--border);">
-    <div class="page-wrap">
-      <nav class="sub-nav" style="padding: 0;">
-        <a href="index.html" class="sub-nav__back">
-          <i class="ti ti-arrow-left" style="font-size:13px;"></i> Home
+ 
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <img class="page-header-photo" src="../images/jennifer.jpg" alt="Jennifer Thornton">
+    <div class="page-header-text">
+      <p class="page-header-eyebrow">Senior Fraud &amp; Compliance Operations Analyst</p>
+      <h1 class="page-header-name">Jennifer<br><em>Thornton</em></h1>
+      <p class="page-header-tagline">Seven years in fintech risk and fraud operations — building detection systems, closing cases, and thriving in the grey areas where fast thinking and good judgment matter most. Gotta catch 'em all.</p>
+      <div class="header-actions">
+        <a class="btn-primary" href="jennifer-thornton-resume.pdf" download>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Résumé
         </a>
-        <ul class="sub-nav__links">
-          <li><a href="#about" class="active">About</a></li>
-          <li><a href="#resume">Resume</a></li>
-          <li><a href="#articles">Articles</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
+        <a class="btn-secondary" href="portfolio/">View portfolio</a>
+      </div>
     </div>
   </div>
-
-  <main>
-    <div class="page-wrap">
-
-      <!-- ── Hero ──────────────────────────────────────── -->
-      <section class="person-hero" id="about">
-        <!-- Replace src with images/jennifer.jpg -->
-        <img class="person-hero__avatar" src="images/jennifer.jpg"
-             alt="Jennifer Thornton" />
+ 
+  <!-- BIO -->
+  <div class="section">
+    <p class="section-label">About</p>
+    <h2 class="section-heading">A puzzle-solver at<br><em>heart &amp; at work</em></h2>
+    <div class="bio-body">
+      <p>Jennifer is a Senior Fraud &amp; Compliance Operations Analyst with 7+ years of experience building and scaling risk detection capabilities inside hyper-growth fintech environments. She's most at home in the grey areas — situations where the rulebook doesn't quite cover the scenario, context needs to be gathered quickly, and a sound decision still needs to be made.</p>
+      <p>She loves the puzzle-solving nature of fraud and AML work: every case is different, every pattern has a story, and catching something that would otherwise slip through is deeply satisfying. Currently working towards her CAMS certification (expected September 2026), Jennifer brings equal parts analytical rigour and practical judgment to every investigation.</p>
+      <p>Outside of work she's a keen geocacher, an avid reader, and — above all — a dedicated family person based in Orleans, Ontario.</p>
+    </div>
+ 
+    <div class="details-strip">
+      <div class="detail-item">
+        <p class="detail-label">Current role</p>
+        <p class="detail-value">Sr. Risk Operations Analyst</p>
+      </div>
+      <div class="detail-item" style="padding-left: 1.5rem;">
+        <p class="detail-label">Employer</p>
+        <p class="detail-value">Benevity, Inc.</p>
+      </div>
+      <div class="detail-item" style="padding-left: 1.5rem;">
+        <p class="detail-label">Certification</p>
+        <p class="detail-value">CAMS (exp. Sept 2026)</p>
+      </div>
+      <div class="detail-item" style="padding-left: 1.5rem;">
+        <p class="detail-label">Based in</p>
+        <p class="detail-value">Orleans, ON</p>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- SKILLS -->
+  <div class="section">
+    <p class="section-label">Core skills</p>
+    <h2 class="section-heading">What I bring<br><em>to the table</em></h2>
+    <div class="skills-grid">
+      <div class="skill-item">
+        <p class="skill-title">Fraud Detection &amp; Investigation</p>
+        <p class="skill-desc">End-to-end case management from alert triage through resolution. Experienced with non-profit fraud, collusion schemes, account takeover, impersonation, and financial abuse at scale.</p>
+      </div>
+      <div class="skill-item">
+        <p class="skill-title">AML &amp; Regulatory Compliance</p>
+        <p class="skill-desc">STR playbook development, FINTRAC reporting obligations, KYC/EDD vetting, sanctions and PEP screening, and adverse media monitoring. Working towards CAMS certification.</p>
+      </div>
+      <div class="skill-item">
+        <p class="skill-title">AI &amp; Automation</p>
+        <p class="skill-desc">Built an AI investigation agent that reduced manual effort by 48% through forensic analysis and OSINT with human-in-the-loop verification. Experienced with ML model validation and anomaly detection.</p>
+      </div>
+      <div class="skill-item">
+        <p class="skill-title">Risk Strategy &amp; Operations</p>
+        <p class="skill-desc">Designing detection rules, building KPI frameworks, identifying process gaps, and delivering recommendations to senior leadership that translate risk signals into clear action.</p>
+      </div>
+      <div class="skill-item">
+        <p class="skill-title">Cross-functional Partnership</p>
+        <p class="skill-desc">Proven track record working with Legal, Product, Engineering, Security, and PR. Comfortable serving as the senior escalation point on complex, high-visibility incidents.</p>
+      </div>
+      <div class="skill-item">
+        <p class="skill-title">Team Leadership &amp; Development</p>
+        <p class="skill-desc">Former manager of a 7-person compliance team — focused on coaching specialists into subject-matter experts, implementing QA processes, and building sustainable operational workflows.</p>
+      </div>
+    </div>
+ 
+    <div style="margin-top: 2.5rem;">
+      <p class="section-label" style="margin-bottom: 1rem;">Tools &amp; technologies</p>
+      <div class="tools-list">
+        <span class="tool-tag">SQL</span>
+        <span class="tool-tag">Python</span>
+        <span class="tool-tag">Jira</span>
+        <span class="tool-tag">Zendesk</span>
+        <span class="tool-tag">Zapier</span>
+        <span class="tool-tag">Figma</span>
+        <span class="tool-tag">GitHub</span>
+        <span class="tool-tag">GSuite</span>
+        <span class="tool-tag">Slack</span>
+        <span class="tool-tag">ChatGPT</span>
+        <span class="tool-tag">Gemini</span>
+        <span class="tool-tag">NotebookLM</span>
+        <span class="tool-tag">Google AI Essentials</span>
+        <span class="tool-tag">Google Cybersecurity Certificate</span>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- EXPERIENCE -->
+  <div class="section">
+    <p class="section-label">Experience</p>
+    <h2 class="section-heading">Career<br><em>history</em></h2>
+    <div class="timeline">
+ 
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <p class="timeline-dates">Jan 2026 – Present</p>
+          <p class="timeline-company">Benevity, Inc.</p>
+        </div>
         <div>
-          <h1 class="person-hero__name">Jennifer Thornton</h1>
-          <p class="person-hero__title">Senior Fraud Operations Analyst &nbsp;·&nbsp; AML Specialist &nbsp;·&nbsp; Ottawa, ON</p>
-          <p class="person-hero__bio">
-            Over a decade of experience in financial crime prevention, fraud operations, and anti-money laundering.
-            I investigate complex fraud typologies, build detection frameworks, and write about emerging trends
-            in financial intelligence.
-          </p>
-          <div class="btn-row">
-            <a href="files/jennifer-resume.pdf" class="btn-primary" style="background:var(--jen);">
-              <i class="ti ti-download" style="font-size:14px;"></i> Download resume
-            </a>
-            <a href="#articles" class="btn-secondary" style="color:var(--jen);border-color:#5DCAA5;">
-              <i class="ti ti-article" style="font-size:14px;"></i> Read my writing
-            </a>
-            <a href="#contact" class="btn-secondary" style="color:var(--jen);border-color:#5DCAA5;">
-              <i class="ti ti-mail" style="font-size:14px;"></i> Contact
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- ── Stats ─────────────────────────────────────── -->
-      <div style="padding-top: 36px;">
-        <div class="stat-grid">
-          <div class="stat-card">
-            <span class="stat-card__num">10+</span>
-            <span class="stat-card__label">years in financial crime</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-card__num">CAMS</span>
-            <span class="stat-card__label">certified</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-card__num">CFE</span>
-            <span class="stat-card__label">certified fraud examiner</span>
-          </div>
-        </div>
-
-        <!-- ── Expertise pills ───────────────────────── -->
-        <p class="sec-label">Areas of expertise</p>
-        <div class="pill-wrap">
-          <span class="pill"><span class="pill__dot"></span>Anti-money laundering</span>
-          <span class="pill"><span class="pill__dot"></span>Fraud operations</span>
-          <span class="pill"><span class="pill__dot"></span>Transaction monitoring</span>
-          <span class="pill"><span class="pill__dot"></span>KYC / CDD</span>
-          <span class="pill"><span class="pill__dot"></span>SAR filing</span>
-          <span class="pill"><span class="pill__dot"></span>Risk assessment</span>
-          <span class="pill"><span class="pill__dot"></span>Fraud typologies</span>
-          <span class="pill"><span class="pill__dot"></span>Regulatory compliance</span>
-          <span class="pill"><span class="pill__dot"></span>OSINT</span>
-          <span class="pill"><span class="pill__dot"></span>FINTRAC reporting</span>
-          <span class="pill"><span class="pill__dot"></span>Fintech</span>
+          <p class="timeline-role">Senior Risk Operations Analyst</p>
+          <ul class="timeline-bullets">
+            <li>Founding fraud analyst responsible for building and scaling detection and monitoring capabilities across Benevity's platform.</li>
+            <li>Recovered over $315,000 in funds through fraud investigations within the first month of implementing new standardized processes.</li>
+            <li>Created an AI investigation agent that reduced manual investigation effort by 48% through forensic donation analysis and OSINT with human-in-the-loop verification.</li>
+            <li>Built Benevity's STR playbook and end-to-end process supporting FINTRAC cross-border compliance and regulatory reporting obligations.</li>
+            <li>Partnered with Engineering to develop an ML-driven fraud model, including data validation, historical investigation insights, and anomaly detectors.</li>
+            <li>Lead complex investigations into non-profit fraud, collusion, impersonation, and account takeover; communicate directly with top 20 global enterprise clients.</li>
+            <li>Established monthly fraud metrics and KPIs to monitor program impact for senior leadership.</li>
+          </ul>
         </div>
       </div>
-
-      <!-- ── Body grid ─────────────────────────────────── -->
-      <div class="body-grid">
-
-        <!-- LEFT: Articles -->
-        <div>
-          <p class="sec-label" id="articles">Latest articles</p>
-
-          <a href="#" class="article-card" style="text-decoration:none;color:inherit;">
-            <span class="article-card__tag" style="background:var(--jen-light);color:#085041;">AML</span>
-            <div>
-              <p class="article-card__title">Emerging typologies in crypto-based money laundering</p>
-              <p class="article-card__excerpt">How decentralized finance is reshaping the layering stage — and what compliance teams need to watch for.</p>
-              <p class="article-card__meta">June 2025 &nbsp;·&nbsp; 8 min read</p>
-            </div>
-          </a>
-
-          <a href="#" class="article-card" style="text-decoration:none;color:inherit;">
-            <span class="article-card__tag" style="background:#9FE1CB;color:#04342C;">Fraud</span>
-            <div>
-              <p class="article-card__title">When the model is wrong: the limits of AI in fraud detection</p>
-              <p class="article-card__excerpt">Machine learning catches patterns humans miss — but overreliance creates blind spots that sophisticated actors are already exploiting.</p>
-              <p class="article-card__meta">March 2025 &nbsp;·&nbsp; 6 min read</p>
-            </div>
-          </a>
-
-          <a href="#" class="article-card" style="text-decoration:none;color:inherit;">
-            <span class="article-card__tag" style="background:var(--rob-light);color:#0C447C;">Fintech</span>
-            <div>
-              <p class="article-card__title">Real-time payments, real-time fraud: closing the gap</p>
-              <p class="article-card__excerpt">Interac e-Transfer and open banking are convenient — and a gift to fraudsters. What banks and fintechs must do differently.</p>
-              <p class="article-card__meta">November 2024 &nbsp;·&nbsp; 7 min read</p>
-            </div>
-          </a>
-
-          <!-- Projects section -->
-          <p class="sec-label" id="projects" style="margin-top:36px;">Projects</p>
-          <div style="background:#fff; border:0.5px solid var(--border); border-radius:var(--radius-lg); padding:20px; color:var(--ink-muted); font-size:13px; line-height:1.6;">
-            Project work and case studies coming soon. Check back or <a href="#contact" style="color:var(--jen);">get in touch</a> to learn more.
-          </div>
+ 
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <p class="timeline-dates">Jul 2023 – Dec 2025</p>
+          <p class="timeline-company">Shopify</p>
         </div>
-
-        <!-- RIGHT: Resume -->
         <div>
-          <p class="sec-label" id="resume">Experience</p>
-
-          <div class="exp-block">
-            <div class="exp-block__top">
-              <span class="exp-block__company">Current Employer</span>
-              <span class="exp-block__date">2018 – present</span>
-            </div>
-            <p class="exp-block__role">Senior Fraud Operations Analyst</p>
-            <p class="exp-block__bullet">Lead fraud detection strategy and complex case investigations</p>
-            <p class="exp-block__bullet">AML transaction monitoring and suspicious activity reporting</p>
-            <p class="exp-block__bullet">Liaison with law enforcement and FINTRAC</p>
-            <p class="exp-block__bullet">Mentor junior analysts and contribute to team training</p>
-          </div>
-
-          <div class="exp-block">
-            <div class="exp-block__top">
-              <span class="exp-block__company">Previous Employer</span>
-              <span class="exp-block__date">2014 – 2018</span>
-            </div>
-            <p class="exp-block__role">Fraud Analyst</p>
-            <p class="exp-block__bullet">Card fraud and account takeover investigations</p>
-            <p class="exp-block__bullet">Built and implemented internal KYC review process</p>
-            <p class="exp-block__bullet">Contributed to fraud loss reduction initiatives</p>
-          </div>
-
-          <div class="exp-block">
-            <div class="exp-block__top">
-              <span class="exp-block__company">Earlier Role</span>
-              <span class="exp-block__date">2012 – 2014</span>
-            </div>
-            <p class="exp-block__role">Junior Analyst</p>
-            <p class="exp-block__bullet">Transaction review and escalation</p>
-            <p class="exp-block__bullet">Customer identity verification processes</p>
-          </div>
-
-          <!-- Certifications -->
-          <p class="sec-label" style="margin-top:28px;">Certifications</p>
-          <div class="cert-card">
-            <div class="cert-card__icon">
-              <i class="ti ti-shield-check" style="font-size:18px;color:var(--jen);"></i>
-            </div>
-            <div>
-              <p class="cert-card__name">CAMS</p>
-              <p class="cert-card__org">ACAMS · Certified Anti-Money Laundering Specialist</p>
-            </div>
-          </div>
-          <div class="cert-card">
-            <div class="cert-card__icon">
-              <i class="ti ti-certificate" style="font-size:18px;color:var(--jen);"></i>
-            </div>
-            <div>
-              <p class="cert-card__name">CFE</p>
-              <p class="cert-card__org">ACFE · Certified Fraud Examiner</p>
-            </div>
-          </div>
-
-          <!-- Contact -->
-          <p class="sec-label" id="contact" style="margin-top:28px;">Get in touch</p>
-          <div style="background:var(--jen-light); border-radius:var(--radius-md); padding:16px 18px;">
-            <p style="font-size:13px; color:#085041; margin-bottom:10px; line-height:1.6;">
-              Available for professional inquiries, speaking opportunities, or collaborations in fraud and AML.
-            </p>
-            <a href="mailto:jennifer@thethorntons.ca" class="btn-primary" style="background:var(--jen); font-size:12px;">
-              <i class="ti ti-mail" style="font-size:13px;"></i> jennifer@thethorntons.ca
-            </a>
-          </div>
+          <p class="timeline-role">Senior Policy &amp; Compliance Analyst, Partner Governance</p>
+          <ul class="timeline-bullets">
+            <li>Senior point of contact for complex partner program violations including fraud, abuse, security vulnerabilities, and non-compliance.</li>
+            <li>Designed and implemented process workflows for policy violations with a focus on automation and reducing operational toil.</li>
+            <li>Monitored partner activity for fraud trends and collaborated with merchant fraud teams to share findings and mitigate risk.</li>
+            <li>Provided risk assessments for product teams, combining policy knowledge and research to identify risks and deliver recommendations.</li>
+          </ul>
         </div>
-
       </div>
-
+ 
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <p class="timeline-dates">Jan 2022 – Jul 2023</p>
+          <p class="timeline-company">Shopify</p>
+        </div>
+        <div>
+          <p class="timeline-role">Compliance Manager, Partner Governance</p>
+          <ul class="timeline-bullets">
+            <li>Managed a team of 7 Compliance Specialists, coaching them into subject-matter experts through targeted development and support.</li>
+            <li>Introduced segmented work streams — Security &amp; Fraud, General Compliance, Partnership Terminations — to enhance SLAs and streamline operations.</li>
+            <li>Implemented a QA process for ticket-based work ensuring consistency and identifying coaching opportunities for career growth.</li>
+            <li>Served as senior escalation point for critical incidents, collaborating with Legal, PR, and Senior Leadership.</li>
+          </ul>
+        </div>
+      </div>
+ 
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <p class="timeline-dates">Oct 2020 – Jan 2022</p>
+          <p class="timeline-company">Shopify</p>
+        </div>
+        <div>
+          <p class="timeline-role">Strategic Specialist, Partner Governance</p>
+          <ul class="timeline-bullets">
+            <li>Maintained high volume of ticket-based work in Zendesk, prioritizing high-risk and urgent cases to protect the ecosystem and merchant safety.</li>
+            <li>Created and optimized workflows in a rapidly growing department, balancing partner community growth while minimizing risks.</li>
+            <li>Worked closely with senior stakeholders across security, PR, legal, and leadership to resolve complex issues.</li>
+          </ul>
+        </div>
+      </div>
+ 
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <p class="timeline-dates">Jul 2017 – Oct 2020</p>
+          <p class="timeline-company">Shopify</p>
+        </div>
+        <div>
+          <p class="timeline-role">Financial Services Specialist</p>
+          <ul class="timeline-bullets">
+            <li>Managed high-volume queue covering billing inquiries, chargeback monitoring, refund abuse, and Shopify Payments troubleshooting.</li>
+            <li>Founding member of the 1099-K support team, processing corrections and filing 1099-K reporting for eligible U.S. merchants.</li>
+            <li>Led the Canada West billing and payments team for one year, overseeing 12 specialists with a focus on performance coaching.</li>
+          </ul>
+        </div>
+      </div>
+ 
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <p class="timeline-dates">Nov 2016 – Jul 2017</p>
+          <p class="timeline-company">Shopify</p>
+        </div>
+        <div>
+          <p class="timeline-role">Support Advisor</p>
+          <ul class="timeline-bullets">
+            <li>Front-line merchant support, building foundational knowledge of the Shopify platform and payments ecosystem.</li>
+          </ul>
+        </div>
+      </div>
+ 
     </div>
-  </main>
-
-  <footer class="person-footer">
-    <span>jennifer.thethorntons.ca</span>
-    <div class="person-footer__links">
-      <a href="https://linkedin.com" target="_blank" rel="noopener">
-        <i class="ti ti-brand-linkedin" style="font-size:14px;"></i> LinkedIn
-      </a>
-      <a href="mailto:jennifer@thethorntons.ca">
-        <i class="ti ti-mail" style="font-size:14px;"></i> Email
+  </div>
+ 
+  <!-- PORTFOLIO CTA -->
+  <div class="section" style="padding-top: 0; padding-bottom: 4rem;">
+    <div class="portfolio-cta">
+      <div class="portfolio-cta-text">
+        <h3 class="portfolio-cta-heading">Selected <em>portfolio work</em></h3>
+        <p class="portfolio-cta-sub">Case studies, frameworks, and examples of the kind of work Jennifer has built — from investigation playbooks to AI-assisted workflows and compliance programs.</p>
+      </div>
+      <a class="btn-primary" href="portfolio/" style="white-space: nowrap;">
+        View portfolio →
       </a>
     </div>
+  </div>
+ 
+  <!-- REST OF FAMILY -->
+  <div class="section" style="border-top: 0.5px solid var(--stone-200);">
+    <p class="section-label">The rest of the family</p>
+    <div class="family-nav-grid">
+      <a class="family-nav-card" href="/rob/">
+        <p class="family-nav-name">Rob Thornton</p>
+        <p class="family-nav-role">Senior Software Engineer</p>
+        <span class="family-nav-link">View profile</span>
+      </a>
+      <a class="family-nav-card" href="/natalie/">
+        <p class="family-nav-name">Natalie Thornton</p>
+        <p class="family-nav-role">Mathematics student, uOttawa '29</p>
+        <span class="family-nav-link">View profile</span>
+      </a>
+      <a class="family-nav-card" href="/kaitlyn/">
+        <p class="family-nav-name">Kaitlyn Thornton</p>
+        <p class="family-nav-role">Artist &amp; Animator</p>
+        <span class="family-nav-link">View profile</span>
+      </a>
+    </div>
+  </div>
+ 
+  <footer>
+    <p class="footer-copy">&copy; 2025 The Thorntons &middot; thethorntons.ca</p>
+    <p class="footer-cats">Supervised by Khaleesi &amp; Luna</p>
   </footer>
-
+ 
 </body>
 </html>
+ 
