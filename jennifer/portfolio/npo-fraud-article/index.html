@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NPO Fraud Tactics — Jennifer Thornton</title>
+<meta name="description" content="Common NPO fraud tactics in the CSR space — and how to spot them. By Jennifer Thornton, Senior Fraud Operations Analyst." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+  :root {
+    --stone-50:  #F8F6F1;
+    --stone-100: #EDE9E0;
+    --stone-200: #D6CFC2;
+    --stone-400: #A89F8F;
+    --stone-600: #6B6256;
+    --stone-800: #3A332A;
+    --slate-900: #1C1C1E;
+    --serif: 'EB Garamond', Georgia, serif;
+    --sans:  'Inter', system-ui, sans-serif;
+  }
+ 
+  body {
+    font-family: var(--sans);
+    background-color: var(--stone-50);
+    color: var(--slate-900);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+ 
+  /* ── Progress bar ── */
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    background: var(--stone-800);
+    z-index: 300;
+    transition: width 0.1s linear;
+  }
+ 
+  /* ── Nav ── */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    border-bottom: 0.5px solid var(--stone-200);
+    background: var(--stone-50);
+    position: sticky;
+    top: 0;
+    z-index: 200;
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--slate-900);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--stone-600);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--slate-900); }
+  .nav-links a.active { color: var(--slate-900); }
+ 
+  /* ── Page header ── */
+  .page-header-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 3rem 3rem;
+    border-bottom: 0.5px solid var(--stone-200);
+  }
+  .breadcrumb {
+    font-size: 0.72rem;
+    color: var(--stone-400);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .breadcrumb a { color: var(--stone-400); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--slate-900); }
+  .breadcrumb span { color: var(--stone-200); }
+ 
+  .article-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+    border: 0.5px solid var(--stone-200);
+    padding: 0.3rem 0.65rem;
+    margin-bottom: 1.25rem;
+  }
+  .page-title {
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 400;
+    line-height: 1.08;
+    color: var(--slate-900);
+    letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+    max-width: 18ch;
+  }
+  .page-title em { font-style: italic; color: var(--stone-600); }
+ 
+  .byline {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 0.5px solid var(--stone-200);
+    flex-wrap: wrap;
+  }
+  .byline-name {
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: var(--slate-900);
+  }
+  .byline-role {
+    font-size: 0.78rem;
+    color: var(--stone-400);
+    font-weight: 300;
+  }
+  .byline-divider {
+    width: 0.5px;
+    height: 1.5rem;
+    background: var(--stone-200);
+  }
+  .byline-meta {
+    font-size: 0.78rem;
+    color: var(--stone-400);
+    font-weight: 300;
+  }
+ 
+  /* ── Article body ── */
+  .article-outer {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 3rem;
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 5rem;
+    align-items: start;
+  }
+ 
+  /* Main column */
+  .article-body {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    line-height: 1.85;
+    color: var(--stone-800);
+    font-weight: 400;
+  }
+  .article-body p { margin-bottom: 1.5rem; }
+  .article-body p:last-child { margin-bottom: 0; }
+ 
+  .article-body h2 {
+    font-family: var(--serif);
+    font-size: 1.7rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--slate-900);
+    margin: 3rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+  .article-body h2 em { font-style: italic; color: var(--stone-600); }
+ 
+  .article-body h3 {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+    margin: 2.5rem 0 0.75rem;
+  }
+ 
+  /* Pull quote */
+  .pull-quote {
+    border-left: 2px solid var(--stone-800);
+    margin: 2.5rem 0;
+    padding: 0.25rem 0 0.25rem 1.75rem;
+  }
+  .pull-quote p {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--slate-900);
+    margin-bottom: 0;
+  }
+ 
+  /* Tactic card */
+  .tactic {
+    border: 0.5px solid var(--stone-200);
+    background: var(--stone-100);
+    margin: 2rem 0;
+    padding: 1.75rem 2rem;
+  }
+  .tactic-label {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+    margin-bottom: 0.5rem;
+  }
+  .tactic-title {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--slate-900);
+    margin-bottom: 0.85rem;
+  }
+  .tactic-body {
+    font-family: var(--serif);
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--stone-600);
+    margin-bottom: 0;
+  }
+  .tactic-signal {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 0.5px solid var(--stone-200);
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    color: var(--stone-600);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+  .tactic-signal strong {
+    font-weight: 500;
+    color: var(--stone-800);
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+ 
+  /* Takeaways strip */
+  .takeaways {
+    border-top: 0.5px solid var(--stone-200);
+    border-bottom: 0.5px solid var(--stone-200);
+    margin: 3.5rem 0 0;
+    padding: 2rem 0;
+  }
+  .takeaways-label {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+    margin-bottom: 1.25rem;
+  }
+  .takeaways-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .takeaways-list li {
+    font-family: var(--serif);
+    font-size: 1rem;
+    color: var(--stone-800);
+    line-height: 1.6;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+  .takeaways-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--stone-400);
+  }
+ 
+  /* ── Sidebar ── */
+  .article-sidebar {
+    position: sticky;
+    top: 6rem;
+  }
+  .sidebar-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+    margin-bottom: 1rem;
+  }
+  .toc-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-left: 0.5px solid var(--stone-200);
+  }
+  .toc-list a {
+    display: block;
+    padding: 0.55rem 0 0.55rem 1rem;
+    font-size: 0.78rem;
+    color: var(--stone-400);
+    text-decoration: none;
+    font-weight: 300;
+    line-height: 1.4;
+    border-left: 2px solid transparent;
+    margin-left: -0.5px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .toc-list a:hover { color: var(--slate-900); }
+  .toc-list a.active { color: var(--slate-900); border-left-color: var(--stone-800); font-weight: 400; }
+ 
+  .sidebar-about {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 0.5px solid var(--stone-200);
+  }
+  .sidebar-about-name {
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--slate-900);
+    margin-bottom: 0.2rem;
+  }
+  .sidebar-about-role {
+    font-size: 0.72rem;
+    color: var(--stone-400);
+    font-weight: 300;
+    line-height: 1.5;
+    margin-bottom: 0.85rem;
+  }
+  .sidebar-about-link {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.2s;
+  }
+  .sidebar-about-link::after { content: '→'; }
+  .sidebar-about-link:hover { color: var(--slate-900); }
+ 
+  /* ── Back & footer ── */
+  .back-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem 3rem;
+    border-top: 0.5px solid var(--stone-200);
+  }
+  .back-link {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: color 0.2s;
+  }
+  .back-link::before { content: '←'; font-size: 0.85rem; }
+  .back-link:hover { color: var(--slate-900); }
+ 
+  footer {
+    border-top: 0.5px solid var(--stone-200);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-copy { font-size: 0.75rem; color: var(--stone-400); }
+  .footer-cats { font-size: 0.75rem; color: var(--stone-400); font-style: italic; font-family: var(--serif); }
+ 
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .article-outer { grid-template-columns: 1fr; gap: 3rem; }
+    .article-sidebar { position: static; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 1.25rem 1.5rem; }
+    .nav-links { gap: 1.25rem; }
+    .page-header-section { padding: 2.5rem 1.5rem; }
+    .article-outer { padding: 3rem 1.5rem; }
+    .back-section { padding: 2rem 1.5rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .nav-links { gap: 1rem; }
+    .nav-links a { font-size: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+ 
+<div class="progress-bar" id="progress"></div>
+ 
+<!-- ── Nav ── -->
+<nav>
+  <a class="nav-logo" href="/">The Thorntons</a>
+  <ul class="nav-links">
+    <li><a href="/rob/">Rob</a></li>
+    <li><a href="/jennifer/" class="active">Jennifer</a></li>
+    <li><a href="/natalie/">Natalie</a></li>
+    <li><a href="/kaitlyn/">Kaitlyn</a></li>
+  </ul>
+</nav>
+ 
+<!-- ── Page header ── -->
+<div class="page-header-section">
+  <p class="breadcrumb">
+    <a href="/jennifer/">Jennifer Thornton</a>
+    <span>/</span>
+    <a href="/jennifer/portfolio/">Portfolio</a>
+    <span>/</span>
+    NPO Fraud Tactics
+  </p>
+  <div class="article-tag">Article · Fraud Operations</div>
+  <h1 class="page-title">What NPO Fraud Actually <em>Looks Like</em></h1>
+  <div class="byline">
+    <div>
+      <div class="byline-name">Jennifer Thornton</div>
+      <div class="byline-role">Senior Fraud Operations Analyst</div>
+    </div>
+    <div class="byline-divider"></div>
+    <div class="byline-meta">June 2026 &nbsp;·&nbsp; 12 min read</div>
+  </div>
+</div>
+ 
+<!-- ── Article ── -->
+<div class="article-outer">
+ 
+  <!-- Main content -->
+  <article class="article-body">
+ 
+    <p>Most fraud detection content focuses on consumer fraud — stolen credit cards, identity theft, account takeovers. Those are real problems, but there's a quieter category of financial crime that gets far less attention: nonprofit fraud in the corporate social responsibility space. I've spent years investigating it, and it's genuinely fascinating — partly because it's technically complex, and partly because the organizations perpetrating it are often hiding behind the language of doing good.</p>
+ 
+    <p>This article is a practical rundown of the tactics I see most often. If you work in fraud, compliance, or AML and your organization handles charitable giving — through a CSR platform, a donor-advised fund, or a corporate matching program — this is the landscape you're operating in.</p>
+ 
+    <div class="pull-quote">
+      <p>The most effective nonprofit fraudsters don't look like fraudsters. They look like charities.</p>
+    </div>
+ 
+    <h2 id="why-npo">Why NPO fraud is <em>different</em></h2>
+ 
+    <p>Consumer fraud usually involves someone trying to take money that isn't theirs. NPO fraud in the CSR space involves someone who has already received money — legitimately, in many cases — and is either misrepresenting how it's used, inflating their activity to extract more, or running a shell organization designed to funnel funds back to the people who donated them in the first place.</p>
+ 
+    <p>The detection challenge is compounded by two things. First, nonprofits are trusted by default. When a 501(c)(3) appears on a platform, donors and corporate clients assume someone has already done the vetting. Often, that assumption is wrong. Second, the fraud frequently involves insiders — employees or their family members — which makes pattern detection harder. The signals are there, but they're subtle.</p>
+ 
+    <h2 id="tactics">The tactics, <em>one by one</em></h2>
+ 
+    <h3>01 — Match harvesting</h3>
+ 
+    <div class="tactic">
+      <div class="tactic-label">Most common · High volume · Often coordinated</div>
+      <div class="tactic-title">Gaming the employer match to extract double the value</div>
+      <p class="tactic-body">Match harvesting is the most prevalent tactic I encounter. The mechanics are simple: a donor gives to a nonprofit they control, or in which they have a personal interest. Their employer matches the donation. The nonprofit then returns some or all of the funds to the donor, effectively turning a $50 donation into a $100 personal gain with the employer covering the difference.</p>
+      <p class="tactic-body" style="margin-top:1rem;">In practice it's often more coordinated than that. I've seen cases where a small group of employees — sometimes colleagues, sometimes family members — rotate donations across a handful of complicit nonprofits, generating match payouts repeatedly over months before the pattern becomes visible in transaction data.</p>
+      <p class="tactic-body" style="margin-top:1rem;">In more sophisticated schemes, diaspora groups sit on NPO boards and rotate leadership frequently — particularly when they suspect they've been identified. Rather than stopping, they'll simply create a new NPO or transfer control to an existing one and continue the same practices under a different name. The fraud doesn't end; it migrates. This is why the ability to review cluster entities for overlapping leadership and governance structures is so valuable — the individual NPO may look clean, but the network it belongs to tells a different story.</p>
+      <div class="tactic-signal">
+        <strong>Signals to look for</strong>
+        Donations clustering tightly at or just above the minimum match threshold. A high ratio of match value to base donations (4× or higher is a red flag). Multiple donors sharing an email domain donating to the same small NPO. Zero recurring donors — everyone gives once, near the match cap, and never again. When reviewing flagged NPOs, look for overlapping board members and governance structures across cluster entities — fraudulent networks often resurface under new names when they believe they've been caught, and shared leadership is the thread that connects them.
+      </div>
+    </div>
+ 
+    <h3>02 — Impossible volunteer hours</h3>
+ 
+    <div class="tactic">
+      <div class="tactic-label">Underreported · Hard to disprove · Often combined with match harvesting</div>
+      <div class="tactic-title">Claiming volunteer hours that simply couldn't have happened</div>
+      <p class="tactic-body">Many corporate CSR programs offer a dollar-per-hour incentive for verified volunteer time. The verification is usually self-reporting — employees submit their hours, and the company makes a corresponding donation. The problem is that there is rarely any mechanism to verify whether those hours actually happened.</p>
+      <p class="tactic-body" style="margin-top:1rem;">I've reviewed volunteer hour submissions where individuals are logging several hundred hours within a single month — while employed full-time. It's a simple test: you cannot volunteer more hours than you are employed. When the math doesn't work, the submission is fraudulent by definition, and yet these claims routinely pass through platforms without any automated check against that basic threshold.</p>
+      <p class="tactic-body" style="margin-top:1rem;">A subtler but equally telling red flag: an NPO that receives a disproportionate volume of corporate-matched volunteer hours while showing zero donations. Genuine charitable engagement doesn't look like that. When people care enough about an organization to give hundreds of hours of their time, some of them donate too. An NPO with high matched-hour volume and no donation activity isn't organic — it's a signal that the hours are being manufactured specifically to extract the corporate match.</p>
+      <div class="tactic-signal">
+        <strong>Signals to look for</strong>
+        Individual hour submissions that exceed what's physically possible alongside full-time employment — particularly claims of several hundred hours within a single month. NPOs receiving high volumes of corporate-matched volunteer hours with zero corresponding donations. Hours claims that spike around match program deadlines and drop to zero outside them.
+      </div>
+    </div>
+ 
+    <h3>03 — Shell NPOs</h3>
+ 
+    <div class="tactic">
+      <div class="tactic-label">Highest risk · Often linked to repeat offenders · Network effects</div>
+      <div class="tactic-title">Legitimate-looking organizations with nothing behind them</div>
+      <p class="tactic-body">A shell NPO has a valid EIN, a website, a mission statement, and sometimes even a brief operating history — enough to pass a surface-level review. What it doesn't have is any meaningful charitable activity. Funds flow in through a CSR platform, and flow back out through payments to "contractors," "consultants," or "program partners" that trace back to the same individuals who control the nonprofit.</p>
+      <p class="tactic-body" style="margin-top:1rem;">What makes this particularly difficult to detect is that shell NPOs often mirror the language and presentation of legitimate charities operating in the same space. I've seen mission statements that were essentially paraphrased from a real local organization's website. The EIN checks out, the 501(c)(3) status is current, and there's a physical address — which, on investigation, turned out to be a UPS store.</p>
+      <div class="tactic-signal">
+        <strong>Signals to look for</strong>
+        Domain registered less than 18 months ago, with social accounts created around the same time. Mission statement language that mirrors a legitimate local NPO. No Form 990 on file, or 990s with minimal program expenditure relative to total revenue. Board members sharing a residential address. Cross-referencing EINs against flagged organizations on the same platform often reveals network connections.
+      </div>
+    </div>
+ 
+    <h3>04 — Form 990-EZ underreporting</h3>
+ 
+    <div class="tactic">
+      <div class="tactic-label">IRS reporting gap · Platform data mismatch · Often overlooked</div>
+      <div class="tactic-title">Filing a postcard return while processing far more than the threshold allows</div>
+      <p class="tactic-body">US-based nonprofits with annual revenues under $50,000 are eligible to file a Form 990-N — commonly called the e-Postcard — instead of a full 990 or 990-EZ. It's a minimal disclosure: eight data points, no financial detail, no public accountability. Organizations with revenues between $50,000 and $200,000 file the 990-EZ, which requires more information but still far less than a full return.</p>
+      <p class="tactic-body" style="margin-top:1rem;">The tactic I've seen is straightforward: an NPO files a 990-N or 990-EZ claiming revenues below the relevant threshold, while their actual donation volume on the CSR platform tells a completely different story. I've reviewed cases where an organization's platform data showed six figures in processed donations within a single calendar year — donations that never appeared in any public filing. The IRS record showed a postcard. The platform showed fraud.</p>
+      <p class="tactic-body" style="margin-top:1rem;">This works because IRS filings and CSR platform data exist in entirely separate systems with no automatic reconciliation between them. Nobody is routinely cross-referencing the two — which is exactly what the fraudster is counting on.</p>
+      <div class="tactic-signal">
+        <strong>Signals to look for</strong>
+        990-N or 990-EZ filings from organizations whose platform donation totals materially exceed the $50,000 or $200,000 filing thresholds. Multi-year 990-N filers whose donation velocity on the platform has been growing steadily. Organizations that cite "low revenues" in self-certification submissions while showing high transaction volume. Any NPO where the IRS-reported revenue and the platform-processed total don't reconcile within a reasonable margin.
+      </div>
+    </div>
+ 
+    <h3>05 — AI-generated websites &amp; forged documentation</h3>
+ 
+    <div class="tactic">
+      <div class="tactic-label">Rapidly evolving · Increasingly convincing · Affects KYB/KYC integrity</div>
+      <div class="tactic-title">Using AI tools to manufacture legitimacy from scratch</div>
+      <p class="tactic-body">This is the tactic that has changed the most in the last few years, and it's the one I'd most want other fraud professionals to be paying attention to in 2026. It is extraordinarily easy to use AI tools to spin up a convincing nonprofit presence — a polished website, a compelling mission statement, emotionally resonant imagery generated in seconds. What used to take months of organizational history to fabricate can now be assembled in an afternoon.</p>
+      <p class="tactic-body" style="margin-top:1rem;">The documentation problem is just as serious. AI can be used to alter financial statements, business registration documents, tax filings, and anything else required to pass a KYB or KYC review. The alterations are often subtle — and that's exactly what makes them dangerous. I've seen documents where the business name changes partway through the same file, where the entity is described using language that suggests a for-profit structure (LLC designations appearing in what's supposed to be a 501(c)(3) filing), and where typos or formatting inconsistencies point to a document that was assembled rather than issued. None of these individually would fail a surface review. Together, they tell a different story.</p>
+      <p class="tactic-body" style="margin-top:1rem;">Third-party document verification tooling can help catch forgeries at scale, and it's worth integrating where possible. But tooling alone isn't enough. The most important thing is to stay hyper-vigilant and trust your instincts — if something feels off about a document, it usually is. The details that don't quite add up are often the ones worth pulling on.</p>
+      <p class="tactic-body" style="margin-top:1rem;">A related pattern worth flagging: trend-farming. Fraudsters will spin up an NPO around a current crisis — a natural disaster, a conflict, a public health emergency — accepting donations while the cause has maximum emotional salience, then disappear. These organizations often deliberately mimic the branding and naming of well-regarded legitimate charities, and they use aggressive tactics: manufactured urgency, heavy emotional appeals, and pressure to donate immediately. The speed is the tell. Legitimate organizations build presence over time. Crisis-opportunists arrive fully formed and vanish just as quickly.</p>
+      <div class="tactic-signal">
+        <strong>Signals to look for</strong>
+        Websites and documentation that look polished but lack any organizational history — no press coverage, no event records, no staff profiles with verifiable LinkedIn presence. Business names or entity designations inconsistent with nonprofit status anywhere in the documentation. Formatting anomalies, font inconsistencies, or metadata that doesn't match the issuing body. NPOs that appeared recently and are tied to a current high-profile crisis, especially those using emotional urgency and branding similar to established charities. When something in a document doesn't add up, don't rationalize it away — investigate it.
+      </div>
+    </div>
+ 
+    <div class="pull-quote">
+      <p>Fraudulent NPOs rarely operate alone. Shell organizations and repeat offenders often share board members, addresses, or platform history — and that network is where the clearest evidence lives.</p>
+    </div>
+ 
+    <h2 id="investigation">How I approach <em>an investigation</em></h2>
+ 
+    <p>When a case lands on my desk, the first thing I do is resist the temptation to jump straight to the most visible red flag. A suspicious donation pattern is usually a symptom. The underlying cause — whether it's a shell NPO, a coordinated harvesting scheme, or an insider — takes more structured investigation to surface.</p>
+ 
+    <p>My approach runs in stages. Legal and regulatory status first, because a revoked 501(c)(3) is an automatic critical flag and changes the entire character of the case. Then governance and leadership — who actually controls this organization, and do those people check out? Adverse media next, because reputational signals often appear in local press long before they show up in any database. Then digital presence, financial transparency, program evidence, and finally network analysis, which cross-references board members and EINs against the platform's broader history.</p>
+ 
+    <p>That last stage — network analysis — is where coordinated fraud most often reveals itself. Fraudulent organizations rarely operate in isolation. The same names, addresses, and email domains appear across multiple entities. Catching one usually means catching several.</p>
+ 
+    <h2 id="prevention">What good <em>prevention</em> looks like</h2>
+ 
+    <p>Detection matters, but the most effective fraud programs invest equally in prevention. A few things that make a real difference: requiring Form 990s or equivalent financial disclosures at onboarding rather than on request; flagging donation velocity spikes in real time rather than catching them in monthly reviews; building transaction anomaly detectors that watch for threshold clustering and match ratio outliers; and making self-certification submissions reviewable against prior submissions so inconsistencies surface automatically rather than requiring manual comparison.</p>
+ 
+    <p>None of this is glamorous. It's the operational infrastructure that most CSR fraud programs don't have until something goes wrong. Building it proactively is significantly cheaper than recovering from a large-scale incident — both financially and in terms of client trust.</p>
+ 
+    <div class="takeaways">
+      <div class="takeaways-label">Key takeaways</div>
+      <ul class="takeaways-list">
+        <li>Match harvesting is the highest-volume tactic — watch for threshold clustering, high match ratios, and single-domain donor groups.</li>
+        <li>Volunteer hour claims are almost never audited. A simple check — individual hours versus hours physically possible alongside full-time employment — catches a surprising amount. Zero donations alongside high matched-hour volume is equally telling.</li>
+        <li>Shell NPOs invest in looking legitimate — check registration date, Form 990 history, board member addresses, and program evidence, not just 501(c)(3) status.</li>
+        <li>Cross-reference IRS filing status against platform donation totals. A 990-N postcard filer processing six figures on your platform is a serious red flag that no single system will surface on its own.</li>
+        <li>AI has made it trivial to manufacture a convincing nonprofit presence — polished websites, generated imagery, and altered documents can all pass a surface review. Look for organizational history, not just organizational appearance. When something in a document doesn't add up, trust that instinct and investigate it.</li>
+        <li>Trend-farming — spinning up crisis-linked NPOs to harvest donations then disappear — is an increasingly common pattern. Urgency, emotional appeals, and similarity to established charities are the hallmarks.</li>
+        <li>Network analysis catches coordinated fraud that individual NPO checks miss. Fraudulent organizations share people, addresses, and histories more often than you'd expect.</li>
+        <li>Prevention infrastructure — velocity monitoring, anomaly detection, financial disclosure requirements — is far cheaper to build than a post-incident recovery.</li>
+      </ul>
+    </div>
+ 
+  </article>
+ 
+  <!-- Sidebar -->
+  <aside class="article-sidebar">
+    <div class="sidebar-label">In this article</div>
+    <ul class="toc-list" id="toc">
+      <li><a href="#why-npo" class="active">Why NPO fraud is different</a></li>
+      <li><a href="#tactics">The tactics, one by one</a></li>
+      <li><a href="#investigation">How I approach an investigation</a></li>
+      <li><a href="#prevention">What good prevention looks like</a></li>
+    </ul>
+ 
+    <div class="sidebar-about">
+      <div class="sidebar-about-name">Jennifer Thornton</div>
+      <div class="sidebar-about-role">Senior Fraud &amp; Compliance Operations Analyst · Benevity, Inc.</div>
+      <a class="sidebar-about-link" href="/jennifer/">View full profile</a>
+    </div>
+  </aside>
+ 
+</div>
+ 
+<!-- ── Back link ── -->
+<div class="back-section">
+  <a class="back-link" href="/jennifer/portfolio/">Back to portfolio</a>
+</div>
+ 
+<footer>
+  <p class="footer-copy">&copy; 2025 The Thorntons &middot; thethorntons.ca</p>
+  <p class="footer-cats">Supervised by Khaleesi &amp; Luna</p>
+</footer>
+ 
+<script>
+  // Reading progress bar
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const scrolled = doc.scrollTop;
+    const total = doc.scrollHeight - doc.clientHeight;
+    bar.style.width = (scrolled / total * 100) + '%';
+  });
+ 
+  // Table of contents scrollspy
+  const headings = document.querySelectorAll('h2[id]');
+  const tocLinks = document.querySelectorAll('#toc a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  headings.forEach(h => observer.observe(h));
+</script>
+</body>
+</html>
