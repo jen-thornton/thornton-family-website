@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio — Jennifer Thornton</title>
+  <meta name="description" content="Portfolio of Jennifer Thornton — case studies, frameworks, and examples from a career in fraud operations and compliance.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    :root {
+      --stone-50:  #F8F6F1;
+      --stone-100: #EDE9E0;
+      --stone-200: #D6CFC2;
+      --stone-400: #A89F8F;
+      --stone-600: #6B6256;
+      --stone-800: #3A332A;
+      --slate-900: #1C1C1E;
+      --serif: 'EB Garamond', Georgia, serif;
+      --sans:  'Inter', system-ui, sans-serif;
+    }
+ 
+    body {
+      font-family: var(--sans);
+      background-color: var(--stone-50);
+      color: var(--slate-900);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+ 
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      border-bottom: 0.5px solid var(--stone-200);
+      background: var(--stone-50);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--stone-600);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--slate-900); }
+    .nav-links a.active { color: var(--slate-900); }
+ 
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 3rem;
+    }
+    .section + .section { border-top: 0.5px solid var(--stone-200); }
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 2rem;
+    }
+ 
+    /* PAGE HEADER */
+    .page-header-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 3rem 3rem;
+      border-bottom: 0.5px solid var(--stone-200);
+    }
+    .breadcrumb {
+      font-size: 0.72rem;
+      color: var(--stone-400);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .breadcrumb a { color: var(--stone-400); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--slate-900); }
+    .breadcrumb span { color: var(--stone-200); }
+    .page-title {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--slate-900);
+      margin-bottom: 1rem;
+    }
+    .page-title em { font-style: italic; color: var(--stone-600); }
+    .page-intro {
+      font-size: 0.9rem;
+      line-height: 1.85;
+      color: var(--stone-600);
+      font-weight: 300;
+      max-width: 65ch;
+    }
+ 
+    /* PORTFOLIO GRID */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5px;
+      background: var(--stone-200);
+      border: 0.5px solid var(--stone-200);
+    }
+    .portfolio-card {
+      background: var(--stone-50);
+      padding: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: background 0.2s;
+      text-decoration: none;
+      color: inherit;
+      cursor: default;
+    }
+    .portfolio-card.has-link { cursor: pointer; }
+    .portfolio-card.has-link:hover { background: var(--stone-100); }
+    .card-tag {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+    }
+    .card-title {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      line-height: 1.25;
+    }
+    .card-desc {
+      font-size: 0.82rem;
+      line-height: 1.75;
+      color: var(--stone-600);
+      font-weight: 300;
+      flex: 1;
+    }
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 0.5px solid var(--stone-200);
+      margin-top: auto;
+    }
+    .card-employer {
+      font-size: 0.72rem;
+      color: var(--stone-400);
+      letter-spacing: 0.05em;
+    }
+    .card-action {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+    }
+    .card-action.coming-soon {
+      font-style: italic;
+      font-family: var(--serif);
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: 0.8rem;
+    }
+    .card-action.link::after { content: ' →'; }
+    .portfolio-card.has-link:hover .card-action { color: var(--slate-900); }
+ 
+    /* ARTICLES SECTION */
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5px;
+      background: var(--stone-200);
+      border: 0.5px solid var(--stone-200);
+    }
+    .article-card {
+      background: var(--stone-50);
+      padding: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.2s;
+    }
+    .article-card:hover { background: var(--stone-100); }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .article-tag {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+    }
+    .article-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--stone-200);
+    }
+    .article-read-time {
+      font-size: 0.65rem;
+      color: var(--stone-400);
+      letter-spacing: 0.06em;
+    }
+    .article-title {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      line-height: 1.25;
+    }
+    .article-desc {
+      font-size: 0.82rem;
+      line-height: 1.75;
+      color: var(--stone-600);
+      font-weight: 300;
+      flex: 1;
+    }
+    .article-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 0.5px solid var(--stone-200);
+      margin-top: auto;
+    }
+    .article-date {
+      font-size: 0.72rem;
+      color: var(--stone-400);
+    }
+    .article-action {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+    }
+    .article-action::after { content: ' →'; }
+    .article-card:hover .article-action { color: var(--slate-900); }
+ 
+    /* BACK LINK */
+    .back-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem;
+      border-top: 0.5px solid var(--stone-200);
+    }
+    .back-link {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+    .back-link::before { content: '←'; font-size: 0.85rem; }
+    .back-link:hover { color: var(--slate-900); }
+ 
+    footer {
+      border-top: 0.5px solid var(--stone-200);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy { font-size: 0.75rem; color: var(--stone-400); }
+    .footer-cats { font-size: 0.75rem; color: var(--stone-400); font-style: italic; font-family: var(--serif); }
+ 
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { gap: 1.25rem; }
+      .page-header-section { padding: 2.5rem 1.5rem 2.5rem; }
+      .section { padding: 3rem 1.5rem; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .back-section { padding: 2rem 1.5rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+ 
+  <nav>
+    <a class="nav-logo" href="/">The Thorntons</a>
+    <ul class="nav-links">
+      <li><a href="/rob/">Rob</a></li>
+      <li><a href="/jennifer/" class="active">Jennifer</a></li>
+      <li><a href="/natalie/">Natalie</a></li>
+      <li><a href="/kaitlyn/">Kaitlyn</a></li>
+    </ul>
+  </nav>
+ 
+  <div class="page-header-section">
+    <p class="breadcrumb">
+      <a href="/jennifer/">Jennifer Thornton</a>
+      <span>/</span>
+      Portfolio
+    </p>
+    <h1 class="page-title">Selected<br><em>work</em></h1>
+    <p class="page-intro">A collection of frameworks, case studies, articles, and operational work built across a career in fraud operations and compliance. More pieces added as they become available to share.</p>
+  </div>
+ 
+  <!-- PROJECTS -->
+  <div class="section">
+    <p class="section-label">Projects</p>
+    <div class="portfolio-grid" style="grid-template-columns: 1fr;">
+ 
+      <a class="portfolio-card has-link" href="/jennifer/portfolio/platform-integrity-agent/">
+        <p class="card-tag">AI &amp; Automation · Benevity, Inc.</p>
+        <p class="card-title">Platform Integrity Investigation Agent — 48% reduction in manual effort</p>
+        <p class="card-desc">Designed and built an AI-powered investigation agent that performs forensic donation analysis and OSINT research with human-in-the-loop verification — cutting manual investigation time nearly in half within months of deployment. Includes a 7-stage OSINT pipeline, risk scoring framework, escalation logic, and full analyst sign-off workflow. Built as a team of one with no prior tooling in place.</p>
+        <div class="card-footer">
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <span class="card-employer">Claude API</span>
+            <span class="card-employer">·</span>
+            <span class="card-employer">Agentic AI</span>
+            <span class="card-employer">·</span>
+            <span class="card-employer">OSINT</span>
+            <span class="card-employer">·</span>
+            <span class="card-employer">Risk Scoring</span>
+            <span class="card-employer">·</span>
+            <span class="card-employer">Human-in-the-loop</span>
+          </div>
+          <span class="card-action link">View project</span>
+        </div>
+      </a>
+ 
+    </div>
+  </div>
+ 
+  <!-- ARTICLES -->
+  <div class="section">
+    <p class="section-label">Articles &amp; writing</p>
+    <div class="articles-grid">
+ 
+      <a class="article-card" href="/jennifer/portfolio/npo-fraud-article/">
+        <div class="article-meta">
+          <span class="article-tag">Fraud Operations</span>
+          <span class="article-dot"></span>
+          <span class="article-read-time">12 min read</span>
+        </div>
+        <p class="article-title">What NPO Fraud Actually Looks Like</p>
+        <p class="article-desc">A practitioner's guide to the tactics that appear most often in CSR fraud — from match harvesting and impossible volunteer hours to AI-generated documentation and trend-farming crisis NPOs.</p>
+        <div class="article-footer">
+          <span class="article-date">June 2026</span>
+          <span class="article-action">Read article</span>
+        </div>
+      </a>
+ 
+      <div class="article-card" style="cursor:default;">
+        <div class="article-meta">
+          <span class="article-tag">AML &amp; Strategy</span>
+          <span class="article-dot"></span>
+          <span class="article-read-time">Coming soon</span>
+        </div>
+        <p class="article-title">FRAML: Why Fraud and AML Need to Work as One</p>
+        <p class="article-desc">Fraud and AML have historically operated as separate disciplines — but as financial crime evolves, so must the teams fighting it. A look at the case for convergence and what it means in practice.</p>
+        <div class="article-footer">
+          <span class="article-date">2026</span>
+          <span class="article-action" style="font-style:italic; font-family:var(--serif); text-transform:none; letter-spacing:0; font-size:0.8rem;">Article coming soon</span>
+        </div>
+      </div>
+ 
+    </div>
+  </div>
+ 
+  <div class="back-section">
+    <a class="back-link" href="/jennifer/">Back to Jennifer's profile</a>
+  </div>
+ 
+  <footer>
+    <p class="footer-copy">&copy; 2025 The Thorntons &middot; thethorntons.ca</p>
+    <p class="footer-cats">Supervised by Khaleesi &amp; Luna</p>
+  </footer>
+ 
+</body>
+</html>
