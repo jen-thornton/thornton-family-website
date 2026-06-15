@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rob Thornton — The Thorntons</title>
   <meta name="description" content="Rob Thornton — Senior Software Developer at Shopify. Building reliable systems, exploring with GPS, and tinkering at the edges of what's possible.">
+  <meta name="theme-color" content="#F8F6F1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -38,7 +39,9 @@
       align-items: center;
       padding: 1.5rem 3rem;
       border-bottom: 0.5px solid var(--stone-200);
-      background: var(--stone-50);
+      background: rgba(248, 246, 241, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -89,7 +92,7 @@
       font-weight: 500;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--stone-400);
+      color: var(--stone-600);
       margin-bottom: 0.75rem;
     }
     .page-header-name {
@@ -154,7 +157,7 @@
       font-weight: 500;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--stone-400);
+      color: var(--stone-600);
       margin-bottom: 2rem;
     }
     .section-heading {
@@ -194,7 +197,7 @@
       font-weight: 500;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--stone-400);
+      color: var(--stone-600);
       margin-bottom: 0.35rem;
     }
     .detail-value {
@@ -261,7 +264,7 @@
       font-weight: 400;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--stone-400);
+      color: var(--stone-600);
       margin-bottom: 0.35rem;
     }
     .timeline-company {
@@ -348,7 +351,7 @@
     }
     .family-nav-role {
       font-size: 0.75rem;
-      color: var(--stone-400);
+      color: var(--stone-600);
       font-weight: 400;
       letter-spacing: 0.03em;
       margin-bottom: 0.85rem;
@@ -364,6 +367,12 @@
     }
     .family-nav-link::after { content: '→'; font-size: 0.85rem; }
     .family-nav-card:hover .family-nav-link { color: var(--slate-900); }
+ 
+    /* FOCUS */
+    a:focus-visible {
+      outline: 2px solid var(--stone-800);
+      outline-offset: 3px;
+    }
  
     /* FOOTER */
     footer {
@@ -418,7 +427,7 @@
  
   <!-- PAGE HEADER -->
   <div class="page-header">
-    <img class="page-header-photo" src="../images/rob.jpg" alt="Rob Thornton">
+    <img class="page-header-photo" src="../images/rob.jpg" alt="Rob Thornton" width="200" height="200" fetchpriority="high">
     <div class="page-header-text">
       <p class="page-header-eyebrow">Senior Software Developer</p>
       <h1 class="page-header-name">Rob<br><em>Thornton</em></h1>
