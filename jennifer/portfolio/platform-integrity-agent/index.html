@@ -23,7 +23,7 @@
     --slate-900: #1C1C1E;
     --serif: 'EB Garamond', Georgia, serif;
     --sans:  'Inter', system-ui, sans-serif;
-
+ 
     /* Agent mockup tokens — kept exactly as authored */
     --bg: #F8F9FB;
     --bg-card: #FFFFFF;
@@ -48,9 +48,9 @@
     --radius: 8px;
     --radius-lg: 12px;
   }
-
+ 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
   body {
     font-family: var(--sans);
     background-color: var(--stone-50);
@@ -59,7 +59,7 @@
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
-
+ 
   /* ─────────────────────────────────────────
      NAV — Thornton style
   ───────────────────────────────────────── */
@@ -94,7 +94,7 @@
   }
   .nav-links a:hover { color: var(--slate-900); }
   .nav-links a.active { color: var(--slate-900); }
-
+ 
   /* ─────────────────────────────────────────
      PAGE HEADER — Thornton style
   ───────────────────────────────────────── */
@@ -144,7 +144,7 @@
     padding: 0.3rem 0.65rem;
     background: var(--stone-50);
   }
-
+ 
   /* ─────────────────────────────────────────
      ORIGIN / CONTEXT — Thornton style wrapper
      (text sections between screens)
@@ -204,7 +204,7 @@
     font-weight: 300;
   }
   .origin-col-body p + p { margin-top: 0.85rem; }
-
+ 
   /* Stats strip */
   .stats-strip {
     display: grid;
@@ -232,7 +232,7 @@
     font-weight: 300;
     line-height: 1.5;
   }
-
+ 
   /* ─────────────────────────────────────────
      SCREEN WRAPPER — sits inside Thornton layout
   ───────────────────────────────────────── */
@@ -271,7 +271,7 @@
     font-weight: 300;
     margin-left: auto;
   }
-
+ 
   /* ─────────────────────────────────────────
      AGENT MOCKUP — all styles kept exactly
      as originally authored by Jennifer
@@ -307,7 +307,7 @@
     margin: 0 8px;
   }
   .screen-inner { padding: 24px; }
-
+ 
   /* Annotation system — kept exactly */
   .annotated { position: relative; }
   .annotated::after {
@@ -336,7 +336,7 @@
     right: -4px;
     left: auto;
     transform: none;
-    width: 340px;
+    width: 420px;
     background: #F0FDFA;
     border: 1px solid #99F6E4;
     border-left: 3px solid #0D9488;
@@ -348,6 +348,10 @@
   }
   .annotated:hover .annotation-tooltip { display: block; }
   .annotation-tooltip { pointer-events: auto; }
+  .annotation-tooltip.tooltip-up {
+    top: auto;
+    bottom: calc(100% + 4px);
+  }
   .annotation-tip-header {
     display: flex;
     align-items: center;
@@ -376,7 +380,7 @@
     line-height: 1.65;
   }
   .annotation-text strong { color: #042F2E; font-weight: 500; }
-
+ 
   /* UI components — kept exactly */
   .topbar {
     display: flex; align-items: center; justify-content: space-between;
@@ -581,7 +585,7 @@
   }
   .btn-danger { background: var(--red-dim); color: var(--red); border-color: #FECACA; }
   .ui-divider { height: 1px; background: var(--border); margin: 12px 0; }
-
+ 
   /* ─────────────────────────────────────────
      BACK LINK & FOOTER — Thornton style
   ───────────────────────────────────────── */
@@ -604,7 +608,7 @@
   }
   .back-link::before { content: '←'; font-size: 0.85rem; }
   .back-link:hover { color: var(--slate-900); }
-
+ 
   footer {
     border-top: 0.5px solid var(--stone-200);
     padding: 2rem 3rem;
@@ -614,7 +618,7 @@
   }
   .footer-copy { font-size: 0.75rem; color: var(--stone-400); }
   .footer-note { font-size: 0.75rem; color: var(--stone-400); font-style: italic; font-family: var(--serif); }
-
+ 
   /* ─────────────────────────────────────────
      RESPONSIVE
   ───────────────────────────────────────── */
@@ -644,7 +648,7 @@
 </style>
 </head>
 <body>
-
+ 
 <!-- ─── NAV ─── -->
 <nav>
   <a class="nav-logo" href="/">The Thorntons</a>
@@ -655,7 +659,7 @@
     <li><a href="/kaitlyn/">Kaitlyn</a></li>
   </ul>
 </nav>
-
+ 
 <!-- ─── PAGE HEADER ─── -->
 <div class="page-header-section">
   <p class="breadcrumb">
@@ -677,7 +681,7 @@
     <span class="header-tag">Human-in-the-loop</span>
   </div>
 </div>
-
+ 
 <!-- ─── ORIGIN STORY ─── -->
 <div class="thornton-section">
   <p class="section-label">Background</p>
@@ -699,7 +703,7 @@
       </div>
     </div>
   </div>
-
+ 
   <div class="stats-strip">
     <div class="stat-item">
       <div class="stat-num">7</div>
@@ -719,7 +723,7 @@
     </div>
   </div>
 </div>
-
+ 
 <!-- ══════════════════════════════════════
      SCREEN 1: CASE INTAKE
 ═══════════════════════════════════════ -->
@@ -730,14 +734,14 @@
       <span class="screen-title">Case intake</span>
       <span class="screen-desc">Structured input triggers the agent pipeline</span>
     </div>
-
+ 
     <div class="screen">
       <div class="screen-chrome">
         <div class="chrome-dots"><span></span><span></span><span></span></div>
         <div class="chrome-url">platform-integrity / investigations / new</div>
       </div>
       <div class="screen-inner">
-
+ 
         <div class="topbar">
           <div class="topbar-left">
             <i class="ti ti-file-plus" style="color:var(--text-secondary);"></i>
@@ -745,7 +749,7 @@
           </div>
           <span class="badge badge-gray">Draft</span>
         </div>
-
+ 
         <!-- NPO info -->
         <div class="sec-title">NPO information</div>
         <div class="ui-card annotated" data-badge="✦ Design note" style="position:relative;">
@@ -767,7 +771,7 @@
             <div class="annotation-text">Every field maps directly to what the OSINT pipeline needs to operate. EIN feeds stage 1 (legal status), website and social links feed stage 4 (digital presence), address feeds stage 2 (governance). <strong>No field is decorative</strong> — each one is a structured input for a downstream agent prompt.</div>
           </div>
         </div>
-
+ 
         <!-- Case context -->
         <div class="sec-title" style="margin-top:4px;">Case context</div>
         <div class="ui-card">
@@ -799,7 +803,7 @@
             </div>
           </div>
         </div>
-
+ 
         <!-- Data inputs -->
         <div class="sec-title" style="margin-top:4px;">Data inputs</div>
         <div class="ui-card">
@@ -816,9 +820,9 @@
             </div>
           </div>
           <div class="ui-divider"></div>
-
+ 
           <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;">Transaction analysis</div>
-
+ 
           <div class="ui-card annotated" style="margin-bottom:14px;position:relative;" data-badge="✦ Architecture note">
             <div class="annotation-tooltip">
               <div class="annotation-tip-header"><div class="annotation-tip-icon"><i class="ti ti-table-import"></i></div><span class="annotation-label">CSV pre-processing: optimised for speed and cost</span></div>
@@ -838,13 +842,13 @@
             <div class="anomaly"><i class="ti ti-alert-circle"></i>No recurring donors; all one-time gifts with no follow-on engagement</div>
             <div class="anomaly"><i class="ti ti-alert-circle"></i>Self-certified volunteer hours (480 hrs) inconsistent with 14-donor base</div>
           </div>
-
+ 
           <div class="ui-divider"></div>
           <div class="field" style="margin-bottom:14px;">
             <label>Self-certification response</label>
             <textarea>Q: Describe your primary programs and beneficiaries.
 A: We provide after-school tutoring and meals to underprivileged youth in the Phoenix metro area, serving approximately 200 children weekly.
-
+ 
 Q: How are donated funds allocated?
 A: 70% program delivery, 20% operations, 10% fundraising.</textarea>
             <div class="selfcert-check annotated" style="position:relative;" data-badge="✦ Design note">
@@ -856,7 +860,7 @@ A: 70% program delivery, 20% operations, 10% fundraising.</textarea>
             </div>
           </div>
         </div>
-
+ 
         <!-- Agent config -->
         <div class="sec-title" style="margin-top:4px;">Agent configuration</div>
         <div class="ui-card annotated" data-badge="✦ Design note" style="position:relative;">
@@ -886,18 +890,18 @@ A: 70% program delivery, 20% operations, 10% fundraising.</textarea>
             <div class="annotation-text">Not every case needs all 7 stages. A quick legitimacy check on a new NPO doesn't need transaction analysis. Making stages toggleable means the agent can run <strong>faster and cheaper</strong> for lower-stakes cases, and be dialled up to full depth when the risk warrants it.</div>
           </div>
         </div>
-
+ 
         <div style="display:flex;justify-content:flex-end;padding-top:12px;border-top:1px solid var(--border);gap:8px;">
           <button class="btn">Save draft</button>
           <button class="btn btn-agent-primary"><i class="ti ti-player-play"></i> Launch investigation</button>
         </div>
-
+ 
       </div>
     </div>
   </div>
 </div>
-
-
+ 
+ 
 <!-- ══════════════════════════════════════
      SCREEN 2: OSINT PIPELINE
 ═══════════════════════════════════════ -->
@@ -908,14 +912,14 @@ A: 70% program delivery, 20% operations, 10% fundraising.</textarea>
       <span class="screen-title">OSINT investigation pipeline</span>
       <span class="screen-desc">7-stage agent running live</span>
     </div>
-
+ 
     <div class="screen">
       <div class="screen-chrome">
         <div class="chrome-dots"><span></span><span></span><span></span></div>
         <div class="chrome-url">platform-integrity / investigations / PI-2024-0847 / osint</div>
       </div>
       <div class="screen-inner">
-
+ 
         <div class="topbar annotated" data-badge="✦ Architecture note" style="position:relative;">
           <div class="annotation-tooltip">
             <div class="annotation-tip-header"><div class="annotation-tip-icon"><i class="ti ti-layers-intersect"></i></div><span class="annotation-label">Why 7 stages, not one big prompt</span></div>
@@ -931,7 +935,7 @@ A: 70% program delivery, 20% operations, 10% fundraising.</textarea>
             <span style="font-size:11px;color:var(--text-secondary);">Stage 4 of 7 · Est. 40s remaining</span>
           </div>
         </div>
-
+ 
         <!-- progress -->
         <div style="margin-bottom:20px;">
           <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-secondary);margin-bottom:6px;">
@@ -941,10 +945,10 @@ A: 70% program delivery, 20% operations, 10% fundraising.</textarea>
             <div style="height:100%;width:57%;background:var(--accent);border-radius:2px;"></div>
           </div>
         </div>
-
+ 
         <div class="sec-title">Agent stages</div>
         <div class="stage-list">
-
+ 
           <!-- S1 -->
           <div class="stage annotated" data-badge="✦ Why first" style="position:relative;">
             <div class="stage-connector"><div class="sdot sdot-done">✓</div><div class="sline sline-done"></div></div>
@@ -962,7 +966,7 @@ A: 70% program delivery, 20% operations, 10% fundraising.</textarea>
               <div class="annotation-text">Legal status is checked first because <strong>a revoked 501(c)(3) is an automatic critical flag</strong>. It means donations may not be tax-deductible and the corporate client has liability exposure. Finding this early prevents wasted effort on remaining stages if the case is already clear-cut.</div>
             </div>
           </div>
-
+ 
           <!-- S2 -->
           <div class="stage">
             <div class="stage-connector"><div class="sdot sdot-done">✓</div><div class="sline sline-done"></div></div>
@@ -976,7 +980,7 @@ A: 70% program delivery, 20% operations, 10% fundraising.</textarea>
               <div class="source-tags"><span class="stag">GuideStar</span><span class="stag">LinkedIn</span><span class="stag">AZ SOS</span></div>
             </div>
           </div>
-
+ 
           <!-- S3 -->
           <div class="stage annotated" data-badge="✦ Design note" style="position:relative;">
             <div class="stage-connector"><div class="sdot sdot-done">✓</div><div class="sline sline-done"></div></div>
@@ -994,7 +998,7 @@ A: 70% program delivery, 20% operations, 10% fundraising.</textarea>
               <div class="annotation-text">Adverse media can't be inferred from regulatory databases alone. News coverage, watchdog reports, and BBB ratings reveal <strong>reputational risk that doesn't show up in official filings</strong>. This is especially important when escalating to ELT, where brand exposure is as significant as legal exposure.</div>
             </div>
           </div>
-
+ 
           <!-- S4 active -->
           <div class="stage">
             <div class="stage-connector"><div class="sdot sdot-active">4</div><div class="sline sline-pending"></div></div>
@@ -1009,7 +1013,7 @@ A: 70% program delivery, 20% operations, 10% fundraising.</textarea>
               <div class="source-tags"><span class="stag">WHOIS</span><span class="stag">Wayback Machine</span><span class="stag">LinkedIn</span><span class="stag">Facebook</span></div>
             </div>
           </div>
-
+ 
           <!-- S5 -->
           <div class="stage">
             <div class="stage-connector"><div class="sdot sdot-pending">5</div><div class="sline sline-pending"></div></div>
@@ -1021,7 +1025,7 @@ A: 70% program delivery, 20% operations, 10% fundraising.</textarea>
               <div class="pending-stage">Queued · GuideStar, Charity Navigator, Google Maps, program evidence search</div>
             </div>
           </div>
-
+ 
           <!-- S6 -->
           <div class="stage">
             <div class="stage-connector"><div class="sdot sdot-pending">6</div><div class="sline sline-pending"></div></div>
@@ -1033,7 +1037,7 @@ A: 70% program delivery, 20% operations, 10% fundraising.</textarea>
               <div class="pending-stage">Queued · Form 990 lookup, Candid, Open990, funding source analysis</div>
             </div>
           </div>
-
+ 
           <!-- S7 -->
           <div class="stage annotated" data-badge="✦ Why last" style="position:relative;">
             <div class="stage-connector"><div class="sdot sdot-pending">7</div></div>
@@ -1044,19 +1048,19 @@ A: 70% program delivery, 20% operations, 10% fundraising.</textarea>
               </div>
               <div class="pending-stage">Queued · EIN cross-reference, board member network, platform history lookup</div>
             </div>
-            <div class="annotation-tooltip">
+            <div class="annotation-tooltip tooltip-up">
               <div class="annotation-tip-header"><div class="annotation-tip-icon"><i class="ti ti-network"></i></div><span class="annotation-label">Stage 7: the one that catches the most</span></div>
               <div class="annotation-text">Network analysis (cross-referencing EINs, board members, and platform history) was added after noticing that <strong>fraudulent NPOs rarely operate alone</strong>. Shell organizations and repeat offenders often share board members or addresses. This stage catches coordinated fraud that individual NPO checks would miss entirely.</div>
             </div>
           </div>
-
+ 
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
+ 
+ 
 <!-- ══════════════════════════════════════
      SCREEN 3: INVESTIGATION REPORT
 ═══════════════════════════════════════ -->
@@ -1067,14 +1071,14 @@ A: 70% program delivery, 20% operations, 10% fundraising.</textarea>
       <span class="screen-title">Investigation report</span>
       <span class="screen-desc">Risk score, findings, escalation &amp; analyst sign-off</span>
     </div>
-
+ 
     <div class="screen">
       <div class="screen-chrome">
         <div class="chrome-dots"><span></span><span></span><span></span></div>
         <div class="chrome-url">platform-integrity / investigations / PI-2024-0847 / report</div>
       </div>
       <div class="screen-inner">
-
+ 
         <div class="topbar">
           <div class="topbar-left">
             <i class="ti ti-shield-check" style="color:var(--text-secondary);"></i>
@@ -1086,7 +1090,7 @@ A: 70% program delivery, 20% operations, 10% fundraising.</textarea>
             <span style="font-size:11px;color:var(--text-secondary);">Generated Jun 10, 2026</span>
           </div>
         </div>
-
+ 
         <!-- Risk -->
         <div class="sec-title">Risk assessment</div>
         <div class="risk-banner annotated" data-badge="✦ Framework note" style="position:relative;">
@@ -1100,7 +1104,7 @@ A: 70% program delivery, 20% operations, 10% fundraising.</textarea>
             <div class="annotation-text">The Green / Yellow / Orange / Red scale maps directly to recommended actions: <strong>No action → RFI → Suspend → Terminate</strong>. This framework was built from scratch. There was no existing model when the fraud program launched. The goal was to make every decision <strong>consistent and defensible</strong>, especially when escalating to legal or ELT.</div>
           </div>
         </div>
-
+ 
         <div class="ui-card" style="margin-bottom:12px;">
           <div class="score-track"><div class="score-marker"></div></div>
           <div class="score-labels"><span>Green</span><span>Yellow</span><span>Orange</span><span>Red</span></div>
@@ -1111,7 +1115,7 @@ A: 70% program delivery, 20% operations, 10% fundraising.</textarea>
             <span class="badge badge-yellow">Self-cert: inconsistent</span>
           </div>
         </div>
-
+ 
         <!-- OSINT summary -->
         <div class="sec-title">OSINT findings summary</div>
         <div class="ui-card">
@@ -1122,7 +1126,7 @@ A: 70% program delivery, 20% operations, 10% fundraising.</textarea>
           <div class="flag-row"><i class="ti ti-alert-circle"></i>No verifiable program delivery. Mission statement mirrors a legitimate local NPO.</div>
           <div class="flag-row"><i class="ti ti-alert-circle"></i>Shared board member cross-references with 2 other flagged NPOs; 1 previously suspended on platform.</div>
         </div>
-
+ 
         <!-- Escalation -->
         <div class="sec-title">Escalation</div>
         <div class="esc-box annotated" style="margin-bottom:12px;position:relative;" data-badge="✦ Logic note">
@@ -1133,7 +1137,7 @@ A: 70% program delivery, 20% operations, 10% fundraising.</textarea>
             <div class="annotation-text">The escalation trigger isn't just risk score. It factors in <strong>blast radius</strong> (how many corporate clients or donors are affected), <strong>brand risk</strong> (adverse media that could reach the press) and <strong>legal/regulatory exposure</strong>. A medium-risk case with a Fortune 500 client and live media coverage escalates faster than a high-risk case with no external visibility.</div>
           </div>
         </div>
-
+ 
         <!-- Sign-off -->
         <div class="sec-title">Analyst review &amp; sign-off</div>
         <div class="signoff-box annotated" style="position:relative;" data-badge="✦ Governance note">
@@ -1151,27 +1155,27 @@ A: 70% program delivery, 20% operations, 10% fundraising.</textarea>
             <button class="btn">Draft comms</button>
             <button class="btn btn-danger" style="margin-left:auto;">Confirm &amp; submit</button>
           </div>
-          <div class="annotation-tooltip">
+          <div class="annotation-tooltip tooltip-up">
             <div class="annotation-tip-header"><div class="annotation-tip-icon"><i class="ti ti-user-check"></i></div><span class="annotation-label">Human-in-the-loop: by design, not as a fallback</span></div>
             <div class="annotation-text">The agent <strong>cannot take action on its own</strong>. Every investigation requires a human analyst to review findings, add notes, and explicitly confirm before any action is taken. This was a deliberate governance decision, not a technical limitation, to ensure <strong>accountability and defensibility</strong>, especially when terminating a nonprofit's access to the platform.</div>
           </div>
         </div>
-
+ 
       </div>
     </div>
   </div>
 </div>
-
+ 
 <!-- ─── BACK LINK ─── -->
 <div class="back-section">
   <a class="back-link" href="/jennifer/portfolio/">Back to portfolio</a>
 </div>
-
+ 
 <footer>
   <p class="footer-copy">&copy; 2025 The Thorntons &middot; thethorntons.ca</p>
   <p class="footer-note">Mockup. All data is synthetic &middot; No proprietary IP</p>
 </footer>
-
+ 
 <script>
   const annotated = document.querySelectorAll('.annotated');
   const pulse = new IntersectionObserver((entries) => {
