@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FRAML: Why Fraud and AML Need to Work as One — Jennifer Thornton</title>
+  <meta name="description" content="Fraud and AML aren't two separate disciplines — they're two chapters in the same book. Jennifer Thornton on why siloed financial crime programs miss the story.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --stone-50:  #F8F6F1;
+      --stone-100: #EDE9E0;
+      --stone-200: #D6CFC2;
+      --stone-400: #A89F8F;
+      --stone-600: #6B6256;
+      --stone-800: #3A332A;
+      --slate-900: #1C1C1E;
+      --serif: 'EB Garamond', Georgia, serif;
+      --sans:  'Inter', system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--sans);
+      background-color: var(--stone-50);
+      color: var(--slate-900);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      border-bottom: 0.5px solid var(--stone-200);
+      background: var(--stone-50);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--stone-600);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--slate-900); }
+    .nav-links a.active { color: var(--slate-900); }
+
+    /* PAGE HEADER */
+    .page-header-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 3rem 3rem;
+      border-bottom: 0.5px solid var(--stone-200);
+    }
+    .breadcrumb {
+      font-size: 0.72rem;
+      color: var(--stone-400);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .breadcrumb a { color: var(--stone-400); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--slate-900); }
+    .breadcrumb span { color: var(--stone-200); }
+
+    .article-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .article-eyebrow-divider {
+      display: inline-block;
+      width: 1.5rem;
+      height: 0.5px;
+      background: var(--stone-200);
+    }
+
+    .page-title {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--slate-900);
+      margin-bottom: 1.5rem;
+    }
+    .page-title em { font-style: italic; color: var(--stone-600); }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 0.5px solid var(--stone-200);
+    }
+    .article-meta-name {
+      font-family: var(--serif);
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--slate-900);
+    }
+    .article-meta-role {
+      font-size: 0.75rem;
+      color: var(--stone-400);
+      font-weight: 300;
+    }
+    .article-meta-divider {
+      width: 0.5px;
+      height: 2rem;
+      background: var(--stone-200);
+    }
+    .article-meta-detail {
+      font-size: 0.75rem;
+      color: var(--stone-400);
+      font-weight: 300;
+    }
+
+    /* ARTICLE BODY */
+    .article-layout {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .article-body h2 {
+      font-family: var(--serif);
+      font-size: 1.9rem;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--slate-900);
+      margin-top: 3rem;
+      margin-bottom: 1.25rem;
+    }
+    .article-body h2 em { font-style: italic; color: var(--stone-600); }
+    .article-body h2:first-child { margin-top: 0; }
+
+    .article-body p {
+      font-size: 0.92rem;
+      line-height: 1.9;
+      color: var(--stone-600);
+      font-weight: 300;
+      margin-bottom: 1.1rem;
+    }
+    .article-body p:last-child { margin-bottom: 0; }
+
+    .article-body strong {
+      font-weight: 500;
+      color: var(--slate-900);
+    }
+
+    .article-body hr {
+      border: none;
+      border-top: 0.5px solid var(--stone-200);
+      margin: 3rem 0;
+    }
+
+    /* PULL QUOTE */
+    .pull-quote {
+      border-left: 1.5px solid var(--stone-800);
+      padding: 0.25rem 0 0.25rem 1.5rem;
+      margin: 2.25rem 0;
+    }
+    .pull-quote p {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      line-height: 1.55;
+      color: var(--slate-900);
+      font-style: italic;
+      margin: 0;
+    }
+
+    /* KEY TAKEAWAYS */
+    .takeaways {
+      background: var(--stone-100);
+      border: 0.5px solid var(--stone-200);
+      padding: 2rem 2.25rem;
+      margin-top: 3rem;
+    }
+    .takeaways-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 1.25rem;
+    }
+    .takeaways ul {
+      list-style: none;
+      padding: 0;
+    }
+    .takeaways ul li {
+      font-size: 0.82rem;
+      line-height: 1.75;
+      color: var(--stone-600);
+      font-weight: 300;
+      padding-left: 1rem;
+      position: relative;
+      margin-bottom: 0.75rem;
+    }
+    .takeaways ul li:last-child { margin-bottom: 0; }
+    .takeaways ul li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--stone-400);
+    }
+
+    /* SIDEBAR */
+    .article-sidebar {
+      position: sticky;
+      top: 6rem;
+    }
+    .sidebar-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 1rem;
+    }
+    .sidebar-toc {
+      list-style: none;
+      padding: 0;
+      border-left: 0.5px solid var(--stone-200);
+    }
+    .sidebar-toc li {
+      padding: 0.45rem 0 0.45rem 1.25rem;
+      border-bottom: 0.5px solid var(--stone-200);
+    }
+    .sidebar-toc li:first-child { border-top: 0.5px solid var(--stone-200); }
+    .sidebar-toc a {
+      font-size: 0.78rem;
+      color: var(--stone-400);
+      text-decoration: none;
+      font-weight: 300;
+      line-height: 1.5;
+      transition: color 0.2s;
+      display: block;
+    }
+    .sidebar-toc a:hover { color: var(--slate-900); }
+
+    .sidebar-author {
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 0.5px solid var(--stone-200);
+    }
+    .sidebar-author-name {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      margin-bottom: 0.2rem;
+    }
+    .sidebar-author-role {
+      font-size: 0.75rem;
+      color: var(--stone-400);
+      font-weight: 300;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+    .sidebar-author-link {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .sidebar-author-link::after { content: '→'; font-size: 0.85rem; }
+    .sidebar-author-link:hover { color: var(--slate-900); }
+
+    /* BACK LINK */
+    .back-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 3rem;
+      border-top: 0.5px solid var(--stone-200);
+    }
+    .back-link {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .back-link::before { content: '←'; font-size: 0.85rem; }
+    .back-link:hover { color: var(--slate-900); }
+
+    /* FOOTER */
+    footer {
+      border-top: 0.5px solid var(--stone-200);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy { font-size: 0.75rem; color: var(--stone-400); }
+    .footer-cats {
+      font-size: 0.75rem;
+      color: var(--stone-400);
+      font-style: italic;
+      font-family: var(--serif);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .article-layout {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      .article-sidebar {
+        position: static;
+        border-top: 0.5px solid var(--stone-200);
+        padding-top: 2.5rem;
+      }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { gap: 1.25rem; }
+      .page-header-section { padding: 2.5rem 1.5rem; }
+      .article-layout { padding: 3rem 1.5rem; }
+      .back-section { padding: 2rem 1.5rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.7rem; }
+      .article-meta { flex-wrap: wrap; gap: 0.75rem; }
+      .article-meta-divider { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="/">The Thorntons</a>
+    <ul class="nav-links">
+      <li><a href="/rob/">Rob</a></li>
+      <li><a href="/jennifer/" class="active">Jennifer</a></li>
+      <li><a href="/natalie/">Natalie</a></li>
+      <li><a href="/kaitlyn/">Kaitlyn</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-header-section">
+    <p class="breadcrumb">
+      <a href="/jennifer/">Jennifer Thornton</a>
+      <span>/</span>
+      <a href="/jennifer/portfolio/">Portfolio</a>
+      <span>/</span>
+      FRAML
+    </p>
+    <p class="article-eyebrow">
+      Article <span class="article-eyebrow-divider"></span> Financial Crime
+    </p>
+    <h1 class="page-title">FRAML: Why Fraud and AML Need to<br><em>Work as One</em></h1>
+    <div class="article-meta">
+      <div>
+        <p class="article-meta-name">Jennifer Thornton</p>
+        <p class="article-meta-role">Senior Fraud Operations Analyst</p>
+      </div>
+      <div class="article-meta-divider"></div>
+      <p class="article-meta-detail">June 2026 &middot; 10 min read</p>
+    </div>
+  </div>
+
+  <div class="article-layout">
+    <div class="article-body">
+
+      <p>There's a conversation happening across financial services right now, and it's long overdue. It's not just another acronym to memorize — the idea behind FRAML is fundamentally sound: fraud and AML are not two separate disciplines operating in parallel. They are two chapters in the same book. And for as long as organizations keep reading them separately, they're going to keep missing the story.</p>
+      <p>This article is about why that matters, what gets lost when the two functions operate in silos, and what it actually looks like to build a financial crime program that treats them as one.</p>
+
+      <hr>
+
+      <h2 id="perception">The <em>perception problem</em></h2>
+
+      <p>Fraud is a hero story. You catch a bad actor, you recover money, you have a number to put on a slide deck. Fraud teams are easy to justify because the return on investment is obvious — prevention metrics, recovery totals, incident counts. When I built Benevity's fraud program, one of the first things I was able to show leadership was $315,000 recovered within the first month of implementing standardized processes. That's a compelling number. It's the kind of thing that gets fraud programs funded.</p>
+      <p>AML doesn't get that luxury. It's the Cinderella of financial crime — doing some of the most consequential work in the building, receiving considerably less credit for it. The value of AML is structural: it's about dismantling the organizations that move money through the financial system at scale. That takes months, sometimes years. The outcome isn't a recovered dollar figure; it's a Suspicious Transaction Report filed with a financial intelligence unit that may contribute — alongside dozens of other reports from other institutions — to a prosecution that happens years from now. The ROI is real. It just doesn't show up in a quarterly business review.</p>
+      <p>This asymmetry in visibility is one of the main reasons the two functions end up siloed. Fraud gets investment because it's easy to measure. AML is treated as a cost centre because its wins are diffuse and delayed. The result is that most organizations under-resource AML and over-silo fraud — and financial criminals benefit from both mistakes.</p>
+
+      <hr>
+
+      <h2 id="sprint-marathon">The sprint <em>and the marathon</em></h2>
+
+      <p>The distinction I find most useful is this: fraud is a sprint, AML is a marathon.</p>
+      <p>Fraud is reactive and immediate. A transaction looks wrong, you pull it, you investigate, you act. The timeline is compressed. The data is transactional — individual events, individual actors, individual losses. Fraud investigators are sprinters: they need to move fast, make defensible decisions under uncertainty, and close cases.</p>
+      <p>AML operates on a completely different timescale. The targets aren't individual transactions — they're people, relationships, and the patterns those relationships create over months and years. Money laundering isn't a single event; it's a process. Placement, layering, integration. By the time you're looking at the integration stage, the original fraud that generated the funds may have happened a year ago, at a different institution, under a different name. AML investigators are marathoners: patience and pattern recognition are the job.</p>
+
+      <div class="pull-quote">
+        <p>Neither of these is more important than the other. What they are is interdependent — and that interdependence is exactly what gets lost when the functions don't talk.</p>
+      </div>
+
+      <hr>
+
+      <h2 id="blindspots">What siloed organizations <em>miss</em></h2>
+
+      <p>The practical consequences of keeping fraud and AML separate are more serious than most organizations realize.</p>
+      <p><strong>You can't see the full lifecycle of a crime.</strong> Fraud generates the dirty money. AML is supposed to catch what happens to it afterward. If your fraud team closes a case when they've identified the loss and your AML team isn't aware that a customer was flagged for fraud, no one is watching what that customer does next. The crime continues; you just stopped looking.</p>
+      <p>I built something that illustrated this gap before I had language to describe it as a FRAML problem.</p>
+      <p>The <a href="/jennifer/portfolio/platform-integrity-agent/" style="color: var(--stone-800); text-decoration: underline; text-decoration-color: var(--stone-200); text-underline-offset: 3px;">Platform Integrity Agent</a> I developed at Benevity was scoped as a fraud tool — NPO legitimacy checks, match harvesting detection, donation pattern analysis. But as I built out the investigation pipeline, I kept running into the same problem: the fraud signals were pointing somewhere the fraud framework couldn't follow. Stage 7 of the agent — network analysis, cross-referencing EINs, board members, and platform history — wasn't just catching isolated fraudulent NPOs. It was surfacing the networks behind them. Shared board members across multiple flagged entities. Addresses that linked to prior suspensions. Organizational structures that had migrated under new names when they suspected they'd been identified.</p>
+      <p>Those are AML questions. Placement, layering, network obfuscation — the fraud was the visible surface. What the network analysis kept gesturing at was the infrastructure underneath. A fraud tool, designed well, will eventually start asking AML questions. The better question is whether your organization is set up to answer them.</p>
+      <p><strong>You investigate the same customers twice.</strong> This is more common than it should be. A customer triggers a fraud alert. The fraud team investigates, closes the case as confirmed or inconclusive, and files it. Months later, the same customer triggers an AML alert. The AML team starts from scratch — often pulling the same data points, running the same OSINT queries, reaching the same or similar conclusions. The duplication isn't just inefficient; it means neither team ever builds a complete picture of who they're looking at.</p>
+      <p><strong>Your reporting to financial intelligence units is fragmented.</strong> This is the one I feel most strongly about. When fraud and AML operate independently, their reports to FIUs — Suspicious Activity Reports in the US, STRs under FINTRAC in Canada — reflect only their portion of the picture. The fraud team files a SAR about a transaction. The AML team files a SAR about a pattern of behavior. The FIU receives two separate documents that don't connect, and the investigative burden of assembling the full story falls on them.</p>
+      <p>Financial intelligence units expect a holistic review of customer activity, particularly on SARs. A unified report that traces a customer's full activity — the fraudulent transactions, the behavioral patterns, the network connections — is exponentially more useful to an investigation than two partial reports that arrived separately. When we work in silos, we give FIUs puzzle pieces. When we work together, we give them the assembled picture.</p>
+
+      <hr>
+
+      <h2 id="same-goal">The same <em>goal, different tools</em></h2>
+
+      <p>None of this should be surprising, because fraud and AML have always had the same fundamental objective: defend against financial crime and protect the system from being exploited.</p>
+      <p>The difference is methodological. Fraud defends at the transaction level. AML defends at the network level. Fraud catches the individual actor; AML catches the organization behind them. And in a world where financial crime has become professionalized — where the same networks that run fraud schemes also launder the proceeds — you need both.</p>
+      <p>Consider what a unified view looks like in practice. A customer is flagged for a suspicious donation pattern — a fraud signal. The fraud team investigates and confirms it: coordinated match harvesting, possible insider involvement. Under a siloed model, that's a closed case. Under a FRAML model, the same investigation also asks: where did the recovered funds go? Are there secondary accounts receiving payouts? Do the people involved have relationships with other flagged customers? Is there a layering pattern in the transaction history that suggests the fraud wasn't just opportunistic, but part of something larger?</p>
+      <p>Those are AML questions. They don't replace the fraud investigation — they extend it. And the answers often lead somewhere the fraud investigation, on its own, was never going to go.</p>
+
+      <hr>
+
+      <h2 id="what-it-looks-like">What <em>FRAML</em> actually looks like</h2>
+
+      <p>I want to be specific here, because FRAML can sound like a buzzword if it isn't grounded in operational reality.</p>
+      <p>At its core, a FRAML approach means shared intelligence and unified reporting. It doesn't necessarily mean a single team or a reorganized org chart — though that's one way to do it. What it requires is that fraud and AML analysts have visibility into each other's findings, that customer-level risk is assessed holistically rather than per-alert, and that reports to financial intelligence units reflect the full picture of a customer's activity on the platform.</p>
+      <p>It also means shared tooling where it makes sense. Fraud and AML draw on overlapping data — transaction history, customer identity, behavioral patterns, network relationships. A unified case management system, or at minimum a shared customer risk profile, prevents duplication and ensures that a fraud finding informs the AML review of the same customer.</p>
+      <p>The shift in mindset is the harder part. Fraud teams are trained to think in cases. AML teams are trained to think in patterns. A FRAML approach requires both — and it requires analysts who are comfortable moving between those two modes of thinking. That's not trivial. It's also, in my experience, exactly the kind of work that fraud and AML professionals find most interesting when they're given the space to do it.</p>
+
+      <hr>
+
+      <h2 id="evolving">Financial crime is <em>evolving</em>. Our response should too.</h2>
+
+      <p>The financial crime landscape has changed significantly in the time I've been working in this space. The criminals are more sophisticated, more organized, and more deliberate about exploiting the gaps between functions. The gap between fraud and AML is one of the most reliable gaps there is — and it exists in almost every institution of every size.</p>
+      <p>The answer isn't to do what we've always done, but faster. It's to change the frame. Financial crime is not a fraud problem with an AML component, or an AML problem with a fraud component. It is a financial crime problem, and it requires a financial crime response — one that treats fraud and AML as two parts of a single program rather than two programs that happen to share a building.</p>
+      <p>FRAML is not a new idea. But it's an urgent one. The organizations that get there first will be better at detecting crime, better at supporting law enforcement, and better at protecting the people who use their platforms. That seems like a good enough reason to start.</p>
+
+      <div class="takeaways">
+        <p class="takeaways-label">Key takeaways</p>
+        <ul>
+          <li>Fraud and AML have the same goal — defend against financial crime — but most organizations treat them as separate functions with separate mandates. That separation is a gap that financial criminals exploit.</li>
+          <li>Fraud is high-visibility and easy to measure. AML is slower, harder to quantify, and arguably more consequential at scale. The asymmetry in visibility leads to chronic under-investment in AML.</li>
+          <li>Siloed organizations miss the full lifecycle of financial crime, investigate the same customers twice, and deliver fragmented reporting to FIUs — reducing the investigative value of every SAR or STR filed.</li>
+          <li>FIUs expect holistic customer reviews. A unified fraud-and-AML report is exponentially more useful than two partial reports filed separately.</li>
+          <li>A fraud tool, designed well, will eventually start asking AML questions. The better question is whether your organization is set up to answer them.</li>
+          <li>FRAML in practice means shared intelligence, unified customer risk profiles, and reports to financial intelligence units that reflect the complete picture.</li>
+          <li>The mindset shift is harder than the structural change. Fraud thinks in cases; AML thinks in patterns. Effective FRAML programs need both — and analysts who can move between them.</li>
+          <li>Financial crime is evolving. A siloed response is a structurally weaker one. The frame needs to change.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="article-sidebar">
+      <p class="sidebar-label">In this article</p>
+      <ul class="sidebar-toc">
+        <li><a href="#perception">The perception problem</a></li>
+        <li><a href="#sprint-marathon">The sprint and the marathon</a></li>
+        <li><a href="#blindspots">What siloed organizations miss</a></li>
+        <li><a href="#same-goal">The same goal, different tools</a></li>
+        <li><a href="#what-it-looks-like">What FRAML actually looks like</a></li>
+        <li><a href="#evolving">Financial crime is evolving</a></li>
+      </ul>
+
+      <div class="sidebar-author">
+        <p class="sidebar-author-name">Jennifer Thornton</p>
+        <p class="sidebar-author-role">Senior Fraud Operations Analyst &middot; Benevity, Inc.</p>
+        <a class="sidebar-author-link" href="/jennifer/">View full profile</a>
+      </div>
+    </aside>
+  </div>
+
+  <div class="back-section">
+    <a class="back-link" href="/jennifer/portfolio/">Back to portfolio</a>
+  </div>
+
+  <footer>
+    <p class="footer-copy">&copy; 2025 The Thorntons &middot; thethorntons.ca</p>
+    <p class="footer-cats">Supervised by Khaleesi &amp; Luna</p>
+  </footer>
+
+</body>
+</html>
