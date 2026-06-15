@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photos — The Thorntons</title>
+  <meta name="description" content="Candid family photos from the Thornton family — life behind the scenes in Orleans, Ontario.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --stone-50:  #F8F6F1;
+      --stone-100: #EDE9E0;
+      --stone-200: #D6CFC2;
+      --stone-400: #A89F8F;
+      --stone-600: #6B6256;
+      --stone-800: #3A332A;
+      --slate-900: #1C1C1E;
+      --serif: 'EB Garamond', Georgia, serif;
+      --sans:  'Inter', system-ui, sans-serif;
+    }
+    body { font-family: var(--sans); background-color: var(--stone-50); color: var(--slate-900); font-weight: 300; -webkit-font-smoothing: antialiased; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 3rem; border-bottom: 0.5px solid var(--stone-200); background: var(--stone-50); position: sticky; top: 0; z-index: 100; }
+    .nav-logo { font-family: var(--serif); font-size: 1.2rem; font-weight: 400; color: var(--slate-900); letter-spacing: 0.02em; text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.8rem; font-weight: 400; color: var(--stone-600); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--slate-900); }
+    .nav-links a.active { color: var(--slate-900); }
+    .page-header { max-width: 1100px; margin: 0 auto; padding: 4rem 3rem 3rem; border-bottom: 0.5px solid var(--stone-200); }
+    .page-header-eyebrow { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--stone-400); margin-bottom: 0.75rem; }
+    .page-header-title { font-family: var(--serif); font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 400; line-height: 1.05; color: var(--slate-900); letter-spacing: -0.01em; margin-bottom: 1rem; }
+    .page-header-title em { font-style: italic; color: var(--stone-600); }
+    .page-header-sub { font-size: 0.9rem; color: var(--stone-600); font-weight: 300; max-width: 55ch; line-height: 1.75; }
+    .section { max-width: 1100px; margin: 0 auto; padding: 4rem 3rem; }
+    .section-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--stone-400); margin-bottom: 2rem; }
+    .gallery { columns: 3; column-gap: 1.5px; background: var(--stone-200); border: 0.5px solid var(--stone-200); }
+    .photo { break-inside: avoid; background: var(--stone-50); margin: 0 0 1.5px 0; display: block; position: relative; overflow: hidden; cursor: pointer; }
+    .photo img { width: 100%; display: block; object-fit: cover; transition: opacity 0.3s, transform 0.4s; }
+    .photo:hover img { opacity: 0.88; transform: scale(1.02); }
+    .photo figcaption { padding: 0.85rem 1rem 1rem; background: var(--stone-50); }
+    .photo-caption-text { font-size: 0.8rem; line-height: 1.6; color: var(--stone-600); font-weight: 300; }
+    .photo-caption-text em { font-style: italic; }
+    .photo-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 0.4rem; }
+    .photo-date { font-size: 0.65rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone-400); }
+    .photo-tag { font-size: 0.65rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--stone-400); border: 0.5px solid var(--stone-200); padding: 0.2rem 0.5rem; background: var(--stone-100); }
+    .lightbox { display: none; position: fixed; inset: 0; background: rgba(28,28,30,0.92); z-index: 1000; align-items: center; justify-content: center; padding: 2rem; }
+    .lightbox.open { display: flex; }
+    .lightbox-inner { position: relative; max-width: 900px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; }
+    .lightbox-img { width: 100%; max-height: 78vh; object-fit: contain; display: block; background: var(--slate-900); }
+    .lightbox-caption { background: var(--stone-50); padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .lightbox-caption-text { font-size: 0.85rem; color: var(--stone-600); font-weight: 300; line-height: 1.5; }
+    .lightbox-date { font-size: 0.65rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone-400); white-space: nowrap; }
+    .lightbox-close { position: absolute; top: -2.5rem; right: 0; background: none; border: none; color: rgba(255,255,255,0.7); font-size: 0.72rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; transition: color 0.2s; }
+    .lightbox-close:hover { color: #fff; }
+    .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(28,28,30,0.5); border: none; color: rgba(255,255,255,0.8); font-size: 1.2rem; width: 2.5rem; height: 2.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+    .lightbox-nav:hover { background: rgba(28,28,30,0.85); }
+    .lightbox-nav.prev { left: -3rem; }
+    .lightbox-nav.next { right: -3rem; }
+    footer { border-top: 0.5px solid var(--stone-200); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+    .footer-copy { font-size: 0.75rem; color: var(--stone-400); }
+    .footer-cats { font-size: 0.75rem; color: var(--stone-400); font-style: italic; font-family: var(--serif); }
+    @media (max-width: 900px) { .gallery { columns: 2; } .lightbox-nav.prev { left: -1rem; } .lightbox-nav.next { right: -1rem; } }
+    @media (max-width: 768px) { nav { padding: 1.25rem 1.5rem; } .nav-links { gap: 1.25rem; } .page-header { padding: 2.5rem 1.5rem; } .section { padding: 3rem 1.5rem; } footer { flex-direction: column; gap: 0.5rem; text-align: center; } }
+    @media (max-width: 480px) { .gallery { columns: 1; } .nav-links { gap: 1rem; } .nav-links a { font-size: 0.7rem; } .lightbox-nav { display: none; } }
+  </style>
+</head>
+<body>
+ 
+  <nav>
+    <a class="nav-logo" href="/">The Thorntons</a>
+    <ul class="nav-links">
+      <li><a href="/rob/">Rob</a></li>
+      <li><a href="/jennifer/">Jennifer</a></li>
+      <li><a href="/natalie/">Natalie</a></li>
+      <li><a href="/kaitlyn/">Kaitlyn</a></li>
+      <li><a href="/photos/" class="active">Photos</a></li>
+    </ul>
+  </nav>
+ 
+  <div class="page-header">
+    <p class="page-header-eyebrow">Orleans, Ontario</p>
+    <h1 class="page-header-title">Behind the<br><em>scenes</em></h1>
+    <p class="page-header-sub">The unscripted version — races and musicals, European adventures, first days of school, and two cats who run the place.</p>
+  </div>
+ 
+  <div class="section">
+    <p class="section-label">Family photos</p>
+    <div class="gallery" id="gallery">
+ 
+      <figure class="photo" data-caption="The Thornton Family — 2020 family portrait session, now hanging on our wall." data-date="2020">
+        <img src="Thorntonfamilyphotos.jpg" alt="The Thornton Family photo wall, 2020">
+        <figcaption>
+          <p class="photo-caption-text">The Thornton Family — 2020, in all our buffalo plaid glory.</p>
+          <div class="photo-meta">
+            <time class="photo-date" datetime="2020">2020</time>
+            <span class="photo-tag">Family</span>
+          </div>
+        </figcaption>
+      </figure>
+ 
+      <figure class="photo" data-caption="Rob and Jennifer at home in Orleans." data-date="Recent">
+        <img src="robjen.jpg" alt="Rob and Jennifer Thornton at home">
+        <figcaption>
+          <p class="photo-caption-text">Home base.</p>
+          <div class="photo-meta">
+            <time class="photo-date" datetime="">Recent</time>
+            <span class="photo-tag">Home</span>
+          </div>
+        </figcaption>
+      </figure>
+ 
+      <figure class="photo" data-caption="Khaleesi, ruling the cat tree with quiet authority." data-date="Recent">
+        <img src="khaleesi.jpg" alt="Khaleesi the tabby cat on her cat tree">
+        <figcaption>
+          <p class="photo-caption-text">Khaleesi, ruling the cat tree with quiet authority.</p>
+          <div class="photo-meta">
+            <time class="photo-date" datetime="">Recent</time>
+            <span class="photo-tag">Cats</span>
+          </div>
+        </figcaption>
+      </figure>
+ 
+      <figure class="photo" data-caption="Luna, shelving herself between Clean Code and Clean Architecture. She has opinions." data-date="Recent">
+        <img src="luna.jpg" alt="Luna the black cat sitting in the bookshelf">
+        <figcaption>
+          <p class="photo-caption-text">Luna, shelving herself between <em>Clean Code</em> and <em>Clean Architecture</em>. She has opinions.</p>
+          <div class="photo-meta">
+            <time class="photo-date" datetime="">Recent</time>
+            <span class="photo-tag">Cats</span>
+          </div>
+        </figcaption>
+      </figure>
+ 
+      <figure class="photo" data-caption="First day of Grade 12 and Grade 9 — Natalie and Kaitlyn, ready for another year." data-date="September 2023">
+        <img src="NK-firstdayofschool.jpg" alt="Natalie and Kaitlyn on their first day of school">
+        <figcaption>
+          <p class="photo-caption-text">First day of Grade 12 and Grade 9. Ready for anything.</p>
+          <div class="photo-meta">
+            <time class="photo-date" datetime="2023-09">September 2023</time>
+            <span class="photo-tag">Milestones</span>
+          </div>
+        </figcaption>
+      </figure>
+ 
+      <figure class="photo" data-caption="Natalie and Kaitlyn at the Ottawa Tulip Festival — one of the great perks of living near the capital." data-date="Spring 2023">
+        <img src="NK-tulips.jpg" alt="Natalie and Kaitlyn surrounded by tulips at the Ottawa Tulip Festival">
+        <figcaption>
+          <p class="photo-caption-text">Natalie and Kaitlyn at the Ottawa Tulip Festival. One of the great perks of living near the capital.</p>
+          <div class="photo-meta">
+            <time class="photo-date" datetime="2023-05">Spring 2023</time>
+            <span class="photo-tag">Ottawa</span>
+          </div>
+        </figcaption>
+      </figure>
+ 
+      <figure class="photo" data-caption="The whole family at the Ottawa Army Run — race bibs, matching shirts, and a lot of enthusiasm." data-date="September 2022">
+        <img src="armyrun.jpg" alt="The Thornton family at the Ottawa Army Run">
+        <figcaption>
+          <p class="photo-caption-text">The Ottawa Army Run — race bibs, matching shirts, and a lot of enthusiasm.</p>
+          <div class="photo-meta">
+            <time class="photo-date" datetime="2022-09">September 2022</time>
+            <span class="photo-tag">Ottawa</span>
+          </div>
+        </figcaption>
+      </figure>
+ 
+      <figure class="photo" data-caption="Mom and Dad surprised the girls with tickets to Hamilton in Toronto. Right after this photo was taken, they found out — and were absolutely thrilled." data-date="Summer 2022">
+        <img src="hamilton.jpg" alt="Natalie and Kaitlyn outside the Hamilton musical in Toronto">
+        <figcaption>
+          <p class="photo-caption-text">The surprise Hamilton reveal — right after this photo, they found out. Best reaction ever.</p>
+          <div class="photo-meta">
+            <time class="photo-date" datetime="2022-07">Summer 2022</time>
+            <span class="photo-tag">Theatre</span>
+          </div>
+        </figcaption>
+      </figure>
+ 
+      <figure class="photo" data-caption="Rob and Jennifer at Stonehenge — somehow even bigger in person than you expect." data-date="London 2024">
+        <img src="JR-stonehenge.jpg" alt="Jennifer and Rob at Stonehenge">
+        <figcaption>
+          <p class="photo-caption-text">Stonehenge — somehow even bigger in person than you expect.</p>
+          <div class="photo-meta">
+            <time class="photo-date" datetime="2024">London 2024</time>
+            <span class="photo-tag">Travel</span>
+          </div>
+        </figcaption>
+      </figure>
+ 
+      <figure class="photo" data-caption="Natalie and Rob at a classic London red phone box. Obligatory tourist photo, zero regrets." data-date="London 2024">
+        <img src="NR-phonebooth.jpg" alt="Natalie and Rob at a red London phone box">
+        <figcaption>
+          <p class="photo-caption-text">Natalie and Rob at a classic London phone box. Obligatory tourist photo, zero regrets.</p>
+          <div class="photo-meta">
+            <time class="photo-date" datetime="2024">London 2024</time>
+            <span class="photo-tag">Travel</span>
+          </div>
+        </figcaption>
+      </figure>
+ 
+      <figure class="photo" data-caption="Greg Davies live — the whole reason we planned the March 2026 UK/Paris trip. Worth every penny." data-date="March 2026">
+        <img src="gregdaviesshow.jpg" alt="The Thornton family at the Greg Davies show">
+        <figcaption>
+          <p class="photo-caption-text">Greg Davies live — the whole reason we planned the trip. Worth every penny.</p>
+          <div class="photo-meta">
+            <time class="photo-date" datetime="2026-03">March 2026</time>
+            <span class="photo-tag">Travel</span>
+          </div>
+        </figcaption>
+      </figure>
+ 
+      <figure class="photo" data-caption="The whole family by the Seine with the Eiffel Tower behind us — Paris, March 2026." data-date="March 2026">
+        <img src="eiffeltower.jpg" alt="The Thornton family in front of the Eiffel Tower, Paris">
+        <figcaption>
+          <p class="photo-caption-text">Slightly windswept, completely delighted. Paris, March 2026.</p>
+          <div class="photo-meta">
+            <time class="photo-date" datetime="2026-03">March 2026</time>
+            <span class="photo-tag">Travel</span>
+          </div>
+        </figcaption>
+      </figure>
+ 
+      <figure class="photo" data-caption="Jennifer, Kaitlyn, and Natalie at the Palace of Versailles — the gardens stretch on forever." data-date="March 2026">
+        <img src="versailles.jpg" alt="Jennifer, Kaitlyn, and Natalie at the Palace of Versailles">
+        <figcaption>
+          <p class="photo-caption-text">Jennifer, Kaitlyn, and Natalie at Versailles — the gardens stretch on forever.</p>
+          <div class="photo-meta">
+            <time class="photo-date" datetime="2026-03">March 2026</time>
+            <span class="photo-tag">Travel</span>
+          </div>
+        </figcaption>
+      </figure>
+ 
+    </div>
+  </div>
+ 
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightbox-close">&#x2715; Close</button>
+      <button class="lightbox-nav prev" id="lightbox-prev" aria-label="Previous photo">&#8592;</button>
+      <button class="lightbox-nav next" id="lightbox-next" aria-label="Next photo">&#8594;</button>
+      <img class="lightbox-img" id="lightbox-img" src="" alt="">
+      <div class="lightbox-caption">
+        <p class="lightbox-caption-text" id="lightbox-caption"></p>
+        <span class="lightbox-date" id="lightbox-date"></span>
+      </div>
+    </div>
+  </div>
+ 
+  <footer>
+    <p class="footer-copy">&copy; 2025 The Thorntons &middot; thethorntons.ca</p>
+    <p class="footer-cats">Supervised by Khaleesi &amp; Luna</p>
+  </footer>
+ 
+  <script>
+    const gallery = document.getElementById('gallery');
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    const lbCaption = document.getElementById('lightbox-caption');
+    const lbDate = document.getElementById('lightbox-date');
+    const lbClose = document.getElementById('lightbox-close');
+    const lbPrev = document.getElementById('lightbox-prev');
+    const lbNext = document.getElementById('lightbox-next');
+    const photos = Array.from(gallery.querySelectorAll('.photo'));
+    let current = 0;
+ 
+    function openLightbox(index) {
+      current = index;
+      const fig = photos[index];
+      const img = fig.querySelector('img');
+      lbImg.src = img.src;
+      lbImg.alt = img.alt;
+      lbCaption.textContent = fig.dataset.caption || '';
+      lbDate.textContent = fig.dataset.date || '';
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function showNext() { current = (current + 1) % photos.length; openLightbox(current); }
+    function showPrev() { current = (current - 1 + photos.length) % photos.length; openLightbox(current); }
+ 
+    photos.forEach((fig, i) => fig.addEventListener('click', () => openLightbox(i)));
+    lbClose.addEventListener('click', closeLightbox);
+    lbNext.addEventListener('click', showNext);
+    lbPrev.addEventListener('click', showPrev);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') showNext();
+      if (e.key === 'ArrowLeft') showPrev();
+    });
+  </script>
+ 
+</body>
+</html>
