@@ -1,223 +1,542 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kaitlyn Thornton · Ottawa, ON</title>
-  <meta name="description" content="High school student in Ottawa seeking summer employment. Dependable, hardworking, and ready to contribute." />
-  <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kaitlyn Thornton — The Thorntons</title>
+  <meta name="description" content="Kaitlyn Thornton — multimedia artist, animator, outdoor adventurer, and aspiring health sciences professional.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    .accent-bar { background: var(--kai-mid); }
-    .sub-nav__links a.active { border-bottom-color: var(--kai); color: var(--kai); }
-    .person-hero__avatar { border-color: var(--kai-mid); }
-    .person-hero__title { color: var(--kai); }
-    .stat-card { background: var(--kai-light); }
-    .stat-card__num { color: #4A1B0C; }
-    .stat-card__label { color: var(--kai); }
-    .pill { background: var(--kai-light); color: #712B13; }
-    .pill__dot { background: var(--kai-mid); }
-    .exp-block__role { color: var(--kai); }
-    .exp-block__bullet::before { color: var(--kai-mid); }
-    .avail-badge { background: var(--kai); }
-    .hiring-banner { background: var(--kai-light); border-color: #F0997B; }
-    .hiring-banner__icon { background: var(--kai-mid); }
-    .hiring-banner__title { color: #4A1B0C; }
-    .hiring-banner__sub { color: var(--kai); }
-    .interest-chip i { color: var(--kai-mid); }
-    .person-footer { background: var(--kai-light); border-top-color: #F0997B; }
-    .person-footer, .person-footer a { color: var(--kai); }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    :root {
+      --stone-50:  #F8F6F1;
+      --stone-100: #EDE9E0;
+      --stone-200: #D6CFC2;
+      --stone-400: #A89F8F;
+      --stone-600: #6B6256;
+      --stone-800: #3A332A;
+      --slate-900: #1C1C1E;
+      --serif: 'EB Garamond', Georgia, serif;
+      --sans:  'Inter', system-ui, sans-serif;
+    }
+ 
+    body {
+      font-family: var(--sans);
+      background-color: var(--stone-50);
+      color: var(--slate-900);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+ 
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      border-bottom: 0.5px solid var(--stone-200);
+      background: var(--stone-50);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--stone-600);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--slate-900); }
+    .nav-links a.active { color: var(--slate-900); }
+ 
+    /* PAGE HEADER */
+    .page-header {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 3rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 3rem;
+      align-items: end;
+      border-bottom: 0.5px solid var(--stone-200);
+    }
+    .page-header-photo {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      object-position: center 15%;
+      border: 0.5px solid var(--stone-200);
+      display: block;
+      flex-shrink: 0;
+    }
+    .page-header-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 0.75rem;
+    }
+    .page-header-name {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 400;
+      line-height: 1.05;
+      color: var(--slate-900);
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+    }
+    .page-header-name em { font-style: italic; color: var(--stone-600); }
+    .page-header-tagline {
+      font-size: 0.9rem;
+      color: var(--stone-600);
+      font-weight: 300;
+      max-width: 55ch;
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+    .header-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      background: var(--slate-900);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--stone-800); }
+ 
+    /* SHARED SECTION */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 3rem;
+    }
+    .section + .section { border-top: 0.5px solid var(--stone-200); }
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 2rem;
+    }
+    .section-heading {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--slate-900);
+      margin-bottom: 1.25rem;
+    }
+    .section-heading em { font-style: italic; color: var(--stone-600); }
+ 
+    /* BIO */
+    .bio-body {
+      font-size: 0.9rem;
+      line-height: 1.9;
+      color: var(--stone-600);
+      font-weight: 300;
+      max-width: 70ch;
+    }
+    .bio-body p + p { margin-top: 1rem; }
+ 
+    /* PULLQUOTE */
+    .pullquote {
+      margin: 2.5rem 0 0;
+      padding: 0 0 0 1.75rem;
+      border-left: 1.5px solid var(--stone-200);
+    }
+    .pullquote p {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--stone-600);
+      line-height: 1.65;
+      margin-bottom: 0.75rem;
+    }
+    .pullquote cite {
+      font-size: 0.72rem;
+      font-style: normal;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+    }
+ 
+    /* DETAILS STRIP */
+    .details-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 0.5px solid var(--stone-200);
+      margin-top: 3rem;
+    }
+    .detail-item {
+      padding: 1.75rem 1.5rem 1.75rem 0;
+      border-right: 0.5px solid var(--stone-200);
+    }
+    .detail-item:last-child { border-right: none; }
+    .detail-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 0.35rem;
+    }
+    .detail-value {
+      font-size: 0.88rem;
+      color: var(--stone-800);
+      font-weight: 300;
+    }
+ 
+    /* HIGHLIGHTS GRID */
+    .highlights-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5px;
+      background: var(--stone-200);
+      border: 0.5px solid var(--stone-200);
+    }
+    .highlight-card {
+      background: var(--stone-50);
+      padding: 2rem;
+    }
+    .highlight-tag {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 0.75rem;
+    }
+    .highlight-title {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      margin-bottom: 0.65rem;
+      line-height: 1.3;
+    }
+    .highlight-desc {
+      font-size: 0.82rem;
+      line-height: 1.75;
+      color: var(--stone-600);
+      font-weight: 300;
+    }
+ 
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--stone-200);
+      border: 0.5px solid var(--stone-200);
+    }
+    .skill-item {
+      background: var(--stone-50);
+      padding: 1.75rem;
+    }
+    .skill-title {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      margin-bottom: 0.6rem;
+    }
+    .skill-desc {
+      font-size: 0.8rem;
+      line-height: 1.75;
+      color: var(--stone-600);
+      font-weight: 300;
+    }
+ 
+    /* CTA BANNER */
+    .cta-banner {
+      background: var(--stone-100);
+      border: 0.5px solid var(--stone-200);
+      padding: 3rem;
+    }
+    .cta-banner-heading {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      margin-bottom: 0.6rem;
+    }
+    .cta-banner-heading em { font-style: italic; color: var(--stone-600); }
+    .cta-banner-sub {
+      font-size: 0.85rem;
+      color: var(--stone-600);
+      font-weight: 300;
+      line-height: 1.75;
+      max-width: 60ch;
+    }
+ 
+    /* FAMILY NAV */
+    .family-nav-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--stone-200);
+      border: 0.5px solid var(--stone-200);
+    }
+    .family-nav-card {
+      background: var(--stone-50);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      padding: 1.75rem;
+      transition: background 0.2s;
+    }
+    .family-nav-card:hover { background: var(--stone-100); }
+    .family-nav-name {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      margin-bottom: 0.2rem;
+    }
+    .family-nav-role {
+      font-size: 0.75rem;
+      color: var(--stone-400);
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.85rem;
+    }
+    .family-nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+    }
+    .family-nav-link::after { content: '→'; font-size: 0.85rem; }
+    .family-nav-card:hover .family-nav-link { color: var(--slate-900); }
+ 
+    /* FOOTER */
+    footer {
+      border-top: 0.5px solid var(--stone-200);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy { font-size: 0.75rem; color: var(--stone-400); }
+    .footer-cats {
+      font-size: 0.75rem;
+      color: var(--stone-400);
+      font-style: italic;
+      font-family: var(--serif);
+    }
+ 
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { gap: 1.25rem; }
+      .page-header { padding: 2.5rem 1.5rem; grid-template-columns: 1fr; gap: 1.5rem; }
+      .page-header-photo { width: 140px; height: 140px; }
+      .section { padding: 3rem 1.5rem; }
+      .details-strip { grid-template-columns: repeat(2, 1fr); }
+      .detail-item:nth-child(2) { border-right: none; }
+      .detail-item:nth-child(3) { border-top: 0.5px solid var(--stone-200); }
+      .detail-item:nth-child(4) { border-top: 0.5px solid var(--stone-200); }
+      .highlights-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .family-nav-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.7rem; }
+    }
   </style>
 </head>
 <body>
-
-  <nav class="site-nav">
-    <a href="index.html" class="site-nav__logo">the <span>thorntons</span></a>
-    <ul class="site-nav__links">
-      <li><a href="jennifer.html">Jennifer</a></li>
-      <li><a href="rob.html">Rob</a></li>
-      <li><a href="natalie.html">Natalie</a></li>
-      <li><a href="kaitlyn.html" class="active">Kaitlyn</a></li>
-      <li><a href="index.html#photos">Photos</a></li>
+ 
+  <nav>
+    <a class="nav-logo" href="/">The Thorntons</a>
+    <ul class="nav-links">
+      <li><a href="/rob/">Rob</a></li>
+      <li><a href="/jennifer/">Jennifer</a></li>
+      <li><a href="/natalie/">Natalie</a></li>
+      <li><a href="/kaitlyn/" class="active">Kaitlyn</a></li>
     </ul>
   </nav>
-
-  <div class="accent-bar"></div>
-
-  <div style="background:#fff; border-bottom:0.5px solid var(--border);">
-    <div class="page-wrap">
-      <nav class="sub-nav" style="padding:0;">
-        <a href="index.html" class="sub-nav__back">
-          <i class="ti ti-arrow-left" style="font-size:13px;"></i> Home
-        </a>
-        <ul class="sub-nav__links">
-          <li><a href="#about" class="active">About</a></li>
-          <li><a href="#resume">Resume</a></li>
-          <li><a href="#interests">Interests</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
+ 
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <img class="page-header-photo" src="/images/kaitlyn.jpg" alt="Kaitlyn Thornton">
+    <div class="page-header-text">
+      <p class="page-header-eyebrow">Artist · Animator · Outdoor Adventurer</p>
+      <h1 class="page-header-name">Kaitlyn<br><em>Thornton</em></h1>
+      <p class="page-header-tagline">Grade 9 complete at Cairine Wilson Secondary School — with a sketchbook always on the go, a love of the outdoors, and a future somewhere at the intersection of art and health sciences.</p>
+      <div class="header-actions">
+        <a class="btn-primary" href="mailto:kaitlyn@thethorntons.ca">Get in touch</a>
+      </div>
     </div>
   </div>
-
-  <main>
-    <div class="page-wrap">
-
-      <!-- ── Hero ──────────────────────────────────────── -->
-      <section class="person-hero" id="about">
-        <!-- Replace src with images/kaitlyn.jpg -->
-        <img class="person-hero__avatar" src="images/kaitlyn.jpg"
-             alt="Kaitlyn Thornton" />
-        <div>
-          <h1 class="person-hero__name">Kaitlyn Thornton</h1>
-          <p class="person-hero__title">High school student &nbsp;·&nbsp; Ottawa, ON</p>
-          <p class="person-hero__bio">
-            Currently in high school and looking for a summer job where I can gain real work experience.
-            I'm hardworking, a quick learner, great with people, and always show up ready to contribute.
-            Happy to take on any role where I can make a difference.
-          </p>
-          <div class="btn-row">
-            <a href="files/kaitlyn-resume.pdf" class="btn-primary" style="background:var(--kai);">
-              <i class="ti ti-download" style="font-size:14px;"></i> Download resume
-            </a>
-            <a href="#contact" class="btn-secondary" style="color:var(--kai);border-color:#F0997B;">
-              <i class="ti ti-mail" style="font-size:14px;"></i> Get in touch
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- ── Hiring banner ─────────────────────────────── -->
-      <div style="padding-top:32px;">
-        <div class="hiring-banner">
-          <div class="hiring-banner__icon">
-            <i class="ti ti-briefcase" style="font-size:20px;color:#fff;"></i>
-          </div>
-          <div>
-            <p class="hiring-banner__title">Actively seeking summer employment</p>
-            <p class="hiring-banner__sub">Retail, food service, admin, camp counsellor, babysitting — open to all opportunities</p>
-          </div>
-          <span class="avail-badge">
-            <span class="avail-dot"></span> Available now
-          </span>
-        </div>
-
-        <!-- ── Stats ───────────────────────────────────── -->
-        <div class="stat-grid">
-          <div class="stat-card">
-            <span class="stat-card__num">Gr. 11</span>
-            <span class="stat-card__label">strong academic standing</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-card__num">2 yrs</span>
-            <span class="stat-card__label">child care experience</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-card__num">Open</span>
-            <span class="stat-card__label">flexible availability</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── Body grid ─────────────────────────────────── -->
-      <div class="body-grid--equal body-grid" id="resume" style="padding-top:0;">
-
-        <div>
-          <p class="sec-label">Skills</p>
-          <div class="pill-wrap" style="margin-bottom:28px;">
-            <span class="pill"><span class="pill__dot"></span>Reliable &amp; punctual</span>
-            <span class="pill"><span class="pill__dot"></span>Customer service</span>
-            <span class="pill"><span class="pill__dot"></span>Teamwork</span>
-            <span class="pill"><span class="pill__dot"></span>Google Workspace</span>
-            <span class="pill"><span class="pill__dot"></span>Microsoft Office</span>
-            <span class="pill"><span class="pill__dot"></span>Cash handling</span>
-            <span class="pill"><span class="pill__dot"></span>Social media</span>
-            <span class="pill"><span class="pill__dot"></span>Child care</span>
-            <span class="pill"><span class="pill__dot"></span>First aid (in progress)</span>
-          </div>
-
-          <p class="sec-label">Education</p>
-          <div class="exp-block">
-            <div class="exp-block__top">
-              <span class="exp-block__company">Local High School, Ottawa</span>
-              <span class="exp-block__date">2022 – present</span>
-            </div>
-            <p class="exp-block__role">Ontario Secondary School Diploma (in progress)</p>
-            <p class="exp-block__bullet">Strong academic standing</p>
-            <p class="exp-block__bullet">Active in school activities and community</p>
-          </div>
-
-          <!-- Interests -->
-          <p class="sec-label" id="interests" style="margin-top:8px;">Interests</p>
-          <div>
-            <span class="interest-chip"><i class="ti ti-music"></i> Music</span>
-            <span class="interest-chip"><i class="ti ti-book"></i> Reading</span>
-            <span class="interest-chip"><i class="ti ti-palette"></i> Art</span>
-            <span class="interest-chip"><i class="ti ti-paw"></i> Animals</span>
-            <span class="interest-chip"><i class="ti ti-device-gamepad-2"></i> Gaming</span>
-          </div>
-        </div>
-
-        <div>
-          <p class="sec-label">Experience &amp; activities</p>
-
-          <div class="exp-block">
-            <div class="exp-block__top">
-              <span class="exp-block__company">Babysitting</span>
-              <span class="exp-block__date">2023 – present</span>
-            </div>
-            <p class="exp-block__role">Independent child care provider</p>
-            <p class="exp-block__bullet">Regular care for neighbourhood families in Ottawa</p>
-            <p class="exp-block__bullet">Responsible for safety, meals, homework help, and activities</p>
-            <p class="exp-block__bullet">Trusted by multiple families on an ongoing basis</p>
-          </div>
-
-          <div class="exp-block">
-            <div class="exp-block__top">
-              <span class="exp-block__company">Community volunteering</span>
-              <span class="exp-block__date">2023 – present</span>
-            </div>
-            <p class="exp-block__role">Community volunteer</p>
-            <p class="exp-block__bullet">School and community service hours</p>
-            <p class="exp-block__bullet">Event support and collaborative team tasks</p>
-          </div>
-
-          <div class="exp-block">
-            <div class="exp-block__top">
-              <span class="exp-block__company">School activities</span>
-              <span class="exp-block__date">2022 – present</span>
-            </div>
-            <p class="exp-block__role">Clubs &amp; extracurriculars</p>
-            <p class="exp-block__bullet">Participation in school clubs and events</p>
-            <p class="exp-block__bullet">Consistent contributor and team player</p>
-          </div>
-
-          <!-- Contact -->
-          <p class="sec-label" id="contact">Get in touch</p>
-          <div style="background:var(--kai-light); border-radius:var(--radius-md); padding:16px 18px;">
-            <p style="font-size:13px; color:#4A1B0C; margin-bottom:10px; line-height:1.6;">
-              Available for summer employment — flexible hours, enthusiastic, and ready to learn.
-              References available on request.
-            </p>
-            <a href="mailto:kaitlyn@thethorntons.ca" class="btn-primary" style="background:var(--kai); font-size:12px;">
-              <i class="ti ti-mail" style="font-size:13px;"></i> kaitlyn@thethorntons.ca
-            </a>
-          </div>
-        </div>
-
-      </div>
-
+ 
+  <!-- BIO -->
+  <div class="section">
+    <p class="section-label">About</p>
+    <h2 class="section-heading">Creative at heart,<br><em>curious about everything</em></h2>
+    <div class="bio-body">
+      <p>Kaitlyn just wrapped up Grade 9 at Cairine Wilson Secondary School — a year that took her from the art room to the canoe, from the snowshoe trail to the orienteering course. One of the genuine highlights was Outdoor Education, where she got to experience adventures that most people only read about: snowshoeing, orienteering, cycling, and canoeing.</p>
+      <p>Art has always been at the centre of things for Kaitlyn. She's a multimedia artist with a real passion for drawing and animation, and has taken several extracurricular art classes to keep developing her craft. Whether she's sketching characters, experimenting with animation, or illustrating something just for the fun of it, there's always something in progress.</p>
+      <p>She's a fun-loving, kind, and deeply empathetic person — someone who genuinely cares about the people around her. She loves hanging out with her besties, gaming together, and marathoning medical dramas (a passion that, it turns out, is pointing her toward a future in the health sciences — possibly cardiology or medical imaging).</p>
     </div>
-  </main>
-
-  <footer class="person-footer">
-    <span>kaitlyn.thethorntons.ca</span>
-    <div class="person-footer__links">
-      <a href="mailto:kaitlyn@thethorntons.ca">
-        <i class="ti ti-mail" style="font-size:14px;"></i> Email
+ 
+    <blockquote class="pullquote">
+      <p>"I want to do something that actually helps people — and I think health sciences is where art and care come together for me."</p>
+      <cite>— Kaitlyn Thornton</cite>
+    </blockquote>
+ 
+    <div class="details-strip">
+      <div class="detail-item">
+        <p class="detail-label">School</p>
+        <p class="detail-value">Cairine Wilson S.S.</p>
+      </div>
+      <div class="detail-item" style="padding-left: 1.5rem;">
+        <p class="detail-label">Year completed</p>
+        <p class="detail-value">Grade 9, 2025</p>
+      </div>
+      <div class="detail-item" style="padding-left: 1.5rem;">
+        <p class="detail-label">Ambition</p>
+        <p class="detail-value">Health Sciences</p>
+      </div>
+      <div class="detail-item" style="padding-left: 1.5rem;">
+        <p class="detail-label">Based in</p>
+        <p class="detail-value">Orleans, ON</p>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- HIGHLIGHTS -->
+  <div class="section">
+    <p class="section-label">Highlights</p>
+    <h2 class="section-heading">Things worth<br><em>being proud of</em></h2>
+    <div class="highlights-grid">
+ 
+      <div class="highlight-card">
+        <p class="highlight-tag">Art · Ongoing</p>
+        <p class="highlight-title">Multimedia Art &amp; Animation</p>
+        <p class="highlight-desc">Kaitlyn's creative practice spans drawing, illustration, and animation — always experimenting and always improving. She brings a genuine eye for character and storytelling to everything she makes, whether it's a quick sketch or a longer animation project.</p>
+      </div>
+ 
+      <div class="highlight-card">
+        <p class="highlight-tag">Art · Extracurricular</p>
+        <p class="highlight-title">Extracurricular Art Classes</p>
+        <p class="highlight-desc">Beyond what's on the timetable, Kaitlyn has pursued several art classes as extracurricular activities — investing her own time in building skills and exploring different media. The kind of initiative that separates someone who likes art from someone who takes it seriously.</p>
+      </div>
+ 
+      <div class="highlight-card">
+        <p class="highlight-tag">Outdoor Education · Grade 9</p>
+        <p class="highlight-title">Snowshoeing, Orienteering, Cycling &amp; Canoeing</p>
+        <p class="highlight-desc">Outdoor Education was one of the standout experiences of Grade 9 — getting outside the classroom and into genuine adventure. Snowshoeing through winter trails, navigating with a compass, cycling routes, and paddling canoes: four very different skills, all picked up in one course.</p>
+      </div>
+ 
+      <div class="highlight-card">
+        <p class="highlight-tag">Future Path · Health Sciences</p>
+        <p class="highlight-title">Aspiring Cardiology or X-Ray Technician</p>
+        <p class="highlight-desc">A love of medical dramas sparked something real: Kaitlyn is drawn to health sciences and is thinking seriously about a future as a cardiology or X-ray technician. It's a field that combines precision, care, and a genuine desire to help people — all things Kaitlyn already brings to everything she does.</p>
+      </div>
+ 
+    </div>
+  </div>
+ 
+  <!-- SKILLS -->
+  <div class="section">
+    <p class="section-label">What I bring</p>
+    <h2 class="section-heading">Skills built in<br><em>the real world</em></h2>
+    <div class="skills-grid">
+ 
+      <div class="skill-item">
+        <p class="skill-title">Drawing &amp; Illustration</p>
+        <p class="skill-desc">A natural visual communicator with years of drawing practice behind her. Comfortable working across styles and subjects, and always developing — through classes, personal projects, and a genuine love of the craft.</p>
+      </div>
+ 
+      <div class="skill-item">
+        <p class="skill-title">Animation</p>
+        <p class="skill-desc">Brings drawings to life through animation — understanding how movement, timing, and expression work together to tell a story. It's a patient, technical skill that also demands creativity, and Kaitlyn approaches it with both.</p>
+      </div>
+ 
+      <div class="skill-item">
+        <p class="skill-title">Empathy &amp; People Skills</p>
+        <p class="skill-desc">Genuinely kind and caring — the sort of person others feel comfortable around. These aren't soft skills in Kaitlyn's case; they're the foundation of who she is, and exactly what the health sciences field looks for in its people.</p>
+      </div>
+ 
+      <div class="skill-item">
+        <p class="skill-title">Outdoor &amp; Physical Skills</p>
+        <p class="skill-desc">A year of Outdoor Education introduced real hands-on competencies: navigating with a compass, snowshoeing, cycling, and canoeing. Comfortable in the outdoors and willing to try new things.</p>
+      </div>
+ 
+      <div class="skill-item">
+        <p class="skill-title">Attention to Detail</p>
+        <p class="skill-desc">Whether she's refining a line in an illustration or following a pattern carefully in an art class, Kaitlyn works with care and precision. Detail-orientation comes naturally to someone whose artistic eye is always noticing what others miss.</p>
+      </div>
+ 
+      <div class="skill-item">
+        <p class="skill-title">Curiosity &amp; Enthusiasm</p>
+        <p class="skill-desc">The kind of person who leans into new experiences rather than away from them. Whether it's a new art medium, a canoe, or a medical drama that sparks a whole new career idea — Kaitlyn approaches things with openness and genuine enthusiasm.</p>
+      </div>
+ 
+    </div>
+ 
+    <div class="cta-banner" style="margin-top: 2.5rem;">
+      <h3 class="cta-banner-heading">Watching this <em>space</em></h3>
+      <p class="cta-banner-sub">Kaitlyn is still early in her journey — but the ingredients are all there: creativity, care, curiosity, and a growing sense of where she wants to go. Stay tuned as she builds her portfolio and charts her path through secondary school and beyond.</p>
+    </div>
+  </div>
+ 
+  <!-- REST OF FAMILY -->
+  <div class="section" style="border-top: 0.5px solid var(--stone-200);">
+    <p class="section-label">The rest of the family</p>
+    <div class="family-nav-grid">
+      <a class="family-nav-card" href="/rob/">
+        <p class="family-nav-name">Rob Thornton</p>
+        <p class="family-nav-role">Senior Software Engineer</p>
+        <span class="family-nav-link">View profile</span>
+      </a>
+      <a class="family-nav-card" href="/jennifer/">
+        <p class="family-nav-name">Jennifer Thornton</p>
+        <p class="family-nav-role">Senior Fraud Operations Analyst</p>
+        <span class="family-nav-link">View profile</span>
+      </a>
+      <a class="family-nav-card" href="/natalie/">
+        <p class="family-nav-name">Natalie Thornton</p>
+        <p class="family-nav-role">Mathematics student, uOttawa '29</p>
+        <span class="family-nav-link">View profile</span>
       </a>
     </div>
+  </div>
+ 
+  <footer>
+    <p class="footer-copy">&copy; 2025 The Thorntons &middot; thethorntons.ca</p>
+    <p class="footer-cats">Supervised by Khaleesi &amp; Luna</p>
   </footer>
-
+ 
 </body>
 </html>
