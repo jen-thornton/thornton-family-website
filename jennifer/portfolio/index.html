@@ -95,7 +95,7 @@
       align-items: center;
       gap: 0.5rem;
     }
-    .breadcrumb a { color: var(--stone-400); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a { color: var(--stone-400); text-decoration: none; }
     .breadcrumb a:hover { color: var(--slate-900); }
     .breadcrumb span { color: var(--stone-200); }
     .page-title {
@@ -170,98 +170,20 @@
       color: var(--stone-400);
       letter-spacing: 0.05em;
     }
+    .card-meta {
+      font-size: 0.72rem;
+      color: var(--stone-400);
+      letter-spacing: 0.05em;
+    }
     .card-action {
       font-size: 0.7rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--stone-400);
     }
-    .card-action.coming-soon {
-      font-style: italic;
-      font-family: var(--serif);
-      text-transform: none;
-      letter-spacing: 0;
-      font-size: 0.8rem;
-    }
-    .card-action.link::after { content: ' →'; }
+    .card-action.coming-soon { font-style: italic; font-family: var(--serif); text-transform: none; letter-spacing: 0; font-size: 0.8rem; }
     .portfolio-card.has-link:hover .card-action { color: var(--slate-900); }
- 
-    /* ARTICLES SECTION */
-    .articles-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5px;
-      background: var(--stone-200);
-      border: 0.5px solid var(--stone-200);
-    }
-    .article-card {
-      background: var(--stone-50);
-      padding: 2.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      text-decoration: none;
-      color: inherit;
-      transition: background 0.2s;
-    }
-    .article-card:hover { background: var(--stone-100); }
-    .article-meta {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .article-tag {
-      font-size: 0.65rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--stone-400);
-    }
-    .article-dot {
-      width: 3px;
-      height: 3px;
-      border-radius: 50%;
-      background: var(--stone-200);
-    }
-    .article-read-time {
-      font-size: 0.65rem;
-      color: var(--stone-400);
-      letter-spacing: 0.06em;
-    }
-    .article-title {
-      font-family: var(--serif);
-      font-size: 1.3rem;
-      font-weight: 400;
-      color: var(--slate-900);
-      line-height: 1.25;
-    }
-    .article-desc {
-      font-size: 0.82rem;
-      line-height: 1.75;
-      color: var(--stone-600);
-      font-weight: 300;
-      flex: 1;
-    }
-    .article-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 1rem;
-      border-top: 0.5px solid var(--stone-200);
-      margin-top: auto;
-    }
-    .article-date {
-      font-size: 0.72rem;
-      color: var(--stone-400);
-    }
-    .article-action {
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--stone-400);
-    }
-    .article-action::after { content: ' →'; }
-    .article-card:hover .article-action { color: var(--slate-900); }
+    .card-action.link::after { content: ' →'; }
  
     /* BACK LINK */
     .back-section {
@@ -279,7 +201,6 @@
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      transition: color 0.2s;
     }
     .back-link::before { content: '←'; font-size: 0.85rem; }
     .back-link:hover { color: var(--slate-900); }
@@ -300,7 +221,6 @@
       .page-header-section { padding: 2.5rem 1.5rem 2.5rem; }
       .section { padding: 3rem 1.5rem; }
       .portfolio-grid { grid-template-columns: 1fr; }
-      .articles-grid { grid-template-columns: 1fr; }
       .back-section { padding: 2rem 1.5rem; }
       footer { flex-direction: column; gap: 0.5rem; text-align: center; }
     }
@@ -332,27 +252,16 @@
     <p class="page-intro">A collection of frameworks, case studies, articles, and operational work built across a career in fraud operations and compliance. More pieces added as they become available to share.</p>
   </div>
  
-  <!-- PROJECTS -->
   <div class="section">
     <p class="section-label">Projects</p>
-    <div class="portfolio-grid" style="grid-template-columns: 1fr;">
+    <div class="portfolio-grid">
  
       <a class="portfolio-card has-link" href="/jennifer/portfolio/platform-integrity-agent/">
-        <p class="card-tag">AI &amp; Automation · Benevity, Inc.</p>
+        <p class="card-tag">AI &amp; Automation</p>
         <p class="card-title">Platform Integrity Investigation Agent — 48% reduction in manual effort</p>
         <p class="card-desc">Designed and built an AI-powered investigation agent that performs forensic donation analysis and OSINT research with human-in-the-loop verification — cutting manual investigation time nearly in half within months of deployment. Includes a 7-stage OSINT pipeline, risk scoring framework, escalation logic, and full analyst sign-off workflow. Built as a team of one with no prior tooling in place.</p>
         <div class="card-footer">
-          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-            <span class="card-employer">Claude API</span>
-            <span class="card-employer">·</span>
-            <span class="card-employer">Agentic AI</span>
-            <span class="card-employer">·</span>
-            <span class="card-employer">OSINT</span>
-            <span class="card-employer">·</span>
-            <span class="card-employer">Risk Scoring</span>
-            <span class="card-employer">·</span>
-            <span class="card-employer">Human-in-the-loop</span>
-          </div>
+          <span class="card-employer">Benevity, Inc.</span>
           <span class="card-action link">View project</span>
         </div>
       </a>
@@ -360,38 +269,29 @@
     </div>
   </div>
  
-  <!-- ARTICLES -->
   <div class="section">
     <p class="section-label">Articles &amp; writing</p>
-    <div class="articles-grid">
+    <div class="portfolio-grid">
  
-      <a class="article-card" href="/jennifer/portfolio/npo-fraud-article/">
-        <div class="article-meta">
-          <span class="article-tag">Fraud Operations</span>
-          <span class="article-dot"></span>
-          <span class="article-read-time">12 min read</span>
-        </div>
-        <p class="article-title">What NPO Fraud Actually Looks Like</p>
-        <p class="article-desc">A practitioner's guide to the tactics that appear most often in CSR fraud — from match harvesting and impossible volunteer hours to AI-generated documentation and trend-farming crisis NPOs.</p>
-        <div class="article-footer">
-          <span class="article-date">June 2026</span>
-          <span class="article-action">Read article</span>
+      <a class="portfolio-card has-link" href="/jennifer/portfolio/npo-fraud-article/">
+        <p class="card-tag">Fraud Operations</p>
+        <p class="card-title">What NPO Fraud Actually Looks Like</p>
+        <p class="card-desc">A practitioner's guide to the tactics that appear most often in CSR fraud — from match harvesting and impossible volunteer hours to AI-generated documentation and trend-farming crisis NPOs.</p>
+        <div class="card-footer">
+          <span class="card-meta">June 2026 &middot; 12 min read</span>
+          <span class="card-action link">Read article</span>
         </div>
       </a>
  
-      <div class="article-card" style="cursor:default;">
-        <div class="article-meta">
-          <span class="article-tag">AML &amp; Strategy</span>
-          <span class="article-dot"></span>
-          <span class="article-read-time">Coming soon</span>
+      <a class="portfolio-card has-link" href="/jennifer/portfolio/framl/">
+        <p class="card-tag">AML &amp; Strategy</p>
+        <p class="card-title">FRAML: Why Fraud and AML Need to Work as One</p>
+        <p class="card-desc">Fraud and AML have historically operated as separate disciplines — but as financial crime evolves, so must the teams fighting it. A look at the case for convergence, the blindspots siloed programs create, and what a unified financial crime function actually looks like in practice.</p>
+        <div class="card-footer">
+          <span class="card-meta">June 2026 &middot; 10 min read</span>
+          <span class="card-action link">Read article</span>
         </div>
-        <p class="article-title">FRAML: Why Fraud and AML Need to Work as One</p>
-        <p class="article-desc">Fraud and AML have historically operated as separate disciplines — but as financial crime evolves, so must the teams fighting it. A look at the case for convergence and what it means in practice.</p>
-        <div class="article-footer">
-          <span class="article-date">2026</span>
-          <span class="article-action" style="font-style:italic; font-family:var(--serif); text-transform:none; letter-spacing:0; font-size:0.8rem;">Article coming soon</span>
-        </div>
-      </div>
+      </a>
  
     </div>
   </div>
