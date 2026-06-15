@@ -20,6 +20,10 @@
       --stone-600: #6B6256;
       --stone-800: #3A332A;
       --slate-900: #1C1C1E;
+      /* Accent — sage green, matching Natalie's palette */
+      --accent:     #6B8F71;
+      --accent-dim: #8EAF94;
+      --accent-bg:  #EEF3EE;
       --serif: 'EB Garamond', Georgia, serif;
       --sans:  'Inter', system-ui, sans-serif;
     }
@@ -92,7 +96,7 @@
       font-weight: 500;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--stone-600);
+      color: var(--accent);
       margin-bottom: 0.75rem;
     }
     .page-header-name {
@@ -119,7 +123,7 @@
       align-items: center;
       gap: 0.5rem;
       padding: 0.65rem 1.25rem;
-      background: var(--slate-900);
+      background: var(--accent);
       color: #fff;
       font-size: 0.72rem;
       font-weight: 400;
@@ -128,7 +132,7 @@
       text-decoration: none;
       transition: background 0.2s;
     }
-    .btn-primary:hover { background: var(--stone-800); }
+    .btn-primary:hover { background: #4f6e54; }
  
     /* SHARED SECTION */
     .section {
@@ -153,7 +157,7 @@
       color: var(--slate-900);
       margin-bottom: 1.25rem;
     }
-    .section-heading em { font-style: italic; color: var(--stone-600); }
+    .section-heading em { font-style: italic; color: var(--accent); }
  
     /* BIO */
     .bio-body {
@@ -169,7 +173,7 @@
     .pullquote {
       margin: 2.5rem 0 0;
       padding: 0 0 0 1.75rem;
-      border-left: 1.5px solid var(--stone-200);
+      border-left: 2px solid var(--accent);
     }
     .pullquote p {
       font-family: var(--serif);
@@ -230,7 +234,7 @@
       font-weight: 500;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--stone-400);
+      color: var(--accent-dim);
       margin-bottom: 0.75rem;
     }
     .highlight-title {
@@ -276,8 +280,8 @@
  
     /* CTA BANNER */
     .cta-banner {
-      background: var(--stone-100);
-      border: 0.5px solid var(--stone-200);
+      background: var(--accent-bg);
+      border: 0.5px solid #c2d5c4;
       padding: 3rem;
     }
     .cta-banner-heading {
@@ -287,7 +291,7 @@
       color: var(--slate-900);
       margin-bottom: 0.6rem;
     }
-    .cta-banner-heading em { font-style: italic; color: var(--stone-600); }
+    .cta-banner-heading em { font-style: italic; color: var(--accent); }
     .cta-banner-sub {
       font-size: 0.85rem;
       color: var(--stone-600);
@@ -433,8 +437,8 @@
         <p class="detail-value">Grade 9, 2025</p>
       </div>
       <div class="detail-item" style="padding-left: 1.5rem;">
-        <p class="detail-label">Ambition</p>
-        <p class="detail-value">Health Sciences</p>
+        <p class="detail-label">Availability</p>
+        <p class="detail-value">Part-time, Summer 2025</p>
       </div>
       <div class="detail-item" style="padding-left: 1.5rem;">
         <p class="detail-label">Based in</p>
@@ -515,8 +519,8 @@
     </div>
  
     <div class="cta-banner" style="margin-top: 2.5rem;">
-      <h3 class="cta-banner-heading">Watching this <em>space</em></h3>
-      <p class="cta-banner-sub">Kaitlyn is still early in her journey — but the ingredients are all there: creativity, care, curiosity, and a growing sense of where she wants to go. Stay tuned as she builds her portfolio and charts her path through secondary school and beyond.</p>
+      <h3 class="cta-banner-heading">Open to <em>opportunities</em></h3>
+      <p class="cta-banner-sub">Kaitlyn is looking for a part-time position this summer to start building real-world experience — ideally somewhere that values creativity, care, or a genuine enthusiasm for learning. The ingredients are all there; she just needs the first door to open. If you think that might be you, get in touch.</p>
     </div>
   </div>
  
