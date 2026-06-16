@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NPO Risk Scoring Calculator — Jennifer Thornton</title>
+<meta name="description" content="An interactive risk scoring framework for evaluating nonprofit legitimacy and donation integrity in CSR programs." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+<style>
+  /* ── THORNTON SITE TOKENS (exact match) ── */
+  :root {
+    --stone-50:  #F8F6F1;
+    --stone-100: #EDE9E0;
+    --stone-200: #D6CFC2;
+    --stone-400: #A89F8F;
+    --stone-600: #6B6256;
+    --stone-800: #3A332A;
+    --slate-900: #1C1C1E;
+    --serif: 'EB Garamond', Georgia, serif;
+    --sans:  'Inter', system-ui, sans-serif;
+    --bg: #F8F9FB;
+    --bg-card: #FFFFFF;
+    --bg-raised: #F1F3F7;
+    --border: #E2E6ED;
+    --border-mid: #D0D6E0;
+    --text-primary: #111827;
+    --text-secondary: #5A6478;
+    --text-muted: #9AA3B2;
+    --accent: #2563EB;
+    --accent-dim: #DBEAFE;
+    --red: #DC2626;
+    --red-dim: #FEE2E2;
+    --orange: #EA580C;
+    --orange-dim: #FFEDD5;
+    --yellow: #CA8A04;
+    --yellow-dim: #FEF9C3;
+    --green: #16A34A;
+    --green-dim: #DCFCE7;
+    --mono: 'JetBrains Mono', monospace;
+    --radius: 8px;
+    --radius-lg: 12px;
+  }
+ 
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+  body {
+    font-family: var(--sans);
+    background-color: var(--stone-50);
+    color: var(--slate-900);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+ 
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    border-bottom: 0.5px solid var(--stone-200);
+    background: var(--stone-50);
+    position: sticky;
+    top: 0;
+    z-index: 200;
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--slate-900);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--stone-600);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--slate-900); }
+  .nav-links a.active { color: var(--slate-900); }
+ 
+  /* ── PAGE HEADER ── */
+  .page-header-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 3rem 3rem;
+    border-bottom: 0.5px solid var(--stone-200);
+  }
+  .breadcrumb {
+    font-size: 0.72rem;
+    color: var(--stone-400);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .breadcrumb a { color: var(--stone-400); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--slate-900); }
+  .breadcrumb span { color: var(--stone-200); }
+  .page-title {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--slate-900);
+    margin-bottom: 1rem;
+  }
+  .page-title em { font-style: italic; color: var(--stone-600); }
+  .page-intro {
+    font-size: 0.9rem;
+    line-height: 1.85;
+    color: var(--stone-600);
+    font-weight: 300;
+    max-width: 65ch;
+    margin-bottom: 1.5rem;
+  }
+  .header-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .header-tag {
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: var(--stone-600);
+    border: 0.5px solid var(--stone-200);
+    padding: 0.3rem 0.65rem;
+    background: var(--stone-50);
+  }
+ 
+  /* ── THORNTON SECTION (prose) ── */
+  .thornton-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 3rem;
+    border-bottom: 0.5px solid var(--stone-200);
+  }
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+    margin-bottom: 1.5rem;
+  }
+  .section-heading {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--slate-900);
+    margin-bottom: 1.25rem;
+  }
+  .section-heading em { font-style: italic; color: var(--stone-600); }
+  .origin-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 3rem;
+  }
+  .origin-col-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+    margin-bottom: 0.6rem;
+  }
+  .origin-col-heading {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--slate-900);
+    margin-bottom: 0.85rem;
+    line-height: 1.25;
+  }
+  .origin-col-body {
+    font-size: 0.88rem;
+    color: var(--stone-600);
+    line-height: 1.9;
+    font-weight: 300;
+  }
+  .origin-col-body p + p { margin-top: 0.85rem; }
+ 
+  /* ── STATS STRIP ── */
+  .stats-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 0.5px solid var(--stone-200);
+    background: var(--stone-100);
+  }
+  .stat-item {
+    padding: 1.75rem 1.5rem;
+    border-right: 0.5px solid var(--stone-200);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 2.4rem;
+    font-weight: 400;
+    color: var(--slate-900);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--stone-600);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+ 
+  /* ── BEFORE/AFTER ── */
+  .before-after {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 0.5px solid var(--stone-200);
+    margin: 2rem 0;
+  }
+  .ba-col {
+    padding: 1.5rem;
+    background: var(--stone-100);
+  }
+  .ba-col:first-child { border-right: 0.5px solid var(--stone-200); }
+  .ba-col-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .ba-col-label.before { color: var(--red); }
+  .ba-col-label.after  { color: var(--green); }
+  .ba-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: var(--stone-600);
+    margin-bottom: 0.6rem;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+  .ba-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+  .ba-dot.red   { background: var(--red); }
+  .ba-dot.green { background: var(--green); }
+ 
+  /* ── PRINCIPLES ── */
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  .principle {
+    border-top: 0.5px solid var(--stone-200);
+    padding-top: 1.25rem;
+  }
+  .principle-num {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    color: var(--stone-200);
+    margin-bottom: 0.5rem;
+  }
+  .principle-title {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--slate-900);
+    margin-bottom: 0.5rem;
+    line-height: 1.35;
+  }
+  .principle-body {
+    font-size: 0.82rem;
+    color: var(--stone-600);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+ 
+  /* ── SCREEN WRAPPER ── */
+  .screen-section {
+    background: var(--stone-100);
+    border-top: 0.5px solid var(--stone-200);
+    border-bottom: 0.5px solid var(--stone-200);
+    padding: 3rem 0 3.5rem;
+  }
+  .screen-section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 3rem;
+  }
+  .screen-section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  .screen-num {
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--stone-400);
+  }
+  .screen-title {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--slate-900);
+  }
+  .screen-desc {
+    font-size: 0.78rem;
+    color: var(--stone-400);
+    font-weight: 300;
+    margin-left: auto;
+  }
+ 
+  /* ── SCREEN / MOCKUP ── */
+  .screen {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .screen-chrome {
+    background: var(--bg-raised);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .chrome-dots { display: flex; gap: 5px; }
+  .chrome-dots span { width: 10px; height: 10px; border-radius: 50%; }
+  .chrome-dots span:nth-child(1) { background: #EF4444; }
+  .chrome-dots span:nth-child(2) { background: #EAB308; }
+  .chrome-dots span:nth-child(3) { background: #22C55E; }
+  .chrome-url {
+    flex: 1;
+    background: var(--bg);
+    border-radius: 5px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--text-muted);
+    margin: 0 8px;
+  }
+ 
+  /* ── SCREEN LAYOUT (sidebar + content) ── */
+  .screen-body {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+  }
+  .screen-sidebar {
+    background: var(--bg-raised);
+    border-right: 1px solid var(--border);
+    padding: 16px 0;
+  }
+  .sb-section { padding: 0 12px; margin-bottom: 20px; }
+  .sb-section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 0 4px;
+    margin-bottom: 6px;
+  }
+  .sb-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    cursor: default;
+  }
+  .sb-item.active {
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+  .sb-item i { font-size: 14px; }
+  .sb-badge {
+    margin-left: auto;
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 99px;
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+  .tier-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+ 
+  /* ── CALCULATOR CONTENT ── */
+  .calc-content { padding: 24px; }
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .topbar-left { display: flex; align-items: center; gap: 10px; }
+  .topbar-left h2 { font-size: 14px; font-weight: 500; font-family: var(--sans); color: var(--text-primary); }
+ 
+  /* ── DISCLAIMER ── */
+  .disclaimer-bar {
+    background: var(--accent-dim);
+    border: 1px solid #BFDBFE;
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #1E40AF;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  .disclaimer-bar strong { font-weight: 500; }
+ 
+  /* ── CATEGORY BLOCKS ── */
+  .cat-block {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .cat-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-card);
+  }
+  .cat-head.esc-head {
+    background: var(--red-dim);
+    border-bottom-color: #FECACA;
+  }
+  .cat-icon { font-size: 14px; color: var(--text-muted); }
+  .esc-head .cat-icon { color: var(--red); }
+  .cat-title { font-size: 12px; font-weight: 500; color: var(--text-primary); }
+  .esc-head .cat-title { color: var(--red); }
+  .override-tag {
+    margin-left: auto;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 5px;
+    background: var(--red-dim);
+    color: var(--red);
+    border: 1px solid #FECACA;
+    font-weight: 500;
+  }
+  .na-badge {
+    margin-left: auto;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 5px;
+    background: var(--yellow-dim);
+    color: var(--yellow);
+    border: 1px solid #FEF08A;
+    display: none;
+  }
+  .factor-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    border-top: 1px solid var(--border);
+    background: var(--bg-card);
+  }
+  .factor-row:first-of-type { border-top: none; }
+  .factor-cb {
+    margin-top: 2px;
+    flex-shrink: 0;
+    accent-color: var(--accent);
+    width: 13px;
+    height: 13px;
+    cursor: pointer;
+  }
+  .factor-label {
+    font-size: 12px;
+    color: var(--text-primary);
+    line-height: 1.4;
+    cursor: pointer;
+    display: block;
+    font-weight: 400;
+  }
+  .factor-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    line-height: 1.5;
+    font-weight: 300;
+  }
+  .esc-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 5px;
+    background: var(--red-dim);
+    color: var(--red);
+    border: 1px solid #FECACA;
+    margin-top: 5px;
+    font-weight: 500;
+  }
+ 
+  /* ── ACTIONS ── */
+  .actions-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .btn {
+    font-size: 12px;
+    padding: 7px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border-mid);
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-family: var(--sans);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .btn:hover { background: var(--bg-raised); }
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+    font-weight: 500;
+  }
+  .btn-primary:hover { background: #1D4ED8; }
+ 
+  /* ── RESULT PANEL ── */
+  .result-panel {
+    display: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .result-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 5px;
+  }
+  .badge-green  { background: var(--green-dim);   color: var(--green); }
+  .badge-yellow { background: var(--yellow-dim);  color: var(--yellow); }
+  .badge-orange { background: var(--orange-dim);  color: var(--orange); }
+  .badge-red    { background: var(--red-dim);     color: var(--red); }
+  .badge-gray   { background: var(--bg-raised);   color: var(--text-secondary); border: 1px solid var(--border); }
+  .result-body { padding: 14px 16px; background: var(--bg-card); }
+  .sec-title {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .r-action {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+  .score-track {
+    height: 5px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--green) 0%, var(--yellow) 33%, var(--orange) 66%, var(--red) 100%);
+    position: relative;
+    margin-bottom: 4px;
+  }
+  .score-marker {
+    position: absolute;
+    top: -4px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    border: 2px solid var(--bg-card);
+    left: 0%;
+    transform: translateX(-50%);
+    transition: left 0.5s ease, background 0.5s ease;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+  .score-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+  .flag-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    background: var(--bg-raised);
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    border: 1px solid var(--border);
+  }
+  .flag-row i { color: var(--orange); margin-top: 1px; flex-shrink: 0; font-size: 13px; }
+  .flag-row i.esc-icon { color: var(--red); }
+  .notice {
+    display: none;
+    font-size: 12px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    margin-top: 10px;
+    line-height: 1.6;
+  }
+  .notice-warn { background: var(--yellow-dim); color: #92400E; border: 1px solid #FEF08A; }
+  .notice-danger { background: var(--red-dim); color: #991B1B; border: 1px solid #FECACA; }
+ 
+  /* ── TIER EXPLAINER SECTION ── */
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .tier-card {
+    border: 0.5px solid var(--stone-200);
+    padding: 1.25rem;
+    background: var(--stone-50);
+  }
+  .tier-card-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tier-swatch { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .tier-card-body { font-size: 0.82rem; color: var(--stone-600); line-height: 1.8; font-weight: 300; }
+ 
+  /* ── BACK + FOOTER ── */
+  .back-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem;
+    border-bottom: 0.5px solid var(--stone-200);
+  }
+  .back-link {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: color 0.2s;
+  }
+  .back-link::before { content: '←'; font-size: 0.85rem; }
+  .back-link:hover { color: var(--slate-900); }
+  footer {
+    border-top: 0.5px solid var(--stone-200);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-copy { font-size: 0.75rem; color: var(--stone-400); }
+  .footer-note { font-size: 0.75rem; color: var(--stone-400); font-style: italic; font-family: var(--serif); }
+ 
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1.25rem 1.5rem; }
+    .nav-links { gap: 1.25rem; }
+    .page-header-section { padding: 2.5rem 1.5rem; }
+    .thornton-section { padding: 3rem 1.5rem; }
+    .screen-section-inner { padding: 0 1.5rem; }
+    .origin-two-col { grid-template-columns: 1fr; gap: 2rem; }
+    .stats-strip { grid-template-columns: repeat(3, 1fr); }
+    .before-after { grid-template-columns: 1fr; }
+    .ba-col:first-child { border-right: none; border-bottom: 0.5px solid var(--stone-200); }
+    .principles-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .screen-body { grid-template-columns: 1fr; }
+    .screen-sidebar { display: none; }
+    .tier-grid { grid-template-columns: 1fr; }
+    .back-section { padding: 2rem 1.5rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+ 
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-logo" href="/">The Thorntons</a>
+  <ul class="nav-links">
+    <li><a href="/rob/">Rob</a></li>
+    <li><a href="/jennifer/" class="active">Jennifer</a></li>
+    <li><a href="/natalie/">Natalie</a></li>
+    <li><a href="/kaitlyn/">Kaitlyn</a></li>
+  </ul>
+</nav>
+ 
+<!-- ── PAGE HEADER ── -->
+<div class="page-header-section">
+  <p class="breadcrumb">
+    <a href="/jennifer/">Jennifer Thornton</a>
+    <span>/</span>
+    <a href="/jennifer/portfolio/">Portfolio</a>
+    <span>/</span>
+    NPO Risk Scoring Calculator
+  </p>
+  <h1 class="page-title">NPO Risk Scoring<br><em>Calculator</em></h1>
+  <p class="page-intro">A risk-based scoring framework for evaluating nonprofit legitimacy and donation integrity in corporate social responsibility programs — designed to bring structure, consistency, and defensibility to a space where dedicated fraud operations infrastructure is still maturing.</p>
+  <div class="header-tags">
+    <span class="header-tag">Risk Scoring</span>
+    <span class="header-tag">Fraud Operations</span>
+    <span class="header-tag">NPO / CSR</span>
+    <span class="header-tag">Decision Frameworks</span>
+    <span class="header-tag">AML Compliance</span>
+    <span class="header-tag">FINTRAC</span>
+  </div>
+</div>
+ 
+<!-- ── PROBLEM / SOLUTION ── -->
+<div class="thornton-section">
+  <p class="section-label">Industry context</p>
+  <div class="origin-two-col">
+    <div>
+      <p class="origin-col-label">The challenge</p>
+      <h2 class="origin-col-heading">A gap common across the CSR industry</h2>
+      <div class="origin-col-body">
+        <p>CSR platforms sit at a complex intersection: corporate clients, employee donors, and thousands of nonprofits receiving funds. Fraud risk is real and growing — but dedicated fraud operations infrastructure in this space is still relatively rare. Most platforms reach a point where NPO concerns are escalating faster than informal processes can handle them.</p>
+        <p>Without a structured framework, investigation outcomes can vary by analyst, by urgency, and by whatever precedent happened to exist from the last similar case. Decisions that feel right in the moment become difficult to explain to legal or leadership — and impossible to defend consistently at scale.</p>
+      </div>
+    </div>
+    <div>
+      <p class="origin-col-label">The solution</p>
+      <h2 class="origin-col-heading">A scoring model that takes subjectivity out of the equation</h2>
+      <div class="origin-col-body">
+        <p>The framework evaluates NPOs across five risk categories — investigation request, platform activity, financial health, media profile, and public trust — producing an additive score that maps to a tier and a recommended action.</p>
+        <p>Every decision is grounded in documented signals rather than instinct. The score doesn't replace analyst judgment — it structures it, making outcomes consistent across cases, explainable to stakeholders, and defensible if challenged. When the same process is applied to every investigation, precedent builds naturally and the program scales.</p>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="before-after">
+    <div class="ba-col">
+      <div class="ba-col-label before">Without a framework</div>
+      <div class="ba-item"><div class="ba-dot red"></div>Investigation outcomes vary by analyst and urgency</div>
+      <div class="ba-item"><div class="ba-dot red"></div>No consistent criteria to apply across cases</div>
+      <div class="ba-item"><div class="ba-dot red"></div>Escalations difficult to defend to legal and leadership</div>
+      <div class="ba-item"><div class="ba-dot red"></div>No structured audit trail for actioned organizations</div>
+      <div class="ba-item"><div class="ba-dot red"></div>Precedent accumulates inconsistently over time</div>
+    </div>
+    <div class="ba-col">
+      <div class="ba-col-label after">After</div>
+      <div class="ba-item"><div class="ba-dot green"></div>Additive scoring across five risk categories</div>
+      <div class="ba-item"><div class="ba-dot green"></div>Same criteria applied to every investigation</div>
+      <div class="ba-item"><div class="ba-dot green"></div>Score and flagged factors justify every decision</div>
+      <div class="ba-item"><div class="ba-dot green"></div>Full record of what was assessed and why</div>
+      <div class="ba-item"><div class="ba-dot green"></div>Auto-escalation triggers remove edge-case ambiguity</div>
+    </div>
+  </div>
+ 
+  <div class="stats-strip">
+    <div class="stat-item">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Risk categories assessed</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">4</div>
+      <div class="stat-label">Tiers with mapped actions</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">4</div>
+      <div class="stat-label">Auto-escalation triggers</div>
+    </div>
+  </div>
+</div>
+ 
+<!-- ── PRINCIPLES ── -->
+<div class="thornton-section">
+  <p class="section-label">Framework</p>
+  <h2 class="section-heading">Built on <em>three principles</em></h2>
+  <div class="principles-grid">
+    <div class="principle">
+      <div class="principle-num">01</div>
+      <div class="principle-title">Platform neutrality — never integrity neutrality</div>
+      <div class="principle-body">The platform takes no position on the cause an NPO champions. It takes a firm position on whether that NPO is who it says it is, and whether funds are reaching the intended recipients.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">02</div>
+      <div class="principle-title">Collective safety over individual cases</div>
+      <div class="principle-body">Decisions are made with the broader platform ecosystem in mind — not just the organization under review. A pattern that looks minor in isolation may be part of a coordinated scheme across multiple entities.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">03</div>
+      <div class="principle-title">Objective, precedent-aware action</div>
+      <div class="principle-body">Every decision sets a precedent. The scoring model takes emotion out of the equation by anchoring outcomes to documented signals — making it possible to act consistently, explain clearly, and defend confidently.</div>
+    </div>
+  </div>
+</div>
+ 
+<!-- ── CALCULATOR SCREEN ── -->
+<div class="screen-section">
+  <div class="screen-section-inner">
+    <div class="screen-section-header">
+      <span class="screen-num">01</span>
+      <span class="screen-title">Risk calculator</span>
+      <span class="screen-desc">Select factors present in the investigation</span>
+    </div>
+ 
+    <div class="screen">
+      <div class="screen-chrome">
+        <div class="chrome-dots"><span></span><span></span><span></span></div>
+        <div class="chrome-url">platform-integrity / npo-risk-calculator</div>
+      </div>
+ 
+      <div class="screen-body">
+        <!-- SIDEBAR -->
+        <div class="screen-sidebar">
+          <div class="sb-section">
+            <div class="sb-section-label">Tools</div>
+            <div class="sb-item active"><i class="ti ti-shield-check"></i> NPO risk scorer <span class="sb-badge">Beta</span></div>
+            <div class="sb-item"><i class="ti ti-file-search"></i> Investigation agent</div>
+            <div class="sb-item"><i class="ti ti-report"></i> Case reports</div>
+          </div>
+          <div class="sb-section">
+            <div class="sb-section-label">Risk tiers</div>
+            <div class="sb-item"><div class="tier-dot" style="background:var(--green)"></div> Low — no action</div>
+            <div class="sb-item"><div class="tier-dot" style="background:var(--yellow)"></div> Moderate — RFI/EDD</div>
+            <div class="sb-item"><div class="tier-dot" style="background:var(--orange)"></div> High — suspend</div>
+            <div class="sb-item"><div class="tier-dot" style="background:var(--red)"></div> Critical — terminate</div>
+          </div>
+        </div>
+ 
+        <!-- CONTENT -->
+        <div class="calc-content">
+          <div class="topbar">
+            <div class="topbar-left">
+              <i class="ti ti-shield-check" style="color:var(--text-secondary)"></i>
+              <h2>NPO Risk Scoring Calculator</h2>
+            </div>
+            <span class="badge badge-gray">Portfolio demo</span>
+          </div>
+ 
+          <div class="disclaimer-bar">
+            <strong>Portfolio demonstration only.</strong> Scoring weights and thresholds are intentional placeholders — they do not reflect any real organizational methodology, proprietary process, or production system. Designed to help practitioners in the NPO/CSR space structure their investigative thinking.
+          </div>
+ 
+          <!-- RESULT (above buttons so it's always visible after scoring) -->
+          <div class="result-panel" id="result-panel">
+            <div class="result-header" id="result-header">
+              <span class="badge" id="tier-badge"></span>
+              <span style="font-size:12px;color:var(--text-secondary)" id="result-subtitle"></span>
+            </div>
+            <div class="result-body">
+              <div class="sec-title">Recommended action</div>
+              <div class="r-action" id="r-action"></div>
+              <div class="score-track">
+                <div class="score-marker" id="score-marker"></div>
+              </div>
+              <div class="score-labels"><span>Low</span><span>Moderate</span><span>High</span><span>Critical</span></div>
+              <div class="sec-title" id="flags-label" style="margin-top:4px"></div>
+              <div id="flags-list"></div>
+              <div class="notice notice-warn" id="notice-incomplete"></div>
+              <div class="notice notice-danger" id="notice-escalation">
+                <strong><i class="ti ti-alert-circle"></i> Auto-escalation triggered.</strong> One or more factors override the total score. Escalate immediately regardless of other findings.
+              </div>
+            </div>
+          </div>
+ 
+          <!-- BUTTONS always visible -->
+          <div class="actions-row">
+            <button class="btn btn-primary" onclick="scoreIt()"><i class="ti ti-chart-bar"></i> Calculate risk score</button>
+            <button class="btn" onclick="resetForm()"><i class="ti ti-refresh"></i> Reset</button>
+          </div>
+ 
+          <!-- CATEGORIES -->
+          <div id="categories"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- ── TIER EXPLAINER ── -->
+<div class="thornton-section">
+  <p class="section-label">Decision logic</p>
+  <h2 class="section-heading">Why <em>four tiers</em></h2>
+  <div class="tier-grid">
+    <div class="tier-card">
+      <div class="tier-card-label"><div class="tier-swatch" style="background:var(--green)"></div> <span style="color:var(--green)">Low — no action</span></div>
+      <div class="tier-card-body">The platform does not action on discomfort or low-signal noise alone. A low score may still warrant monitoring, but it does not justify restricting an organization's access. Emotional reactions to isolated complaints are not a basis for action.</div>
+    </div>
+    <div class="tier-card">
+      <div class="tier-card-label"><div class="tier-swatch" style="background:var(--yellow)"></div> <span style="color:var(--yellow)">Moderate — request for information</span></div>
+      <div class="tier-card-body">Something warrants a closer look, but the evidence isn't there yet. A Request for Information (RFI) or Enhanced Due Diligence (EDD) gives the organization an opportunity to respond before any restrictive action is taken.</div>
+    </div>
+    <div class="tier-card">
+      <div class="tier-card-label"><div class="tier-swatch" style="background:var(--orange)"></div> <span style="color:var(--orange)">High — suspend with right to appeal</span></div>
+      <div class="tier-card-body">The weight of evidence supports a restriction, but legal frameworks including the Digital Services Act (DSA), GDPR, and DORA require an appeals mechanism. Suspension is not termination — the organization retains the right to contest the decision.</div>
+    </div>
+    <div class="tier-card">
+      <div class="tier-card-label"><div class="tier-swatch" style="background:var(--red)"></div> <span style="color:var(--red)">Critical — terminate, no appeal</span></div>
+      <div class="tier-card-body">Reserved for the most severe cases only: confirmed fraud, sanctions exposure, active law enforcement involvement, or confirmed identity misrepresentation. The bar is deliberately high — termination without appeal is a significant action and must be fully defensible.</div>
+    </div>
+  </div>
+</div>
+ 
+<!-- ── BACK ── -->
+<div class="back-section">
+  <a class="back-link" href="/jennifer/portfolio/">Back to portfolio</a>
+</div>
+ 
+<footer>
+  <p class="footer-copy">&copy; 2025 The Thorntons &middot; thethorntons.ca</p>
+  <p class="footer-note">Portfolio demo &middot; Scoring logic is placeholder &middot; No proprietary IP</p>
+</footer>
+ 
+<script>
+const CATS = [
+  { id:"inv", title:"Investigation request", icon:"ti-file-search",
+    factors:[
+      { id:"f_gen", label:"General inquiry or client discomfort", sub:"Low specificity — prompts investigation but does not alone determine outcome.", pts:5, esc:false },
+      { id:"f_wb",  label:"Specific evidence or whistleblower report", sub:"High-credibility signal originating from within the platform ecosystem.", pts:20, esc:false }
+    ]},
+  { id:"plat", title:"Platform activity", icon:"ti-activity",
+    factors:[
+      { id:"f_spike",   label:"Unexplained activity spike", sub:"Sudden, significant increase in transaction volume without a corresponding catalyst.", pts:15, esc:false },
+      { id:"f_ratio",   label:"Disproportionate matching ratio", sub:"High match volume relative to organic individual donations — suggestive of potential gaming.", pts:15, esc:false },
+      { id:"f_struct",  label:"Donation structuring / threshold avoidance", sub:"Donations patterned below regulatory reporting thresholds to bypass FinCEN/FINTRAC compliance.", pts:25, esc:false },
+      { id:"f_sister",  label:"Coordinated sister-entity network activity", sub:"Cluster of 2+ entities with overlapping leadership, contact details, or registration data.", pts:25, esc:false },
+      { id:"f_insider", label:"High insider concentration match", sub:"Disproportionate donation activity from a small group, where donors may be affiliated with the NPO.", pts:20, esc:false }
+    ]},
+  { id:"fin", title:"Financial health", icon:"ti-report-money",
+    factors:[
+      { id:"f_late",    label:"Potential mismanagement — late filings", sub:"Late 990 filings or other regulatory submissions without explanation.", pts:10, esc:false },
+      { id:"f_exp",     label:"Potential mismanagement — unexplained expenses", sub:"Significant unexplained expenses or absence of audited financials.", pts:15, esc:false },
+      { id:"f_rev",     label:"Revenue vs. regulatory filing mismatch", sub:"Platform logs show receipts materially exceeding IRS filings (e.g. 990-EZ filed for under $50k; $200k received through platform).", pts:25, esc:false },
+      { id:"f_xb",      label:"Missing cross-border regulatory license", sub:"NPO lacks mandatory licensing to receive international donations while actively receiving foreign corporate matching funds.", pts:20, esc:false }
+    ]},
+  { id:"media", title:"Media profile", icon:"ti-news",
+    factors:[
+      { id:"f_adv_l", label:"Adverse media — local or niche reporting", sub:"Minor controversies or low-reach reporting with limited corroboration.", pts:10, esc:false },
+      { id:"f_adv_n", label:"Adverse media — national or international reporting", sub:"Reporting on active legal or criminal probes at significant scale.", pts:25, esc:true }
+    ]},
+  { id:"trust", title:"Public trust", icon:"ti-users",
+    factors:[
+      { id:"f_soc_i", label:"Negative social sentiment — isolated", sub:"Isolated complaints or low-engagement trolling.", pts:5, esc:false },
+      { id:"f_soc_v", label:"Negative social sentiment — viral or coordinated", sub:"Viral or coordinated allegations of systemic issues.", pts:20, esc:false },
+      { id:"f_foot",  label:"No verifiable operational footprint", sub:"NPO claims active programs but has no website, social presence, or verifiable activity. May operate from a virtual office or private mailbox.", pts:25, esc:false }
+    ]},
+  { id:"esc", title:"Auto-escalation triggers", icon:"ti-alert-circle", isEsc:true,
+    factors:[
+      { id:"f_sanc", label:"Confirmed sanctions exposure", sub:"Organization or associated individuals appear on OFAC, UN, EU, or equivalent sanctions lists.", pts:999, esc:true },
+      { id:"f_leo",  label:"Active law enforcement investigation", sub:"Confirmed referral or active investigation by law enforcement — not allegation alone.", pts:999, esc:true },
+      { id:"f_cfr",  label:"Confirmed fraud", sub:"Evidence-based confirmation of fraudulent activity — not unverified allegation.", pts:999, esc:true },
+      { id:"f_id",   label:"Confirmed identity misrepresentation", sub:"Fraudulent registration documents or fabricated identity confirmed.", pts:999, esc:true }
+    ]}
+];
+ 
+const TIERS = [
+  { min:0,   max:39,   cls:"badge-green",  label:"Low risk",      markerBg:"#16A34A", markerPct:12,  action:"No action required. Continue standard monitoring." },
+  { min:40,  max:99,   cls:"badge-yellow", label:"Moderate risk", markerBg:"#CA8A04", markerPct:37,  action:"Further information required. Initiate an RFI, EDD, or enhanced monitoring as appropriate." },
+  { min:100, max:174,  cls:"badge-orange", label:"High risk",      markerBg:"#EA580C", markerPct:62,  action:"Suspend with right to appeal. Document rationale fully. An appeals process is required under applicable legal frameworks (DSA, GDPR, DORA)." },
+  { min:175, max:9999, cls:"badge-red",    label:"Critical risk",  markerBg:"#DC2626", markerPct:90,  action:"Terminate. No appeal. Reserved for confirmed fraud, sanctions exposure, or confirmed legal violations only." }
+];
+ 
+function buildUI() {
+  const wrap = document.getElementById('categories');
+  CATS.forEach(cat => {
+    const block = document.createElement('div');
+    block.className = 'cat-block';
+    const headCls = cat.isEsc ? 'cat-head esc-head' : 'cat-head';
+    block.innerHTML = `
+      <div class="${headCls}">
+        <i class="ti ${cat.icon} cat-icon"></i>
+        <span class="cat-title">${cat.title}</span>
+        ${cat.isEsc
+          ? `<span class="override-tag">Overrides total score</span>`
+          : `<span class="na-badge" id="na-${cat.id}">Not assessed</span>`}
+      </div>
+      ${cat.factors.map(f => `
+        <div class="factor-row">
+          <input class="factor-cb" type="checkbox" id="${f.id}" data-cat="${cat.id}" data-pts="${f.pts}" data-esc="${f.esc || !!cat.isEsc}" onchange="onCheck()">
+          <div>
+            <label class="factor-label" for="${f.id}">${f.label}</label>
+            <div class="factor-sub">${f.sub}</div>
+            ${(f.esc || cat.isEsc) ? `<span class="esc-tag"><i class="ti ti-alert-circle"></i> Auto-escalation trigger</span>` : ''}
+          </div>
+        </div>
+      `).join('')}
+    `;
+    wrap.appendChild(block);
+  });
+}
+ 
+function onCheck() {
+  CATS.forEach(cat => {
+    if (cat.isEsc) return;
+    const checked = [...document.querySelectorAll(`input[data-cat="${cat.id}"]`)].some(b => b.checked);
+    const badge = document.getElementById('na-' + cat.id);
+    if (badge) badge.style.display = checked ? 'none' : '';
+  });
+}
+ 
+function scoreIt() {
+  let total = 0, hasEsc = false, anyChecked = false;
+  const checkedFactors = [], uncheckedCats = [];
+ 
+  CATS.forEach(cat => {
+    const boxes = [...document.querySelectorAll(`input[data-cat="${cat.id}"]`)];
+    let catHit = false;
+    boxes.forEach(b => {
+      if (b.checked) {
+        anyChecked = catHit = true;
+        const pts = parseInt(b.dataset.pts);
+        const esc = b.dataset.esc === 'true';
+        if (esc) hasEsc = true;
+        if (pts < 999) total += pts;
+        checkedFactors.push({ label: document.querySelector(`label[for="${b.id}"]`).textContent.trim(), esc });
+      }
+    });
+    if (!cat.isEsc && !catHit) uncheckedCats.push(cat.title);
+  });
+ 
+  if (!anyChecked) { alert('Select at least one factor before scoring.'); return; }
+ 
+  let tier = TIERS[0];
+  if (hasEsc) { tier = TIERS[3]; }
+  else { for (const t of TIERS) { if (total >= t.min && total <= t.max) { tier = t; break; } } }
+ 
+  const panel = document.getElementById('result-panel');
+  panel.style.display = 'block';
+ 
+  const badge = document.getElementById('tier-badge');
+  badge.className = 'badge ' + tier.cls;
+  badge.textContent = tier.label;
+ 
+  document.getElementById('result-subtitle').textContent = hasEsc ? 'Auto-escalation override applied' : `${checkedFactors.length} factor${checkedFactors.length !== 1 ? 's' : ''} identified`;
+  document.getElementById('r-action').textContent = tier.action;
+ 
+  const marker = document.getElementById('score-marker');
+  marker.style.left = (hasEsc ? 90 : tier.markerPct) + '%';
+  marker.style.background = tier.markerBg;
+ 
+  document.getElementById('flags-label').textContent = `Factors identified (${checkedFactors.length})`;
+  document.getElementById('flags-list').innerHTML = checkedFactors.map(f =>
+    `<div class="flag-row"><i class="ti ${f.esc ? 'ti-alert-circle esc-icon' : 'ti-alert-triangle'}"></i>${f.label}</div>`
+  ).join('');
+ 
+  const ni = document.getElementById('notice-incomplete');
+  if (uncheckedCats.length) {
+    ni.style.display = 'block';
+    ni.innerHTML = `<strong><i class="ti ti-alert-triangle"></i> Incomplete assessment:</strong> ${uncheckedCats.join(', ')} not assessed. Score may understate true risk.`;
+  } else { ni.style.display = 'none'; }
+ 
+  document.getElementById('notice-escalation').style.display = hasEsc ? 'block' : 'none';
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+ 
+function resetForm() {
+  document.querySelectorAll('input[type=checkbox]').forEach(b => b.checked = false);
+  onCheck();
+  document.getElementById('result-panel').style.display = 'none';
+}
+ 
+buildUI();
+onCheck();
+</script>
+</body>
+</html>
