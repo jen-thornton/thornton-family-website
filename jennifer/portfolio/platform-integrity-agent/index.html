@@ -352,6 +352,17 @@
     top: auto;
     bottom: calc(100% + 4px);
   }
+  @media (max-width: 768px) {
+    .annotation-tooltip {
+      width: calc(100vw - 3rem);
+      right: auto;
+      left: 0;
+    }
+    .annotation-tooltip.tooltip-up {
+      left: 0;
+      right: auto;
+    }
+  }
   .annotation-tip-header {
     display: flex;
     align-items: center;
