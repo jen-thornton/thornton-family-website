@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building a Fraud Model for an Ecosystem, Not a Single User — Jennifer Thornton</title>
+  <meta name="description" content="Case study: lessons learned building an in-house ML fraud detection model for a corporate social responsibility platform, from false-positive surprises to CSR-specific tripwires.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    :root {
+      --stone-50:  #F8F6F1;
+      --stone-100: #EDE9E0;
+      --stone-200: #D6CFC2;
+      --stone-400: #A89F8F;
+      --stone-600: #6B6256;
+      --stone-800: #3A332A;
+      --slate-900: #1C1C1E;
+      --serif: 'EB Garamond', Georgia, serif;
+      --sans:  'Inter', system-ui, sans-serif;
+    }
+ 
+    body {
+      font-family: var(--sans);
+      background-color: var(--stone-50);
+      color: var(--slate-900);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+ 
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      border-bottom: 0.5px solid var(--stone-200);
+      background: var(--stone-50);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--stone-600);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--slate-900); }
+    .nav-links a.active { color: var(--slate-900); }
+ 
+    .page-header-section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 4rem 3rem 3rem;
+      border-bottom: 0.5px solid var(--stone-200);
+    }
+    .breadcrumb {
+      font-size: 0.72rem;
+      color: var(--stone-400);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .breadcrumb a { color: var(--stone-400); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--slate-900); }
+    .breadcrumb span { color: var(--stone-200); }
+    .card-tag {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .page-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--slate-900);
+      margin-bottom: 1.25rem;
+    }
+    .page-meta {
+      font-size: 0.78rem;
+      color: var(--stone-400);
+      letter-spacing: 0.03em;
+    }
+ 
+    .article {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 3.5rem 3rem 4rem;
+    }
+    .article h2 {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      margin-top: 2.75rem;
+      margin-bottom: 1rem;
+    }
+    .article h2:first-child { margin-top: 0; }
+    .article p {
+      font-size: 0.92rem;
+      line-height: 1.9;
+      color: var(--stone-600);
+      font-weight: 300;
+      margin-bottom: 1.25rem;
+    }
+    .article ul {
+      list-style: none;
+      padding: 0;
+      margin: 1.5rem 0;
+    }
+    .article ul li {
+      font-size: 0.88rem;
+      line-height: 1.85;
+      color: var(--stone-600);
+      font-weight: 300;
+      padding-left: 1.25rem;
+      position: relative;
+      margin-bottom: 1.1rem;
+    }
+    .article ul li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--stone-400);
+    }
+    .article ul li strong {
+      color: var(--stone-800);
+      font-weight: 500;
+    }
+ 
+    .back-section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 3rem;
+      border-top: 0.5px solid var(--stone-200);
+    }
+    .back-link {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .back-link::before { content: '←'; font-size: 0.85rem; }
+    .back-link:hover { color: var(--slate-900); }
+ 
+    footer {
+      border-top: 0.5px solid var(--stone-200);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy { font-size: 0.75rem; color: var(--stone-400); }
+    .footer-cats { font-size: 0.75rem; color: var(--stone-400); font-style: italic; font-family: var(--serif); }
+ 
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { gap: 1.25rem; }
+      .page-header-section { padding: 2.5rem 1.5rem 2rem; }
+      .article { padding: 2.5rem 1.5rem 3rem; }
+      .back-section { padding: 2rem 1.5rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+ 
+  <nav>
+    <a class="nav-logo" href="/">The Thorntons</a>
+    <ul class="nav-links">
+      <li><a href="/rob/">Rob</a></li>
+      <li><a href="/jennifer/" class="active">Jennifer</a></li>
+      <li><a href="/natalie/">Natalie</a></li>
+      <li><a href="/kaitlyn/">Kaitlyn</a></li>
+    </ul>
+  </nav>
+ 
+  <div class="page-header-section">
+    <p class="breadcrumb">
+      <a href="/jennifer/">Jennifer Thornton</a>
+      <span>/</span>
+      <a href="/jennifer/portfolio/">Portfolio</a>
+      <span>/</span>
+      ML Fraud Model
+    </p>
+    <span class="card-tag">ML &amp; Data · Corporate Social Responsibility (CSR) platform</span>
+    <h1 class="page-title">Building a Fraud Model for an<br>Ecosystem, Not a Single User</h1>
+    <p class="page-meta">Lessons learned partnering with R&amp;D on an in-house ML fraud model.</p>
+  </div>
+ 
+  <div class="article">
+ 
+    <p>When R&amp;D and I set out to build an in-house fraud analytics platform, we had something most fraud teams would envy: a rich, proprietary dataset to train on. The platform sits in a niche corner of fintech, corporate social responsibility (CSR), where every transaction involves three parties, not two: a corporate client, an employee donor, and a nonprofit. We figured that uniqueness would be our advantage — it also turned out to be our first blind spot.</p>
+ 
+    <h2>The false-positive problem</h2>
+    <p>In early testing, the model returned a flood of false positives, almost all tied to transaction volume. At first glance, the pattern looked like exactly what a fraud model should catch: sudden spikes in giving. But when I manually reviewed the flagged cases, a clearer picture emerged: the model was applying the same volume-based criteria to every donor, regardless of who that donor actually was.</p>
+    <p>The problem was the ecosystem itself. A corporate client funding an annual giving campaign, and an individual employee donating to a local food bank, are not the same kind of "donor," but the model didn't know that yet. Corporate clients move significantly more capital than individual donors, often in large, infrequent batches tied to grant cycles or company-wide campaigns. Measured against the same threshold as an employee's personal giving, that completely normal corporate activity looked like a red flag.</p>
+    <p>It was a useful reminder that a model is only as good as its understanding of context, and that "transaction volume" means something different depending on who's transacting.</p>
+ 
+    <h2>Closing the loop</h2>
+    <p>Once the pattern was clear, I worked through the flagged cases, manually validating and labeling the false positives. That labeled data became the foundation for a feedback loop back into the model, retraining it to distinguish between corporate-scale and individual-scale giving rather than applying one standard across both. It was a fairly simple fix in hindsight, but it only became obvious after sitting with the data and asking why the model was wrong, not just that it was wrong.</p>
+ 
+    <h2>Building tripwires for a niche ecosystem</h2>
+    <p>Once the core volume issue was resolved, we layered in detectors built specifically for risks that exist almost nowhere outside the CSR space:</p>
+    <ul>
+      <li><strong>Earmarked ("pass-through") donations.</strong> Donations earmarked for a specific, predetermined recipient in a way that bypasses a nonprofit's discretion can create legal and tax exposure for CSR programs. We built a flag to catch the possibility of this pattern and route it to manual review before it became a liability.</li>
+      <li><strong>Volunteering rewards abuse.</strong> Many CSR programs reward employees for volunteer hours with a corporate match they can direct to a charity of their choice. Without guardrails, that system is easy to game: for example, logging more volunteer hours than physically exist in a day. We added detection for these kinds of impossible or implausible time claims.</li>
+      <li><strong>Revenue vs. IRS filing mismatches.</strong> U.S. nonprofits must disclose revenue on their Form 990 filings. This tripwire flags nonprofits whose rolling 12-month donation revenue on the platform exceeds what they've reported to the IRS, for instance an organization receiving more than $50,000 in donations while filing a 990-N e-Postcard meant for nonprofits earning under that threshold. It's a quiet but meaningful signal that something needs a closer look.</li>
+    </ul>
+ 
+    <h2>The lesson</h2>
+    <p>The biggest takeaway from this project wasn't technical. It was about whose perspective gets built into a model in the first place. A fraud model trained on transaction data alone will find patterns, but it won't know which patterns matter without someone who understands the ecosystem translating that nuance into the model's logic. The false-positive spike wasn't a data problem; it was a missing-context problem, and closing that gap meant treating the model as a partner that needed ongoing investigator insight, not a system to be plugged in and left alone.</p>
+    <p>That's also why the human-in-the-loop feedback process became as important as the model itself, not a stopgap until the model got "good enough," but a permanent part of how we kept the model accurate as the platform's three-sided ecosystem kept evolving.</p>
+ 
+  </div>
+ 
+  <div class="back-section">
+    <a class="back-link" href="/jennifer/portfolio/">Back to portfolio</a>
+  </div>
+ 
+  <footer>
+    <p class="footer-copy">&copy; 2025 The Thorntons &middot; thethorntons.ca</p>
+    <p class="footer-cats">Supervised by Khaleesi &amp; Luna</p>
+  </footer>
+ 
+</body>
+</html>
