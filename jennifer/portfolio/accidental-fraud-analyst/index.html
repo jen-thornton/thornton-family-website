@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confessions of an Accidental Fraud Analyst — Jennifer Thornton</title>
+  <meta name="description" content="Nobody grows up wanting to be a fraud analyst. Jennifer Thornton on stumbling into the job, the mindset it actually requires, and why it's less scary than it sounds.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --stone-50:  #F8F6F1;
+      --stone-100: #EDE9E0;
+      --stone-200: #D6CFC2;
+      --stone-400: #A89F8F;
+      --stone-600: #6B6256;
+      --stone-800: #3A332A;
+      --slate-900: #1C1C1E;
+      --serif: 'EB Garamond', Georgia, serif;
+      --sans:  'Inter', system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--sans);
+      background-color: var(--stone-50);
+      color: var(--slate-900);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      border-bottom: 0.5px solid var(--stone-200);
+      background: var(--stone-50);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--stone-600);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--slate-900); }
+    .nav-links a.active { color: var(--slate-900); }
+
+    /* PAGE HEADER */
+    .page-header-section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 4rem 3rem 3rem;
+      border-bottom: 0.5px solid var(--stone-200);
+    }
+    .breadcrumb {
+      font-size: 0.72rem;
+      color: var(--stone-400);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .breadcrumb a { color: var(--stone-400); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--slate-900); }
+    .breadcrumb span { color: var(--stone-200); }
+    .article-tag {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 1.5rem;
+    }
+    .page-title {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--slate-900);
+      margin-bottom: 1rem;
+    }
+    .page-title em { font-style: italic; color: var(--stone-600); }
+    .page-subtitle {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--stone-600);
+      margin-bottom: 2rem;
+    }
+    .byline { margin-bottom: 0.15rem; }
+    .byline-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--slate-900);
+    }
+    .byline-role {
+      font-size: 0.8rem;
+      color: var(--stone-600);
+      margin-bottom: 0.35rem;
+    }
+    .byline-meta {
+      font-size: 0.75rem;
+      color: var(--stone-400);
+      letter-spacing: 0.03em;
+    }
+
+    /* ARTICLE BODY */
+    .article-body {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 3.5rem 3rem;
+    }
+    .article-body p {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: var(--stone-600);
+      font-weight: 300;
+      max-width: 68ch;
+      margin-bottom: 1.4rem;
+    }
+    .article-body p em { font-style: italic; color: var(--stone-800); }
+    .article-body p strong { font-weight: 500; color: var(--slate-900); }
+    .article-body a { color: var(--slate-900); text-decoration-color: var(--stone-400); }
+    .article-body a:hover { text-decoration-color: var(--slate-900); }
+    .article-body h2 {
+      font-family: var(--serif);
+      font-size: 1.7rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      line-height: 1.25;
+      margin-top: 3rem;
+      margin-bottom: 1.25rem;
+      max-width: 68ch;
+    }
+    .article-body h2 em { font-style: italic; color: var(--stone-600); }
+    .article-body h3 {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      margin-top: 2.25rem;
+      margin-bottom: 0.85rem;
+    }
+    .intro-lead p:first-of-type {
+      font-size: 1rem;
+    }
+
+    /* CALLOUT PARAGRAPHS (career/thinking-about-it) */
+    .callout-block {
+      border-left: 2px solid var(--stone-200);
+      padding-left: 1.5rem;
+      margin: 1.75rem 0;
+    }
+    .callout-block p { margin-bottom: 1rem; }
+    .callout-block p:last-child { margin-bottom: 0; }
+
+    /* KEY TAKEAWAYS */
+    .takeaways {
+      background: var(--stone-100);
+      border: 0.5px solid var(--stone-200);
+      padding: 2.5rem;
+      margin-top: 3rem;
+    }
+    .takeaways-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 1.5rem;
+    }
+    .takeaways ul {
+      list-style: none;
+      padding: 0;
+    }
+    .takeaways li {
+      font-size: 0.85rem;
+      line-height: 1.75;
+      color: var(--stone-600);
+      font-weight: 300;
+      padding-left: 1.1rem;
+      position: relative;
+      margin-bottom: 0.75rem;
+    }
+    .takeaways li:last-child { margin-bottom: 0; }
+    .takeaways li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--stone-400);
+    }
+
+    /* IN THIS ARTICLE */
+    .toc {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2.5rem 3rem;
+      border-top: 0.5px solid var(--stone-200);
+    }
+    .toc-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 1.25rem;
+    }
+    .toc ul { list-style: none; padding: 0; }
+    .toc li { margin-bottom: 0.6rem; }
+    .toc a {
+      font-size: 0.85rem;
+      color: var(--stone-600);
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--slate-900); }
+
+    /* AUTHOR FOOTER */
+    .author-footer {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2.5rem 3rem 3.5rem;
+      border-top: 0.5px solid var(--stone-200);
+    }
+    .author-name {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--slate-900);
+      margin-bottom: 0.25rem;
+    }
+    .author-role {
+      font-size: 0.8rem;
+      color: var(--stone-600);
+      margin-bottom: 1rem;
+    }
+    .author-links a {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      text-decoration: none;
+      margin-right: 1.5rem;
+    }
+    .author-links a:hover { color: var(--slate-900); }
+    .author-links a.link::after { content: ' →'; }
+    .author-links a.back::before { content: '← '; }
+
+    /* FOOTER */
+    footer {
+      border-top: 0.5px solid var(--stone-200);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy { font-size: 0.75rem; color: var(--stone-400); }
+    .footer-cats {
+      font-size: 0.75rem;
+      color: var(--stone-400);
+      font-style: italic;
+      font-family: var(--serif);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { gap: 1.25rem; }
+      .page-header-section { padding: 2.5rem 1.5rem 2rem; }
+      .article-body { padding: 2.5rem 1.5rem; }
+      .toc, .author-footer { padding: 2rem 1.5rem; }
+      .takeaways { padding: 1.75rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 2rem 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="/">The Thorntons</a>
+    <ul class="nav-links">
+      <li><a href="/rob/">Rob</a></li>
+      <li><a href="/jennifer/" class="active">Jennifer</a></li>
+      <li><a href="/natalie/">Natalie</a></li>
+      <li><a href="/kaitlyn/">Kaitlyn</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-header-section">
+    <p class="breadcrumb">
+      <a href="/jennifer/">Jennifer Thornton</a>
+      <span>/</span>
+      <a href="/jennifer/portfolio/">Portfolio</a>
+      <span>/</span>
+      Confessions of an Accidental Fraud Analyst
+    </p>
+    <p class="article-tag">Article &middot; Career &amp; Mindset</p>
+    <h1 class="page-title">Confessions of an <em>Accidental</em> Fraud Analyst</h1>
+    <p class="page-subtitle">I didn't plan this career. I've never once considered leaving it.</p>
+    <div class="byline">
+      <p class="byline-name">Jennifer Thornton</p>
+      <p class="byline-role">Senior Fraud Operations Analyst</p>
+      <p class="byline-meta">June 2026 &middot; 11 min read</p>
+    </div>
+  </div>
+
+  <div class="article-body">
+
+    <div class="intro-lead">
+      <p>Nobody grows up wanting to be a fraud analyst. It's not a job you aim at, it's a job you back into, usually while doing something else entirely. The "accidental" part is real. What surprised me is what happened after: I looked up, realized I'd been thinking like an investigator for years, and instead of drifting back toward something more conventional, I leaned in. Nobody made me stay. I stayed because it turned out to be the most interesting work I'd ever done.</p>
+
+      <p>That's more or less what happened to me. I didn't start in fraud, and honestly I didn't even start in tech. My first real venture was a small business making nerdy baby clothing, the kind of thing you build when you're on maternity leave, bored, and wanting to combine your love for video games and sci-fi into something fun. After that I worked in healthcare admin for a while. Neither of those has anything to do with fraud on paper, but both of them taught me the same thing: how to manage a hundred small moving pieces at once and keep them all straight in my head.</p>
+
+      <p>Then I started answering support tickets at Shopify: billing questions, payment troubleshooting, the occasional very confused merchant. From there it was chargeback monitoring, which is where fraud first really got its hooks into me, and 1099-K corrections. I spent years untangling fraudulent app charges and, eventually, coordinated partner fraud rings on Shopify's platform, the kind where a handful of bad actors set up multiple storefronts or partner accounts and quietly worked them together. Nobody handed me a five-year plan that ended here. But at every one of those steps, I was the person who raised her hand for the messier problem instead of the easier one. And looking back, that's not really an accident. That's just what I actually wanted, before I had the language to say so. Somewhere along the way it stopped feeling like a job I'd fallen into and started feeling like a career I actually wanted to build, one that's challenging in a way that keeps me interested and rewarding in a way that few other things have been.</p>
+
+      <p>If I'm honest about why, it comes down to two things. I've always loved puzzles, the actual kind, jigsaw and crossword and everything between, and I have a fairly stubborn refusal to let one go unsolved. Add a mild, long-running obsession with financial crime documentaries and you've basically got my job description before I ever had the job. I still credit <a href="https://www.netflix.com/title/80118100" target="_blank" rel="noopener"><em>Dirty Money</em></a>, the Netflix series, with genuinely shifting something for me. It's the one that made me want to keep building fraud skills, and, funnily enough, it's also where AML first got on my radar as its own fascinating discipline rather than just the acronym next to "fraud" on an org chart.</p>
+
+      <p>If you're early in your career, or thinking about a pivot, and fraud work looks intimidating from the outside (intense, hyper-technical, full of people who studied criminology and speak fluent regulation), I want to gently push back on that. It's a discipline with real rigor, sure. But the entry point is usually much weirder and much more human than the job title suggests. This is the article I wish someone had handed me on day one.</p>
+    </div>
+
+    <h2 id="vibes">Nobody warns you it's mostly <em>vibes</em> (informed vibes)</h2>
+
+    <p>Here's the gap nobody tells you about: compliance training decks make fraud investigation look like a flowchart. Step one, check the box. Step two, check the next box. If box three is unchecked, escalate. In reality, most days look nothing like that. You're staring at a donation pattern that's <em>probably</em> fine, a board member whose name <em>might</em> be a coincidence, a document that's <em>almost</em> certainly legitimate. And you have to make a call anyway, because the case doesn't pause itself while you wait to feel certain.</p>
+
+    <p>That was the most disorienting part of the transition for me. Support work has answers. A billing error either happened or it didn't, and you can prove it either way with a transaction log. Fraud work mostly doesn't hand you a transaction log that says "this is fraud." It hands you a feeling that something's off, and your job is to turn that feeling into something defensible, or to talk yourself out of it, because plenty of feelings turn out to be nothing.</p>
+
+    <p>I want to be clear that "vibes" undersells it. It's <em>informed</em> intuition: pattern recognition built from hundreds of cases that have taught your brain what normal looks like, so the abnormal starts to stick out before you can consciously articulate why. But from the outside, especially early on, it can feel like everyone around you has some secret instinct you don't have yet. You do. It just hasn't been trained yet. That's what the rest of this is about.</p>
+
+    <h2 id="mindset">The mindset, broken down</h2>
+
+    <h3>01. Find your ground zero</h3>
+    <p>Every investigation starts to feel like a spiderweb eventually: a dozen threads, none of them obviously connected, and a nagging sense that you're supposed to already see the shape of the thing. That feeling is completely normal, and it can tip into genuine overwhelm, even anxiety, if you let it. So don't try to hold the whole web in your head at once. Take a breath, grab a glass of water, and go find your ground zero.</p>
+    <p>Ground zero is the one piece of information that got your attention in the first place, the detail that made your spidey senses tingle before you knew why. Not the whole picture. Just that one thread. Start there, and only there. Break the investigation into small, manageable pieces instead of trying to solve it all in one sitting, and always start with what you actually know rather than what you suspect.</p>
+    <p>And write things down. Open a notepad and jot down the other threads as you notice them, the ones you're not ready to pull yet but don't want to lose. I'm old-school about this one: I keep an actual notebook next to my desk and scribble things down as they occur to me, mid-case, half-formed. It doesn't need to be organized. It just needs to exist somewhere other than your head, so your head is free to focus on the one thread in front of you.</p>
+
+    <h3>02. Have a theory, not a verdict</h3>
+    <p>The instinct when you're new is to wait until you're sure before you act. Resist that. Build a working theory early, something like "I think this is match harvesting" or "I think this person is exactly who they say they are," and hold it loosely enough to throw out the second new evidence contradicts it.</p>
+    <p>A theory isn't a conclusion. It's a flashlight. It tells you where to look next. The investigators who get stuck aren't the ones with a wrong theory. They're the ones who never formed one and are just staring at a pile of data hoping a verdict appears on its own. It won't. Go in with a guess, and let the case talk you out of it if it's wrong.</p>
+    <p>And when it's not wrong? When you finally find the one piece of evidence that turns your hunch into confirmation? Nothing beats it. It's a genuine dopamine hit, the good kind, the fist-pump-at-your-monitor, mini-celebratory-dance-in-your-chair kind. You've been carrying this half-formed theory around for days, maybe weeks, quietly wondering if you're chasing nothing, and then there it is: the document, the transaction, the connection that proves you weren't crazy after all. That feeling is a huge part of why people stay in this job long after the novelty wears off. Chase it honestly, hold the theory loosely until you earn that moment, but don't let anyone tell you it isn't fun when you do.</p>
+
+    <h3>03. What's missing matters as much as what's there</h3>
+    <p>Most training focuses on red flags: the things that show up and shouldn't. The more advanced version of the skill is noticing what <em>should</em> be there and isn't. An organization that receives hundreds of hours of volunteer time but zero donations. A nonprofit with a polished site and no press coverage, no event history, nothing that suggests it existed before last month.</p>
+    <p>It's the same logic as spotting a fake follower count: an account with tens of thousands of followers and almost no likes or comments isn't popular, it's manufactured. It sounds almost too simple until you internalize it, at which point it becomes one of the more reliable tools you have, because absence is much harder to fake than presence.</p>
+
+    <h3>04. One weird thing is a coincidence, three is a pattern, a hundred is a press release</h3>
+    <p>Early on, every anomaly feels significant, because you don't yet have a baseline for what normal noise looks like. A single donor giving right at the match threshold isn't a case. A cluster of donors, sharing a domain, all giving right at the threshold, to the same small organization, who never donate again: that's a pattern, and patterns are where the real work starts. I saw the same shape in a different costume during my Shopify years: a handful of partner accounts, registered close together, sharing a payout method or an IP range, all quiet until they weren't. One storefront doing something questionable is a support ticket. A cluster doing the same questionable thing on a coordinated timeline is a fraud ring.</p>
+    <p>Knowing the difference between "huh, weird" and "wait, that's the third time I've seen this exact shape" is mostly a function of volume. You can't shortcut it. But your ground-zero notebook helps speed it up. Half-noticed patterns you jotted down months ago have a way of suddenly completing themselves when example four or five shows up.</p>
+
+    <h3>05. Try to prove yourself wrong before someone else does it for you</h3>
+    <p>Once you've got a theory you like, your job isn't to defend it. It's to attack it. Before you escalate, ask: what's the most boring, innocent explanation for this? Could this just be a busy volunteer with a flexible schedule? Could this address just be a shared office building?</p>
+    <p>This is the step people skip when they're excited about a finding, and it's the step that separates a defensible case from one that falls apart the moment someone asks an obvious question. If you can't find a way to disprove your own theory, that's not proof you're right, but it's a much stronger position than not having tried.</p>
+
+    <h3>06. Match your certainty to the stakes, not your anxiety</h3>
+    <p>Not every decision needs the same bar of proof. Flagging something for a second look is a low-stakes call: you can be wrong and the cost is someone's mildly annoyed afternoon. Filing a formal report or shutting down an account is a high-stakes call, and it should require a correspondingly higher bar.</p>
+    <p>New analysts (myself included, once upon a time) tend to apply maximum caution to everything, which sounds responsible but actually slows the whole system down and lets the genuinely urgent cases wait in the same queue as the trivial ones. Learning to calibrate how sure you actually need to be <em>for a specific action</em> is one of the more underrated skills in the job, and one nobody really teaches you directly.</p>
+
+    <h2 id="bites">Where the mindset bites you</h2>
+
+    <p>Here's the part the training decks definitely don't cover: once you're good at this, you cannot turn it off, and that is not always a gift.</p>
+
+    <p>You will search for a local landscaper, find a page of glowing five-star reviews, and immediately get suspicious, not reassured, especially when the website looks like it was built in an afternoon and never touched again. You will watch a busker on the street and, for one deeply unnecessary second, wonder if they're actually playing or just running a track and pocketing the tips. You will let an unknown number go straight to call screening, every single time, no exceptions, because you've decided anyone who calls you cold in the year 2026 is guilty until proven innocent. This is the occupational hazard nobody warns you about. The skill that makes you good at your job will, without your permission, start auditing your personal life.</p>
+
+    <p>The serious version of this is pattern-matching fatigue: seeing fraud everywhere because you're trained to see it, which means treating every anomaly as sinister instead of asking whether it's just... normal human messiness. Real organizations are inconsistent. Real people make typos. Not every coincidence is a network. Staying good at this job means staying honest about the difference between vigilance and paranoia, and checking yourself regularly on which side of that line you're standing on.</p>
+
+    <h2 id="career">If you're thinking about this as a career</h2>
+
+    <p>A few honest things, for anyone actually weighing whether to go this direction:</p>
+
+    <div class="callout-block">
+      <p><strong>You don't need a finance degree, or any specific degree.</strong> Some of the best investigators I've worked with came from support roles, customer service, even completely unrelated fields. What matters more than your credentials is whether you're the type of person who can't leave a loose thread alone.</p>
+      <p><strong>The grey area is the job, not a bug in the job.</strong> If you want a role with clean, repeatable answers every time, this isn't it. If the idea of "the rulebook doesn't quite cover this, gather context fast, make a sound call anyway" sounds energizing rather than stressful, that's a real signal you'd be good at this.</p>
+      <p><strong>Curiosity beats suspicion.</strong> The best version of this job isn't about distrusting everyone by default. It's about being genuinely curious when something doesn't add up, and disciplined enough to chase that curiosity all the way to an answer instead of stopping at a hunch.</p>
+      <p><strong>It's more creative than people expect.</strong> Fraudsters innovate, which means investigators have to as well. There's a real puzzle-solving, almost game-like quality to this work that the serious job title doesn't really advertise.</p>
+    </div>
+
+    <p>If I could go back and talk to myself on day one, I'd say two things. Ask a lot of questions. Be that person who asks a million questions to gather context, from your lead, from your peers, from industry professionals, and use their guidance to build a solid foundation. And fail forward. You're human, you're going to get things wrong, and that's okay. Learn from it and let the lesson guide you forward instead of letting it sit there as a reason to doubt yourself.</p>
+
+    <p>I didn't choose this field on purpose. But I've chosen, every year since, to stay in it, and that second choice is the one that actually matters.</p>
+
+    <div class="takeaways">
+      <p class="takeaways-label">Key takeaways</p>
+      <ul>
+        <li>A love of puzzles and a stubborn refusal to leave one unsolved translate directly into investigative skill: you don't need a criminal justice background, just that particular kind of persistence.</li>
+        <li>When a case feels like an overwhelming web, don't try to hold the whole thing at once. Find your ground zero (the one detail that first caught your attention) and start there.</li>
+        <li>Most people back into fraud work rather than planning it. The job rewards curiosity and pattern recognition more than a specific credential or career path.</li>
+        <li>The job is less flowchart, more informed intuition: pattern recognition built from volume that lets you sense what's off before you can fully articulate why.</li>
+        <li>A working theory is a flashlight, not a verdict. Form one early, hold it loosely, and let the evidence talk you out of it.</li>
+        <li>The moment a hunch turns into confirmed evidence is a genuine, fist-pumping dopamine hit, and it's a big part of why people stay in this field.</li>
+        <li>What's missing is often as telling as what's present. Absence is harder to fake than presence.</li>
+        <li>One weird thing is noise. A pattern across multiple instances is signal. Keep notes on the half-formed patterns, they often complete themselves later.</li>
+        <li>Try to disprove your own theory before someone else does it for you. It's the difference between a hunch and a defensible case.</li>
+        <li>Calibrate how sure you need to be to the stakes of the decision, not to general anxiety. Not every call needs the same bar of proof.</li>
+        <li>The mindset doesn't switch off outside work. Staying good at the job means staying honest about the line between vigilance and paranoia.</li>
+        <li>Ask a lot of questions, especially early on. Lean on your lead, your peers, and industry professionals to build a solid foundation.</li>
+        <li>Fail forward. You're going to get things wrong. Let the lesson move you forward instead of letting it become a reason to doubt yourself.</li>
+        <li>You don't need a specialized degree to start. You need to be the kind of person who can't leave a loose thread alone.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="toc">
+    <p class="toc-label">In this article</p>
+    <ul>
+      <li><a href="#vibes">Nobody warns you it's mostly vibes</a></li>
+      <li><a href="#mindset">The mindset, broken down</a></li>
+      <li><a href="#bites">Where the mindset bites you</a></li>
+      <li><a href="#career">If you're thinking about this as a career</a></li>
+    </ul>
+  </div>
+
+  <div class="author-footer">
+    <p class="author-name">Jennifer Thornton</p>
+    <p class="author-role">Senior Fraud Operations Analyst &middot; Benevity, Inc.</p>
+    <div class="author-links">
+      <a class="link" href="/jennifer/">View full profile</a>
+      <a class="back" href="/jennifer/portfolio/">Back to portfolio</a>
+    </div>
+  </div>
+
+  <footer>
+    <p class="footer-copy">&copy; 2025 The Thorntons &middot; thethorntons.ca</p>
+    <p class="footer-cats">Supervised by Khaleesi &amp; Luna</p>
+  </footer>
+
+</body>
+</html>
