@@ -70,7 +70,7 @@
     .hero {
       display: grid;
       grid-template-columns: 55fr 45fr;
-      min-height: 88vh;
+      height: 88vh;
       max-height: 900px;
     }
 
@@ -81,6 +81,7 @@
       justify-content: space-between;
       padding: 4rem 3.5rem 3.5rem 3rem;
       border-right: 0.5px solid var(--stone-200);
+      min-height: 0;
     }
 
     .hero-right {
@@ -90,6 +91,8 @@
     }
 
     .hero-img {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -171,15 +174,6 @@
       font-weight: 300;
     }
 
-    .hero-year {
-      font-family: var(--serif);
-      font-size: 4.5rem;
-      font-weight: 400;
-      color: var(--stone-100);
-      line-height: 1;
-      letter-spacing: -0.03em;
-      user-select: none;
-    }
 
     .hero-img-caption {
       position: absolute;
@@ -369,11 +363,10 @@
 
       .hero {
         grid-template-columns: 1fr;
-        grid-template-rows: 70vw auto;
-        min-height: unset;
+        height: auto;
         max-height: unset;
       }
-      .hero-right { order: -1; }
+      .hero-right { order: -1; height: 70vw; }
       .hero-left {
         border-right: none;
         border-top: 0.5px solid var(--stone-200);
@@ -423,11 +416,10 @@
           45.4532° N<br>
           75.5168° W
         </div>
-        <div class="hero-year">2019</div>
       </div>
     </div>
     <div class="hero-right">
-      <img class="hero-img" src="images/family-portrait.jpg" alt="The Thornton family" width="900" height="1200" fetchpriority="high">
+      <img class="hero-img" src="images/family-hero.jpg" alt="The Thornton family" width="900" height="1200" fetchpriority="high">
       <div class="hero-img-caption">
         <p class="hero-img-caption-label">Est.</p>
         <p class="hero-img-caption-value">Orleans, ON</p>
