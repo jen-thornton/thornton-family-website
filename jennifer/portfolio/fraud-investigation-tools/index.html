@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Fraud Investigation Tools Get Wrong — Jennifer Thornton</title>
+  <meta name="description" content="Fraud investigation tools get built around what's demoable. The actual job happens somewhere else. Jennifer Thornton on the gap between the pitch and the desk, and what good tooling actually looks like.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --stone-50:  #F8F6F1;
+      --stone-100: #EDE9E0;
+      --stone-200: #D6CFC2;
+      --stone-400: #A89F8F;
+      --stone-600: #6B6256;
+      --stone-800: #3A332A;
+      --slate-900: #1C1C1E;
+      --serif: 'EB Garamond', Georgia, serif;
+      --sans:  'Inter', system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--sans);
+      background-color: var(--stone-50);
+      color: var(--slate-900);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      border-bottom: 0.5px solid var(--stone-200);
+      background: var(--stone-50);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--stone-600);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--slate-900); }
+    .nav-links a.active { color: var(--slate-900); }
+
+    /* PAGE HEADER */
+    .page-header-section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 4rem 3rem 3rem;
+      border-bottom: 0.5px solid var(--stone-200);
+    }
+    .breadcrumb {
+      font-size: 0.72rem;
+      color: var(--stone-400);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .breadcrumb a { color: var(--stone-400); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--slate-900); }
+    .breadcrumb span { color: var(--stone-200); }
+    .article-tag {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 1.5rem;
+    }
+    .page-title {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--slate-900);
+      margin-bottom: 1rem;
+    }
+    .page-title em { font-style: italic; color: var(--stone-600); }
+    .page-subtitle {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--stone-600);
+      margin-bottom: 2rem;
+    }
+    .byline { margin-bottom: 0.15rem; }
+    .byline-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--slate-900);
+    }
+    .byline-role {
+      font-size: 0.8rem;
+      color: var(--stone-600);
+      margin-bottom: 0.35rem;
+    }
+    .byline-meta {
+      font-size: 0.75rem;
+      color: var(--stone-400);
+      letter-spacing: 0.03em;
+    }
+
+    /* ARTICLE BODY */
+    .article-body {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 3.5rem 3rem;
+    }
+    .article-body p {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: var(--stone-600);
+      font-weight: 300;
+      max-width: 68ch;
+      margin-bottom: 1.4rem;
+    }
+    .article-body p em { font-style: italic; color: var(--stone-800); }
+    .article-body p strong { font-weight: 500; color: var(--slate-900); }
+    .article-body a { color: var(--slate-900); text-decoration-color: var(--stone-400); }
+    .article-body a:hover { text-decoration-color: var(--slate-900); }
+    .article-body h2 {
+      font-family: var(--serif);
+      font-size: 1.7rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      line-height: 1.25;
+      margin-top: 3rem;
+      margin-bottom: 1.25rem;
+      max-width: 68ch;
+    }
+    .article-body h2 em { font-style: italic; color: var(--stone-600); }
+    .article-body h3 {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      line-height: 1.35;
+      margin-top: 2.25rem;
+      margin-bottom: 0.85rem;
+      max-width: 68ch;
+    }
+    .intro-lead p:first-of-type {
+      font-size: 1rem;
+    }
+
+    /* KEY TAKEAWAYS */
+    .takeaways {
+      background: var(--stone-100);
+      border: 0.5px solid var(--stone-200);
+      padding: 2.5rem;
+      margin-top: 3rem;
+    }
+    .takeaways-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 1.5rem;
+    }
+    .takeaways ul {
+      list-style: none;
+      padding: 0;
+    }
+    .takeaways li {
+      font-size: 0.85rem;
+      line-height: 1.75;
+      color: var(--stone-600);
+      font-weight: 300;
+      padding-left: 1.1rem;
+      position: relative;
+      margin-bottom: 0.75rem;
+    }
+    .takeaways li:last-child { margin-bottom: 0; }
+    .takeaways li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--stone-400);
+    }
+
+    /* IN THIS ARTICLE */
+    .toc {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2.5rem 3rem;
+      border-top: 0.5px solid var(--stone-200);
+    }
+    .toc-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 1.25rem;
+    }
+    .toc ul { list-style: none; padding: 0; }
+    .toc li { margin-bottom: 0.6rem; }
+    .toc a {
+      font-size: 0.85rem;
+      color: var(--stone-600);
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--slate-900); }
+
+    /* AUTHOR FOOTER */
+    .author-footer {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2.5rem 3rem 3.5rem;
+      border-top: 0.5px solid var(--stone-200);
+    }
+    .author-name {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--slate-900);
+      margin-bottom: 0.25rem;
+    }
+    .author-role {
+      font-size: 0.8rem;
+      color: var(--stone-600);
+      margin-bottom: 1rem;
+    }
+    .author-links a {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      text-decoration: none;
+      margin-right: 1.5rem;
+    }
+    .author-links a:hover { color: var(--slate-900); }
+    .author-links a.link::after { content: ' →'; }
+    .author-links a.back::before { content: '← '; }
+
+    /* FOOTER */
+    footer {
+      border-top: 0.5px solid var(--stone-200);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy { font-size: 0.75rem; color: var(--stone-400); }
+    .footer-cats {
+      font-size: 0.75rem;
+      color: var(--stone-400);
+      font-style: italic;
+      font-family: var(--serif);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { gap: 1.25rem; }
+      .page-header-section { padding: 2.5rem 1.5rem 2rem; }
+      .article-body { padding: 2.5rem 1.5rem; }
+      .toc, .author-footer { padding: 2rem 1.5rem; }
+      .takeaways { padding: 1.75rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 2rem 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="/">The Thorntons</a>
+    <ul class="nav-links">
+      <li><a href="/rob/">Rob</a></li>
+      <li><a href="/jennifer/" class="active">Jennifer</a></li>
+      <li><a href="/natalie/">Natalie</a></li>
+      <li><a href="/kaitlyn/">Kaitlyn</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-header-section">
+    <p class="breadcrumb">
+      <a href="/jennifer/">Jennifer Thornton</a>
+      <span>/</span>
+      <a href="/jennifer/portfolio/">Portfolio</a>
+      <span>/</span>
+      What Fraud Investigation Tools Get Wrong
+    </p>
+    <p class="article-tag">Article &middot; Product &amp; Tooling</p>
+    <h1 class="page-title">What Fraud Investigation Tools Get Wrong</h1>
+    <p class="page-subtitle">Built for the demo. Lived in on the desk.</p>
+    <div class="byline">
+      <p class="byline-name">Jennifer Thornton</p>
+      <p class="byline-role">Senior Fraud Operations Analyst</p>
+      <p class="byline-meta">July 2026 &middot; 12 min read</p>
+    </div>
+  </div>
+
+  <div class="article-body">
+
+    <div class="intro-lead">
+      <p>I've sat through a lot of fraud tool demos over the years, as a buyer, an evaluator, and eventually just as the person who has to actually use the thing once procurement is done. They almost always look great. Clean dashboards, satisfying flag counts, a workflow diagram that makes fraud detection look like a solved problem with a nice UI on top of it. Then the tool ships, and within a week the team has built a shadow process around it: a spreadsheet here, a personal notebook there, a Slack channel where the real judgment calls actually happen. Not because the tool is broken. Because it was built for the pitch, not for the desk.</p>
+
+      <p>That gap is the subject of this piece. I'm not writing this as a product person, I'm writing it as the person on the other side of the tool, the one who has spent years working around gaps that a slightly different design decision would have closed. Fraud is one lane within the broader Trust &amp; Safety world, alongside things like content moderation and platform abuse, and I'll leave those to people who actually live in them. This is specifically about fraud investigation tooling, the tools built for people like me. If you're building or buying it, this is the version of the feedback you don't usually get in a sales call.</p>
+    </div>
+
+    <h2 id="pattern">The pattern</h2>
+
+    <p>A few misses show up again and again, across different tools, different companies, different budgets. None of these are exotic. They're just the kind of thing that's easy to miss if you've never had to sit in the seat.</p>
+
+    <h3>01. The buying decision skips the people who'll actually use it</h3>
+    <p>On more than one occasion, I've watched a product or senior leader choose a tool based on cost and a feature checklist, factors that make complete sense at a high level and can still produce a tool that's genuinely painful to use day to day. It's not that those factors don't matter. Budget and feature scope are real constraints, and someone has to own them. It's that they're rarely balanced against the people who'll be living inside the tool eight hours a day.</p>
+    <p>Involving actual investigators in evaluation, not just a courtesy demo at the end but real hands-on testing, and genuinely listening to pain points and wishlist items, is one of the most overlooked steps in the buying process. The goal isn't to let operations override every business constraint. It's to strike an honest balance between what makes sense on a budget spreadsheet and what makes sense on the desk of the person who has to hit quota with the thing.</p>
+
+    <h3>02. Confidence gets treated as binary, because that's all that's on offer</h3>
+    <p>Most tools force a decision: flag or don't flag, escalate or close. This is worth sitting with for a second, because it's not that investigators secretly want a spectrum and tools ignore the request. It's that binary is the default response across nearly every tool on the market, and there isn't much out there offering anything else.</p>
+    <p>Here's the thing that makes this a real gap and not just a preference: fraud investigations may never hit a 100% guaranteed answer. The job isn't about certainty, it's about arriving at a reasonable conclusion, backed by enough data points and critical thinking that you can defend it if someone questions it later. A tool that only understands "flag" or "don't flag" has no way to represent that reasoning, which means the actual thinking, the part that makes a decision defensible, ends up living somewhere the tool can't see: a notebook, a comment thread, a memory you're hoping doesn't fade before the case gets reviewed. <a href="/jennifer/portfolio/accidental-fraud-analyst/">I wrote about calibrating certainty to stakes in more detail here</a> if you want the investigator-side version of this same idea.</p>
+    <p>The fix isn't complicated, even if nobody's building it yet. Let the interface represent a range, not a switch, and give investigators somewhere to attach the reasoning behind wherever they land on that range.</p>
+
+    <h3>03. There's no good place to park a half-formed thread, and no real audit trail once you do</h3>
+    <p>Case management tools are almost always built around a linear model: open a case, investigate, close a case. But real investigations don't work that way. You notice something, you're not ready to act on it, and you need somewhere to put it down without losing it. I still keep a physical notebook next to my desk for exactly this reason, because no tool I've used has given me a good digital equivalent.</p>
+    <p>This sounds like a small feature request. It isn't. The absence of it is why so many patterns get missed, not because nobody noticed the first instance, but because nobody had anywhere to write it down, and by the time the third instance showed up, the first two were already forgotten.</p>
+    <p>It's also bigger than personal note-taking. Solid case management within the tool itself, not bolted on, not offloaded to a notebook or a spreadsheet, is fundamental to how a fraud program actually functions. You need a place to document the decisions you made and why, and you need an audit trail that shows how a case moved from first thread to final call. Whether you're buying a tool or building one in-house, this isn't a nice-to-have. It's the thing that lets you defend a decision six months later when someone asks why, and it's often what regulators and auditors are actually looking for when they review your process.</p>
+
+    <h3>04. Absence isn't queryable</h3>
+    <p>Every tool I've used is built to search for what's present: a transaction, a flag, a matching record. Almost none of them make it easy to search for what's conspicuously missing, even though that's often the stronger signal. A nonprofit with a polished website and zero press mentions. A donor history with suspiciously round numbers and nothing else. An account with a normal volume of activity and an abnormal absence of the kind of friction real users generate.</p>
+    <p>Building for absence is harder than building for presence, which is probably why it rarely gets prioritized. But it's exactly the kind of feature that separates a tool investigators trust from one they route around.</p>
+
+    <h3>05. Impressive new data points, duplicated old work</h3>
+    <p>Sales pitches love to lead with the fancy stuff: proprietary data points, extra fraud filters, signals you can't get anywhere else. Paying for genuinely new data is often a good investment, and I'm not knocking it. But the pitch rarely asks a more basic question: what happens to the data and workflows you already have?</p>
+    <p>If a tool doesn't integrate with your existing systems, you end up doing the same investigative work twice, once inside the shiny new platform and once again in whatever system you were already using to reach your actual conclusion. That's not a productivity nice-to-have. That's duplicated effort, on every single case, forever, and it quietly erodes whatever time the new data points were supposed to save you.</p>
+
+    <h3>06. Escalation paths follow the org chart, not the case</h3>
+    <p>Routing logic in most tools mirrors the reporting structure: this case type goes to this queue, which reports to this manager, who escalates to this director. That makes sense on a slide. It falls apart the moment a case needs Legal, Product, and a senior investigator in the same room within the hour, and the tool has no concept of "who actually needs to see this right now" that isn't just "whoever sits above me."</p>
+    <p>The best escalation systems I've helped build were the ones that let the case dictate the path, not the hierarchy. A front-door intake process that routes based on severity and case type, not seniority, gets urgent things in front of the right eyes faster, and that speed is often the entire ballgame.</p>
+
+    <h3>07. False positives get treated as a tuning problem, not a business problem</h3>
+    <p>Every dismissed false positive is logged somewhere as a metric to improve. What rarely gets tracked is everything that metric is quietly costing.</p>
+    <p>There's the human cost first: alert fatigue. After enough false positives, people stop trusting the flag, and once that trust is gone, they start second-guessing everything the system tells them, including the flags that were actually right. That's a much bigger problem than a slightly noisy model, and it almost never shows up on a roadmap because it doesn't show up in a dashboard.</p>
+    <p>But it doesn't stop there. Every false positive that reaches a legitimate user is friction on someone who did nothing wrong, an extra verification step, a held transaction, a declined donation, and enough of that friction is exactly how you lose good users and the revenue that comes with them. And if the tool charges per check, which plenty of vendor pricing models do, a high false positive rate means you're paying full price to flag people who were never the problem in the first place. That's not a tuning inefficiency. That's money you're actively burning, case by case, on top of everything else it's costing you.</p>
+
+    <h2 id="helps">What actually helps</h2>
+
+    <p>None of this is a complaint without a counterpoint. The tools and frameworks I've had a hand in building were designed specifically around these gaps, because I was building them for people who'd feel the same friction I did, and because I made a point of testing them with the people who'd actually use them, not just presenting the finished version.</p>
+
+    <p>The <a href="/jennifer/portfolio/npo-risk-calculator/">NPO risk scoring framework</a> I built maps findings to a tier and a recommended action instead of a flat flag, so the output actually reflects a spectrum of confidence rather than a single binary call, and the reasoning behind that tier travels with it. The <a href="/jennifer/portfolio/platform-integrity-agent/">investigation agent</a> I designed has a full analyst sign-off step built in on purpose, not as an afterthought, because automation that removes the human's ability to say "wait, that doesn't feel right" is automation that will eventually be wrong in a way nobody catches in time. Both were built to work with our existing systems rather than beside them, because a tool that makes you repeat your own work isn't actually saving anyone time.</p>
+
+    <p>Good fraud tooling, in my experience, tends to share a few things in common. It's evaluated with input from the people who'll use it daily, not just the people who'll approve the invoice. It represents confidence as a range, with room to attach the reasoning behind it. It gives investigators somewhere to park a thread they're not ready to pull. It treats the absence of a signal as seriously as the presence of one. It integrates with what you already have instead of asking you to duplicate the work. It routes based on urgency, not org chart. And it tracks trust in the tool as its own metric, not just accuracy on paper.</p>
+
+    <h2 id="why">Why this matters for whoever's building the next one</h2>
+
+    <p>The cost of getting this wrong isn't abstract. It's slower cases, because investigators are working around the tool instead of with it, or doing the same analysis twice because the tool doesn't talk to their existing systems. It's missed patterns, because there was nowhere to write down the half-formed thread that would have connected them. And eventually, it's good people leaving, because nothing burns out a sharp investigator faster than a tool that doesn't trust their judgment enough to represent it accurately.</p>
+
+    <p>If you're building or buying fraud investigation tooling, or Trust &amp; Safety tooling more broadly, the best thing you can do is spend real time with the people who'll actually live in it, not just the people who'll sign off on buying it. Budget and feature scope are legitimate constraints, but they're only half the equation. The gap between the pitch and the desk is almost always visible from the desk. It just rarely gets asked about from the other side of the table.</p>
+
+    <div class="takeaways">
+      <p class="takeaways-label">Key takeaways</p>
+      <ul>
+        <li>Fraud investigation tools are usually designed around what's demoable, which creates a predictable gap between the pitch and how the tool actually gets used day to day.</li>
+        <li>Buying decisions often get made on cost and feature checklists without meaningfully involving the people who'll use the tool daily. Striking a real balance between both sets of needs is one of the most overlooked steps in procurement.</li>
+        <li>Binary flag or no-flag is the industry default, not because investigators want it that way, but because almost nothing on the market offers a real alternative.</li>
+        <li>Fraud investigation is rarely about 100% certainty. It's about reaching a reasonable, defensible conclusion backed by data and critical thinking, and tools should have somewhere to hold that reasoning.</li>
+        <li>Investigators need somewhere to park a half-formed thread, and the tool needs a real audit trail once they do. Solid case management is fundamental to documenting decisions and defending them later, not a nice-to-have.</li>
+        <li>Tools that only search for what's present miss one of the strongest signals in investigative work: what's conspicuously absent.</li>
+        <li>Flashy new data points are only valuable if the tool integrates with your existing systems. Otherwise you're duplicating investigative work on every case.</li>
+        <li>Escalation logic should route based on the urgency of the case, not the shape of the org chart.</li>
+        <li>False positives cost more than trust in the tool. They cause alert fatigue, add friction that pushes away legitimate users and revenue, and in per-check pricing models, they're money spent flagging people who were never the problem.</li>
+        <li>The best way to close the gap between the pitch and the desk is to spend real time with the people who'll actually use the tool, not just the people who approve buying it.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="toc">
+    <p class="toc-label">In this article</p>
+    <ul>
+      <li><a href="#pattern">The pattern</a></li>
+      <li><a href="#helps">What actually helps</a></li>
+      <li><a href="#why">Why this matters for whoever's building the next one</a></li>
+    </ul>
+  </div>
+
+  <div class="author-footer">
+    <p class="author-name">Jennifer Thornton</p>
+    <p class="author-role">Senior Fraud Operations Analyst &middot; Benevity, Inc.</p>
+    <div class="author-links">
+      <a class="link" href="/jennifer/">View full profile</a>
+      <a class="back" href="/jennifer/portfolio/">Back to portfolio</a>
+    </div>
+  </div>
+
+  <footer>
+    <p class="footer-copy">&copy; 2025 The Thorntons &middot; thethorntons.ca</p>
+    <p class="footer-cats">Supervised by Khaleesi &amp; Luna</p>
+  </footer>
+
+</body>
+</html>
