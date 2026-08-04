@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What You Can't Say, and Who You Can't Say It To — Jennifer Thornton</title>
+  <meta name="description" content="In fraud and AML work, communication isn't a soft skill, it's a control. Jennifer Thornton on tailoring the same case to five different audiences, and what tipping off actually means in practice.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --stone-50:  #F8F6F1;
+      --stone-100: #EDE9E0;
+      --stone-200: #D6CFC2;
+      --stone-400: #A89F8F;
+      --stone-600: #6B6256;
+      --stone-800: #3A332A;
+      --slate-900: #1C1C1E;
+      --serif: 'EB Garamond', Georgia, serif;
+      --sans:  'Inter', system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--sans);
+      background-color: var(--stone-50);
+      color: var(--slate-900);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      border-bottom: 0.5px solid var(--stone-200);
+      background: var(--stone-50);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--stone-600);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--slate-900); }
+    .nav-links a.active { color: var(--slate-900); }
+
+    /* PAGE HEADER */
+    .page-header-section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 4rem 3rem 3rem;
+      border-bottom: 0.5px solid var(--stone-200);
+    }
+    .breadcrumb {
+      font-size: 0.72rem;
+      color: var(--stone-400);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .breadcrumb a { color: var(--stone-400); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--slate-900); }
+    .breadcrumb span { color: var(--stone-200); }
+    .article-tag {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 1.5rem;
+    }
+    .page-title {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--slate-900);
+      margin-bottom: 1rem;
+    }
+    .page-title em { font-style: italic; color: var(--stone-600); }
+    .page-subtitle {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--stone-600);
+      margin-bottom: 2rem;
+    }
+    .byline { margin-bottom: 0.15rem; }
+    .byline-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--slate-900);
+    }
+    .byline-role {
+      font-size: 0.8rem;
+      color: var(--stone-600);
+      margin-bottom: 0.35rem;
+    }
+    .byline-meta {
+      font-size: 0.75rem;
+      color: var(--stone-400);
+      letter-spacing: 0.03em;
+    }
+
+    /* ARTICLE BODY */
+    .article-body {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 3.5rem 3rem;
+    }
+    .article-body p {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: var(--stone-600);
+      font-weight: 300;
+      max-width: 68ch;
+      margin-bottom: 1.4rem;
+    }
+    .article-body p em { font-style: italic; color: var(--stone-800); }
+    .article-body p strong { font-weight: 500; color: var(--slate-900); }
+    .article-body a { color: var(--slate-900); text-decoration-color: var(--stone-400); }
+    .article-body a:hover { text-decoration-color: var(--slate-900); }
+    .article-body h2 {
+      font-family: var(--serif);
+      font-size: 1.7rem;
+      font-weight: 400;
+      color: var(--slate-900);
+      line-height: 1.25;
+      margin-top: 3rem;
+      margin-bottom: 1.25rem;
+      max-width: 68ch;
+    }
+    .article-body h2 em { font-style: italic; color: var(--stone-600); }
+    .intro-lead p:first-of-type {
+      font-size: 1rem;
+    }
+
+    /* KEY TAKEAWAYS */
+    .takeaways {
+      background: var(--stone-100);
+      border: 0.5px solid var(--stone-200);
+      padding: 2.5rem;
+      margin-top: 3rem;
+    }
+    .takeaways-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 1.5rem;
+    }
+    .takeaways ul {
+      list-style: none;
+      padding: 0;
+    }
+    .takeaways li {
+      font-size: 0.85rem;
+      line-height: 1.75;
+      color: var(--stone-600);
+      font-weight: 300;
+      padding-left: 1.1rem;
+      position: relative;
+      margin-bottom: 0.75rem;
+    }
+    .takeaways li:last-child { margin-bottom: 0; }
+    .takeaways li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--stone-400);
+    }
+
+    /* IN THIS ARTICLE */
+    .toc {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2.5rem 3rem;
+      border-top: 0.5px solid var(--stone-200);
+    }
+    .toc-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      margin-bottom: 1.25rem;
+    }
+    .toc ul { list-style: none; padding: 0; }
+    .toc li { margin-bottom: 0.6rem; }
+    .toc a {
+      font-size: 0.85rem;
+      color: var(--stone-600);
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--slate-900); }
+
+    /* AUTHOR FOOTER */
+    .author-footer {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2.5rem 3rem 3.5rem;
+      border-top: 0.5px solid var(--stone-200);
+    }
+    .author-name {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--slate-900);
+      margin-bottom: 0.25rem;
+    }
+    .author-role {
+      font-size: 0.8rem;
+      color: var(--stone-600);
+      margin-bottom: 1rem;
+    }
+    .author-links a {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone-400);
+      text-decoration: none;
+      margin-right: 1.5rem;
+    }
+    .author-links a:hover { color: var(--slate-900); }
+    .author-links a.link::after { content: ' →'; }
+    .author-links a.back::before { content: '← '; }
+
+    /* FOOTER */
+    footer {
+      border-top: 0.5px solid var(--stone-200);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy { font-size: 0.75rem; color: var(--stone-400); }
+    .footer-cats {
+      font-size: 0.75rem;
+      color: var(--stone-400);
+      font-style: italic;
+      font-family: var(--serif);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { gap: 1.25rem; }
+      .page-header-section { padding: 2.5rem 1.5rem 2rem; }
+      .article-body { padding: 2.5rem 1.5rem; }
+      .toc, .author-footer { padding: 2rem 1.5rem; }
+      .takeaways { padding: 1.75rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 2rem 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="/">The Thorntons</a>
+    <ul class="nav-links">
+      <li><a href="/rob/">Rob</a></li>
+      <li><a href="/jennifer/" class="active">Jennifer</a></li>
+      <li><a href="/natalie/">Natalie</a></li>
+      <li><a href="/kaitlyn/">Kaitlyn</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-header-section">
+    <p class="breadcrumb">
+      <a href="/jennifer/">Jennifer Thornton</a>
+      <span>/</span>
+      <a href="/jennifer/portfolio/">Portfolio</a>
+      <span>/</span>
+      What You Can't Say, and Who You Can't Say It To
+    </p>
+    <p class="article-tag">Article &middot; Communication &amp; Compliance</p>
+    <h1 class="page-title">What You Can't Say, and Who You Can't Say It To</h1>
+    <p class="page-subtitle">The same case. Five different conversations.</p>
+    <div class="byline">
+      <p class="byline-name">Jennifer Thornton</p>
+      <p class="byline-role">Senior Fraud Operations Analyst</p>
+      <p class="byline-meta">July 2026 &middot; 10 min read</p>
+    </div>
+  </div>
+
+  <div class="article-body">
+
+    <div class="intro-lead">
+      <p>Most people treat communication like a soft skill, something you pick up with practice and confidence, maybe a course on public speaking somewhere along the way. In fraud and AML work, it functions more like a control. Get it wrong and you're not just being unprofessional. You can compromise a case, breach confidentiality, or in the more serious situations, break the law. The same investigation ends up communicated five different ways depending on who's asking, and knowing which version belongs to which audience is as much a part of the job as running the investigation itself.</p>
+
+      <p>This is the piece I wish someone had handed me early on. The concept isn't complicated. Most of it just gets learned the hard way, one slightly-too-honest sentence at a time.</p>
+    </div>
+
+    <h2 id="conversations">The same case, five different conversations</h2>
+
+    <p>Take a single investigation and imagine explaining it to five different people. The facts don't change. What you're allowed to say about them does.</p>
+
+    <p>With <strong>the subject or a third party</strong>, you say almost nothing, and what you do say has to be careful and firm. This is the hardest version by a wide margin, because the person on the other end usually has a real, sympathetic reason for asking. I recently deactivated an organization for fraud, and a third party reached out because they'd noticed it had disappeared from the platform. They wanted to know why, and understandably weren't satisfied with a standard "we can't share that information" response. My instinct in that moment could easily have gone one of two ways: over-explain to smooth things over, or get defensive because the same question kept coming at me from different angles. Neither actually helps. Empathy does. Understand where the person is coming from, match their tone, and hold the line on substance. Reiterate the policy, acknowledge that the frustration is fair, and don't confirm or deny anything about the specifics, without being a jerk about it. Warm and immovable at the same time turns out to be exactly the combination that de-escalates a conversation like that.</p>
+
+    <p>The audiences on the other end of the spectrum aren't ones you're managing risk with, they're ones you're working with. <strong>Your team or your lead</strong> gets everything: full detail, working theories, the half-formed hunches you're not ready to defend yet. <strong>Legal</strong> gets facts and exposure rather than your gut feeling, because facts are the only material they can actually act on. <strong>PR</strong> gets the narrowest slice of all, only what's needed to manage external risk, since every extra detail handed over is one more thing that could end up in a statement nobody meant to make. Different audiences, same underlying rule: give each one what they need to do their job, nothing more.</p>
+
+    <p><strong>Leadership and the board</strong> get the high-level version, and this is where I think people underestimate how much restraint is actually required. I was recently asked to give leadership and board members statistics on our investigations: typologies, patterns, outcomes. That request came from about as internal as internal gets, the highest levels of the company, for entirely legitimate oversight reasons. I still kept my answer to patterns and typologies rather than the particulars of any individual case. No names. No identifying details about the organizations involved. Nothing traceable back to a specific person or case. It isn't about distrusting the audience. It's about keeping the matter confidential no matter who's asking, so the way you communicate upward doesn't quietly become the thing that tips someone off.</p>
+
+    <p>None of these five versions are lies. None of them are the full picture either. Each one is simply scoped to what that particular audience actually needs.</p>
+
+    <h2 id="tipping-off">Tipping off, what it actually means</h2>
+
+    <p>Tipping off has a specific, defined meaning in AML and fraud work: alerting someone, directly or indirectly, that they're under investigation or that a report has been filed about their activity. In many jurisdictions this crosses from bad practice into a genuine offense, because it hands a bad actor the chance to destroy evidence, move funds, or disappear before the investigation can conclude.</p>
+
+    <p>Most people avoid the direct version instinctively. Nobody calls a suspect and announces they're under investigation. It's the indirect versions that actually catch people: an answer to a third party that's a shade too specific, a tone that shifts just enough to signal something's wrong, timing that lines up too conveniently with a deactivation, or an internal report detailed enough that a name could be pieced back together by whoever eventually reads it. Being trusted or internal doesn't make an audience exempt from this risk. It just changes what the risk looks like.</p>
+
+    <p>The habit that protects you here is the same one from the leadership example above: default to the abstracted version. Patterns, typologies, and outcomes tell leadership whether the program is working and where risk is trending, without exposing the specifics that could compromise a live matter or identify a person. If a name or a detail feels necessary to make your point, that's usually the moment to step back and ask whether the point survives without it.</p>
+
+    <h2 id="consistency">Consistency as its own signal</h2>
+
+    <p>There's a layer to this that's easy to overlook: how consistently you communicate matters almost as much as what you say. An answer that shifts between conversations, softer one week, more guarded the next, becomes a signal in itself, both to a bad actor watching closely for what you know and to anyone reviewing your process later.</p>
+
+    <p>This gets more important once you're not the only person fielding these questions. When a whole team uses the same repeatable language for the same kinds of situations, the process gets stronger, not just any one person's answers. A third party who talks to two different investigators and hears two differently worded versions of the same policy has learned something, even if neither analyst technically said anything wrong. Standardized language closes that gap. It's also the only way the process actually scales. One analyst can hold their own answers consistent through memory and instinct. That falls apart across a growing team unless the consistency lives in the process itself rather than in any single person's head.</p>
+
+    <p>A standard, repeatable line isn't about sounding scripted. It's a bet that whatever gets said today would get said the same way next week, by you or by a teammate, regardless of who's asking or how frustrated they are. That bet protects the case. It also protects the team, because a defensible process is one where no single day, and no single person, becomes the reason something slipped through differently than it should have.</p>
+
+    <div class="takeaways">
+      <p class="takeaways-label">Key takeaways</p>
+      <ul>
+        <li>Communication in fraud and AML work is a control, not a soft skill. The wrong words to the wrong person can compromise a case or breach confidentiality.</li>
+        <li>The same investigation gets a different, appropriately scoped version of the truth depending on the audience: full detail to your team, facts and exposure to Legal, high-level patterns to leadership, minimal and firm responses to a subject or third party.</li>
+        <li>With a subject or third party, match their tone and lead with empathy, but stay firm on the substance. Reiterate the policy without confirming or denying specifics.</li>
+        <li>Tipping off is a defined concept, not just poor judgment: alerting someone, directly or indirectly, that they're under investigation. The indirect versions, tone, timing, an overly specific internal report, are the ones that actually catch people out.</li>
+        <li>Trusted or internal audiences aren't exempt from tipping-off risk. Even board-level reporting should stay at the level of patterns and typologies, not individual cases or identifying details.</li>
+        <li>Consistency needs to hold across a whole team, not just one person. Shared, repeatable language protects the case, scales as the team grows, and closes the gap a bad actor could otherwise exploit by comparing answers from different people.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="toc">
+    <p class="toc-label">In this article</p>
+    <ul>
+      <li><a href="#conversations">The same case, five different conversations</a></li>
+      <li><a href="#tipping-off">Tipping off, what it actually means</a></li>
+      <li><a href="#consistency">Consistency as its own signal</a></li>
+    </ul>
+  </div>
+
+  <div class="author-footer">
+    <p class="author-name">Jennifer Thornton</p>
+    <p class="author-role">Senior Fraud Operations Analyst &middot; Benevity, Inc.</p>
+    <div class="author-links">
+      <a class="link" href="/jennifer/">View full profile</a>
+      <a class="back" href="/jennifer/portfolio/">Back to portfolio</a>
+    </div>
+  </div>
+
+  <footer>
+    <p class="footer-copy">&copy; 2025 The Thorntons &middot; thethorntons.ca</p>
+    <p class="footer-cats">Supervised by Khaleesi &amp; Luna</p>
+  </footer>
+
+</body>
+</html>
